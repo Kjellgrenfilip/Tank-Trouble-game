@@ -27,7 +27,7 @@ void Pause_State::event_handler(sf::Event event)
 {
     if(event.type == sf::Event::KeyPressed)
     {
-        if(event.key.code == sf::Keyboard::Enter)
+        if(event.key.code == sf::Keyboard::Return)
         {
             if(menu_select == 0)
             {
