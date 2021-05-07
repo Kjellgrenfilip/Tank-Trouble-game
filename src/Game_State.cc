@@ -1,12 +1,14 @@
 #include "Constants.h"
 #include "Game_State.h"
 //#include "Game_Map.h"
-
+#include "Resource_Manager.h"
 #include <SFML/Graphics.hpp>
 
 Game_State::Game_State()
-    :   paus{false}, endgame{false}, game_map{}   // Initiera game_map här   
+    :   paus{false}, endgame{false}, players{}, game_map{}   // Initiera game_map här   
 {
+	players.push_back(Player(get_texture_player(1), sf::Vector2f{width/2, height/2}));
+
 }
 
 void Game_State::event_handler(sf::Event event)

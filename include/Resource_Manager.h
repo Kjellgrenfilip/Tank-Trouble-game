@@ -1,5 +1,5 @@
-#ifndef RESOURCE_MANAGER.H
-#define RESOURCE_MANAGER.H
+#ifndef RESOURCE_MANAGER_H
+#define RESOURCE_MANAGER_H
 #include <SFML/Graphics.hpp>
 #include <stdexcept>
 class Resource_Manager
@@ -64,7 +64,7 @@ class Resource_Manager
         }
         return speedboost_texture;
     }
-    static void get_textures()
+    static void get_texture()
     {
         if(!player1_texture.loadFromFile("resources/textures/player1_texture.png"))
         {

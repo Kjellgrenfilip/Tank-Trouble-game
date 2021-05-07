@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "State.h"
 #include "Game_Map.h"
-
+#include "Player.h"
 class Game_State : public State
 {
 public:
@@ -16,8 +16,12 @@ public:
     virtual int get_next_state() override;
 
 private:
+    
+    
     bool paus;
     bool endgame;
+
+	std::vector<Player> players;
 
     Game_Map game_map;   // Döpte den till game_map för att 
                          // inte skapa förvirring med std::map

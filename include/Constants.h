@@ -16,3 +16,5 @@ static float gridsize_y = screen_height/resolution_gridsize;
 float const fps{60.0};
 
 int const MENU_ITEMS{3};
+
+float const pi{3.14159265359};

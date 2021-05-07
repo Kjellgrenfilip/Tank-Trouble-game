@@ -16,8 +16,8 @@ public:
     void render(sf::RenderTarget & target);
     void event_handler(sf::Event event);
 	
-	sf::FloatRect get_hitbox();     //Returnar playerns hitbox
-	std::Vector<Bullet>& get_bullets();	//Hämtar en vector med bullets
+	sf::FloatRect get_hitbox(sf::Sprite&);     //Returnar playerns hitbox
+	std::vector<Bullet>& get_bullets();	//Hämtar en vector med bullets
     
    
 
@@ -26,13 +26,14 @@ private:
 	int hp;       				//Spelarens liv - spel startar med 3. Bullet skadar -1
 	int player_ID;				//Spelarens ID, spelare 1, 2, 3 osv..
     sf::Vector2f pos;			//Spelarens position
-    sf::Vector2f rot;			//Spelarens rotation
+    float rot;					//Spelarens rotation
     std::vector<Bullet> bullets;//Behållare för bullets
     sf::Sprite tank;			
-    bool destoyed;				//Boolean som håller koll på om spelarens har "dött"
+    bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 
 	float speed;
    
 
     //float const scale{.2};
 };
+#endif
