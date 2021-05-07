@@ -17,27 +17,51 @@ class Resource_Manager
     {
         if (player_id == 1)
         {
+            if(player1_texture == NULL)
+            {
+                get_texture();
+            }
             return player1_texture;
         }
         else
         {
+            if(player2_texture == NULL)
+            {
+                get_texture();
+            }
             return player2_texture;
         }
     }
     static sf::Texture& get_texture_shotgun()
     {
+        if(shotgun_texture == NULL)
+        {
+            get_texture();
+        }
         return shotgun_texture;
     }
     static sf::Texture& get_texture_rocket()
     {
+        if(rocket_texture == NULL)
+        {
+            get_texture();
+        }
         return rocket_texture;
     }
     static sf::Texture& get_texture_shield()
     {
+        if(shield_texture == NULL)
+        {
+            get_texture();
+        }
         return shield_texture;
     }
     static sf::Texture& get_texture_speedboost()
     {
+        if(speedboost_texture == NULL)
+        {
+            get_texture();
+        }
         return speedboost_texture;
     }
     static void get_textures()
