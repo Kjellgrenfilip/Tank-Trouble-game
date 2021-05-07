@@ -15,7 +15,7 @@ void Game_State::event_handler(sf::Event event)
     {
         if(event.key.code == sf::Keyboard::Escape)
         {
-            endgame = true;
+            paus = true;
         }
     }
 }
@@ -40,7 +40,7 @@ int Game_State::get_next_state()
     else if(paus)
     {
         paus = false;
-        return MENU_STATE; // Ska egentligen gå vidare till Paus_State
+        return PAUSE_STATE; // Ska egentligen gå vidare till Paus_State
     }
     else
     {

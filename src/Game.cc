@@ -1,13 +1,15 @@
 #include "Game.h"
 #include "Game_State.h"
 #include "Menu_State.h"
-//#include "Pause_State.h"
+#include "Pause_State.h"
 //#include "Win_State.h"
 #include "Constants.h"
 
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <utility>
+
+#include <iostream>
 
 Game::Game( std::string const& title,
             unsigned width,
@@ -29,11 +31,11 @@ Game::Game( std::string const& title,
                         {   GAME_STATE, 
                             std::make_unique<Game_State>()})
                 );
-    // states.insert(  std::pair<int,
-    //                 std::unique_ptr<State>>(
-    //                     {   PAUSE_STATE, 
-    //                         std::make_unique<Pause_State>()})
-    //            );
+    states.insert(  std::pair<int,
+                    std::unique_ptr<State>>(
+                        {   PAUSE_STATE, 
+                            std::make_unique<Pause_State>()})
+                );
     // states.insert(  std::pair<int,
     //                 std::unique_ptr<State>>(
     //                     {   WIN_STATE, 
@@ -56,7 +58,9 @@ void Game::start()
 
         window.display ();
 
-         current_state = states.at(current_state) -> get_next_state();
+        current_state = states.at(current_state) -> get_next_state();
+        if(current_state == EXIT_STATE)
+            running = false;  
 
         delay (clock);
     }

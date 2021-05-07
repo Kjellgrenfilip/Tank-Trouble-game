@@ -1,14 +1,14 @@
-#ifndef MENUSTATE_H
-#define MENUSTATE_H
+#ifndef PAUSSTATE_H
+#define PAUSSTATE_H
 
 #include <SFML/Graphics.hpp>
 #include "State.h"
 #include "Constants.h"
 
-class Menu_State : public State
+class Pause_State : public State  // Kanske ska ärva från Menu_State
 {
 public:
-    Menu_State();
+    Pause_State();
 
     virtual void update() override;
     virtual void event_handler(sf::Event event) override;
@@ -19,7 +19,8 @@ private:
     sf::Text text[MENU_ITEMS];
     sf::Font font;
 
-    bool startgame;
+    bool end_paus;
+    bool menu;
     bool exit;
 
     int menu_select;
