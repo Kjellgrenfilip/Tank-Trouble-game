@@ -13,13 +13,13 @@ Pause_State::Pause_State()
         throw std::invalid_argument("No font at location: " + file);
     }
     text[0] = sf::Text{"Resume", font, 32 };
-    text[0].setColor(sf::Color(255,0,0));
+    text[0].setFillColor(sf::Color(255,0,0));
     text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / MENU_ITEMS - (text[0].getGlobalBounds().height + 15));
     text[1] = sf::Text{"Return to Menu", font, 32 };
-    text[1].setColor(sf::Color(255,255,255));
+    text[1].setFillColor(sf::Color(255,255,255));
     text[1].setPosition(screen_width / 2 - text[1].getGlobalBounds().width / 2, screen_height / MENU_ITEMS);
     text[2] = sf::Text{"Quit to desktop", font, 32 };
-    text[2].setColor(sf::Color(255,255,255));
+    text[2].setFillColor(sf::Color(255,255,255));
     text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[2].getGlobalBounds().height + 10));
 }
 
@@ -71,9 +71,9 @@ void Pause_State::update()
 {
     for(int i{}; i < MENU_ITEMS; i++)
     {
-        text[i].setColor(sf::Color(255,255,255));
+        text[i].setFillColor(sf::Color(255,255,255));
     }
-    text[menu_select].setColor(sf::Color(255,0,0));
+    text[menu_select].setFillColor(sf::Color(255,0,0));
 }
 
 void Pause_State::render(sf::RenderTarget & target)
