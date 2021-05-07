@@ -21,7 +21,7 @@ LDFLAGS += -L$(SFML_ROOT)/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-
 MAINFILE := main.cc
 
 # Object modules
-OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o
+OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
@@ -48,6 +48,9 @@ $(OBJDIR)/Game_Map.o: $(SRC)/Game_Map.cc dir
 
 $(OBJDIR)/Tile.o: $(SRC)/Tile.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Tile.cc -o $(OBJDIR)/Tile.o
+
+$(OBJDIR)/Bullet.o: $(SRC)/Bullet.cc dir
+	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Bullet.cc -o $(OBJDIR)/Bullet.o
 
 dir:
 	@mkdir -p $(OBJDIR)
