@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 Game_State::Game_State()
-    :   paus{false}, endgame{false}  // Initiera game_map här   
+    :   paus{false}, endgame{false}, game_map{}   // Initiera game_map här   
 {
 }
 
@@ -27,7 +27,7 @@ void Game_State::update()
 
 void Game_State::render(sf::RenderTarget & target)
 {
-    //game_map.render(target);
+    game_map.render(target);
 }
 
 int Game_State::get_next_state()

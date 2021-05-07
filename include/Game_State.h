@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "State.h"
-//#include "Game_Map.h"
+#include "Game_Map.h"
 
 class Game_State : public State
 {
@@ -19,7 +19,7 @@ private:
     bool paus;
     bool endgame;
 
-    //Game_Map game_map; // Döpte den till game_map för att 
+    Game_Map game_map;   // Döpte den till game_map för att 
                          // inte skapa förvirring med std::map
 };
 
