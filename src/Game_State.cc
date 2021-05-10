@@ -30,6 +30,8 @@ void Game_State::update()
     //game_map.update();
     players[0].update();
     players[1].update();
+    
+    
 }
 
 void Game_State::render(sf::RenderTarget & target)

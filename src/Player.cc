@@ -123,7 +123,7 @@ sf::FloatRect Player::get_hitbox(sf::Sprite & t)
 
 std::vector<Bullet>& Player::get_bullets()
 {
-	
+	return bullets;
 }
 	
 	
