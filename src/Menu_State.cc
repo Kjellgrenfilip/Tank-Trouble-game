@@ -5,7 +5,7 @@
 #include <iostream>
 
 Menu_State::Menu_State()
-    :   font{}, startgame{false}, exit{false}, menu_select{0}    
+    :   font{}, startgame{false}, exit{false}, menu_select{0}  
 {
     std::string file{"resources/fonts/font.ttf"};
     if(!font.loadFromFile(file))
@@ -25,7 +25,7 @@ Menu_State::Menu_State()
 
 void Menu_State::event_handler(sf::Event event)
 {
-    if(event.KeyReleased == sf::Event::KeyReleased)
+    if(event.type == sf::Event::KeyPressed)
     {
         if(event.key.code == sf::Keyboard::Return)
         {
@@ -65,6 +65,9 @@ void Menu_State::event_handler(sf::Event event)
             }
         }    
     }
+}
+void Menu_State::game_event_handler(sf::Event)
+{
 }
 
 void Menu_State::update()

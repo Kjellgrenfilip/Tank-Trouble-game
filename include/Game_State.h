@@ -13,11 +13,11 @@ public:
     
     virtual void update() override;
     virtual void event_handler(sf::Event event) override;
+    virtual void game_event_handler(sf::Event event) override;
     virtual void render(sf::RenderTarget & target) override;
     virtual int get_next_state() override;
 
 private:
-    
     
     bool paus;
     bool endgame;

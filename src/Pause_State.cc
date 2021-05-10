@@ -25,7 +25,7 @@ Pause_State::Pause_State()
 
 void Pause_State::event_handler(sf::Event event)
 {
-    if(event.KeyReleased == sf::Event::KeyReleased)
+    if(event.type == sf::Event::KeyPressed)
     {
         if(event.key.code == sf::Keyboard::Return)
         {
@@ -65,6 +65,10 @@ void Pause_State::event_handler(sf::Event event)
             }
         }    
     }
+}
+
+void Pause_State::game_event_handler(sf::Event)
+{
 }
 
 void Pause_State::update()

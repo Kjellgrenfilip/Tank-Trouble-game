@@ -14,13 +14,19 @@ Game_State::Game_State()
 }
 void Game_State::event_handler(sf::Event event)
 {
-    if(event.KeyReleased == sf::Event::KeyReleased)
+    if(event.type == sf::Event::KeyPressed)
     {
         if(event.key.code == sf::Keyboard::Escape)
         {
             paus = true;
         }
     }
+    //players[0].event_handler(event);
+    //players[1].event_handler(event);
+}
+
+void Game_State::game_event_handler(sf::Event event)
+{
     players[0].event_handler(event);
     players[1].event_handler(event);
 }
@@ -30,8 +36,6 @@ void Game_State::update()
     //game_map.update();
     players[0].update();
     players[1].update();
-    
-    
 }
 
 void Game_State::render(sf::RenderTarget & target)

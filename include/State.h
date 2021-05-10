@@ -10,7 +10,9 @@ public:
     virtual void update() = 0;
     virtual void event_handler(sf::Event event) = 0;
     virtual void render(sf::RenderTarget & target) = 0;
+    virtual void game_event_handler(sf::Event event) = 0;
     virtual int get_next_state() = 0;
+
 };
 
 #endif
