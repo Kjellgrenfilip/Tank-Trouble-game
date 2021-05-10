@@ -1,9 +1,9 @@
 #include "Bullet.h"
 #include <cmath>
 
-Bullet::Bullet(sf::Vector2f pos, float rot) : lifetime{3}, velocity{ 3*std::cos(rot), 3*std::sin(rot)}, sprite{5.0}
+Bullet::Bullet(sf::Vector2f pos, float rot) : lifetime{3}, velocity{ static_cast<float>(3*std::cos(rot*M_PI/180.0)), static_cast<float>(3*std::sin(rot*M_PI/180.0))}, sprite{5.0}
 {
-    sprite.setPosition(pos);
+    sprite.setPosition(pos + velocity*static_cast<float>(10.0));
     sprite.setOrigin (5, 5);
     sprite.setFillColor(sf::Color(120, 120, 120));
 }

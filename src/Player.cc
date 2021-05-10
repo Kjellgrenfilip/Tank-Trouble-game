@@ -106,7 +106,7 @@ void Player::event_handler(sf::Event event)
 			if ( event.key.code == sf::Keyboard::Key::Numpad0)
 			{
 				if (bullets.size() < 4)
-				bullets.push_back(Bullet(pos, rot));
+				bullets.push_back(Bullet(pos, rot-90));
 			}
 		}
 	}
