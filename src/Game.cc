@@ -75,9 +75,8 @@ void Game::event_handler()
         {
             running = false;
         }
-
-        states.at(current_state)->event_handler(event);
     }
+    states.at(current_state)->event_handler(event);
 }
 
 void Game::delay(sf::Clock & clock)

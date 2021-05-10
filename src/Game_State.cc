@@ -14,7 +14,7 @@ Game_State::Game_State()
 }
 void Game_State::event_handler(sf::Event event)
 {
-    if(event.type == sf::Event::KeyPressed)
+    if(event.KeyReleased == sf::Event::KeyReleased)
     {
         if(event.key.code == sf::Keyboard::Escape)
         {

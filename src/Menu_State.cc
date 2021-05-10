@@ -25,7 +25,7 @@ Menu_State::Menu_State()
 
 void Menu_State::event_handler(sf::Event event)
 {
-    if(event.type == sf::Event::KeyPressed)
+    if(event.KeyReleased == sf::Event::KeyReleased)
     {
         if(event.key.code == sf::Keyboard::Return)
         {
