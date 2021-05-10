@@ -5,6 +5,7 @@
 #include "State.h"
 #include "Game_Map.h"
 #include "Player.h"
+#include "Resource_Manager.h"
 class Game_State : public State
 {
 public:
@@ -22,7 +23,6 @@ private:
     bool endgame;
 
 	std::vector<Player> players;
-
     Game_Map game_map;   // Döpte den till game_map för att 
                          // inte skapa förvirring med std::map
 };
