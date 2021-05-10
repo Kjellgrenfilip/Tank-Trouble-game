@@ -7,11 +7,11 @@ class Resource_Manager
 
     private:
         static inline sf::Texture player1_texture;
-        static inline sf::Texture player2_texture;
+       /* static inline sf::Texture player2_texture;
         static inline sf::Texture shotgun_texture;
         static inline sf::Texture rocket_texture;
         static inline sf::Texture shield_texture;
-        static inline sf::Texture speedboost_texture;
+        static inline sf::Texture speedboost_texture;*/
     public:
         static sf::Texture& get_texture_player(int player_id);
         static sf::Texture& get_texture_shotgun();

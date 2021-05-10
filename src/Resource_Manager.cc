@@ -11,7 +11,8 @@ sf::Texture& Resource_Manager::get_texture_player(int player_id)
             }
             return player1_texture;
         }
-        else
+	}
+       /* else
         {
             if(player2_texture.getSize() == empty)
             {
@@ -51,14 +52,14 @@ sf::Texture& Resource_Manager::get_texture_player(int player_id)
             get_texture();
         }
         return speedboost_texture;
-    }
+    }*/
     void Resource_Manager::get_texture()
     {
         if(!player1_texture.loadFromFile("resources/textures/player1_texture.png"))
         {
             throw std::invalid_argument("cannot open player1_texture");
         }
-        if(!player2_texture.loadFromFile("resources/textures/player2_texture.png"))
+       /* if(!player2_texture.loadFromFile("resources/textures/player2_texture.png"))
         {
             throw std::invalid_argument("cannot open player2_texture");
         }
@@ -77,5 +78,5 @@ sf::Texture& Resource_Manager::get_texture_player(int player_id)
          if(!speedboost_texture.loadFromFile("resources/textures/speedboost_texture.png"))
         {
             throw std::invalid_argument("cannot open speedboost_texture");
-        }
+        }*/
     }

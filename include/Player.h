@@ -10,7 +10,7 @@
 class Player
 {
 public:
-    Player(sf::Texture & t, sf::Vector2f const& p/*sf::Texture & bullet*/);
+    Player(sf::Texture & t, sf::Vector2f const& p, int ID);
 
     void update();
     void render(sf::RenderTarget & target);
