@@ -11,8 +11,8 @@ sf::Texture& Resource_Manager::get_texture_player(int player_id)
             }
             return player1_texture;
         }
-	}
-       /* else
+	
+        else
         {
             if(player2_texture.getSize() == empty)
             {
@@ -21,7 +21,16 @@ sf::Texture& Resource_Manager::get_texture_player(int player_id)
             return player2_texture;
         }
     }
-    sf::Texture& Resource_Manager::get_texture_shotgun()
+sf::Texture& Resource_Manager::get_texture_heart()
+{
+	if (heart_texture.getSize() == sf::Vector2u{0,0})
+		{
+			get_texture();
+		}
+		return heart_texture;
+}
+			
+  /*  sf::Texture& Resource_Manager::get_texture_shotgun()
     {
         if(shotgun_texture.getSize() == sf::Vector2u(0,0))
         {
@@ -59,11 +68,17 @@ sf::Texture& Resource_Manager::get_texture_player(int player_id)
         {
             throw std::invalid_argument("cannot open player1_texture");
         }
-       /* if(!player2_texture.loadFromFile("resources/textures/player2_texture.png"))
+        if(!player2_texture.loadFromFile("resources/textures/player2_texture.png"))
         {
             throw std::invalid_argument("cannot open player2_texture");
         }
-        if(!shotgun_texture.loadFromFile("resources/textures/shotgun_texture.png"))
+        if(!heart_texture.loadFromFile("resources/textures/heart.png"))
+        {
+            throw std::invalid_argument("cannot open heart_texture");
+        }
+       
+       
+        /*if(!shotgun_texture.loadFromFile("resources/textures/shotgun_texture.png"))
         {
             throw std::invalid_argument("cannot open shotgun_texture");
         }
