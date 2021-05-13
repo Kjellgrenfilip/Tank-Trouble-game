@@ -21,7 +21,7 @@ LDFLAGS += -L$(SFML_ROOT)/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-
 MAINFILE := main.cc
 
 # Object modules
-OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o
+OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
@@ -57,6 +57,9 @@ $(OBJDIR)/Player.o: $(SRC)/Player.cc dir
 
 $(OBJDIR)/Resource_Manager.o: $(SRC)/Resource_Manager.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Resource_Manager.cc -o $(OBJDIR)/Resource_Manager.o
+
+$(OBJDIR)/Shield.o: $(SRC)/Shield.cc dir
+	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Shield.cc -o $(OBJDIR)/Shield.o
 
 dir:
 	@mkdir -p $(OBJDIR)

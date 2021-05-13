@@ -4,13 +4,18 @@
 #include <exception>
 #include "Tile.h"
 #include "Constants.h"
+#include "Shield.h"
+#include <memory>
+
+#include <iostream>
 Game_Map::Game_Map()
+    : power_ups{}
 {
     generate();
 }
 void Game_Map::generate()
 {
-    std::ifstream map_text{random_map()};
+    std::ifstream map_text{"resources/maps/map1.txt"}; //random_map()};
     //std::ifstream map_text{"map1.txt"};
     if(map_text.fail())
     {
@@ -33,7 +38,7 @@ void Game_Map::generate()
             Tile temp_tile(pos,true,"blank");
             this->tiles.push_back(temp_tile);
         }
-        if(pos_x>=resolution_gridsize-1)
+        if(pos_x>=pixel_resolution_x-1)
         {
             pos_x = 0;
             pos_y += 1;
@@ -42,6 +47,21 @@ void Game_Map::generate()
         {
             pos_x += 1;
         }
+    }
+}
+
+void Game_Map::update()
+{
+    srand(time(0));
+    int t = rand() % tiles.size();
+    int chance = rand() % 10;
+
+    //std::cout << power_ups.size() << std::endl;
+
+    if(tiles.at(t).passable && chance == 0 && tiles.at(t).available_power == nullptr)
+    {
+        power_ups.push_back(std::make_shared<Shield>(tiles.at(t).get_position()));
+        tiles.at(t).setPowerUp(power_ups.back());
     }
 }
 
@@ -56,6 +76,10 @@ void Game_Map::render(sf::RenderTarget &window)
                 wall.setPosition(i.get_position());
                 window.draw(wall);
             }
+        }
+        for(auto & i : power_ups)
+        {
+            i->render(window);
         }
 }
 

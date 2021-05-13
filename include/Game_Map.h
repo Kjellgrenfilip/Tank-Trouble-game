@@ -2,8 +2,11 @@
 #define MAP_HPP
 #include <SFML/Graphics.hpp>
 #include "Tile.h"
+#include "Power_Up.h"
+
 #include <fstream>
 #include <vector>
+#include <memory>
 
 
 class Game_Map
@@ -15,6 +18,9 @@ private:
 public:
     Game_Map();
     void render(sf::RenderTarget &window);
+    void update();
+
+    std::vector<std::shared_ptr<Power_Up>> power_ups; 
 
 
 };

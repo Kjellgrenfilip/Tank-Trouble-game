@@ -37,6 +37,7 @@ void Game_State::update()
     players[0].update();
     players[1].update();
 	
+    game_map.update();
 	
 	
 }

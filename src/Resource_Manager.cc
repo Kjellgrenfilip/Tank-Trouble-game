@@ -29,6 +29,14 @@ sf::Texture& Resource_Manager::get_texture_heart()
 		}
 		return heart_texture;
 }
+sf::Texture& Resource_Manager::get_texture_shield()
+{
+    if(shield_texture.getSize() == sf::Vector2u(0,0))
+    {
+        get_texture();
+    }
+    return shield_texture;
+}
 			
   /*  sf::Texture& Resource_Manager::get_texture_shotgun()
     {
@@ -46,13 +54,7 @@ sf::Texture& Resource_Manager::get_texture_heart()
         }
         return rocket_texture;
     }
-    sf::Texture& Resource_Manager::get_texture_shield()
-    {
-        if(shield_texture.getSize() == sf::Vector2u(0,0))
-        {
-            get_texture();
-        }
-        return shield_texture;
+
     }
     sf::Texture& Resource_Manager::get_texture_speedboost()
     {
@@ -76,7 +78,10 @@ sf::Texture& Resource_Manager::get_texture_heart()
         {
             throw std::invalid_argument("cannot open heart_texture");
         }
-       
+        if(!shield_texture.loadFromFile("resources/textures/shield_texture1.png"))
+        {
+            throw std::invalid_argument("cannot open shield_texture");
+        }
        
         /*if(!shotgun_texture.loadFromFile("resources/textures/shotgun_texture.png"))
         {
@@ -86,10 +91,7 @@ sf::Texture& Resource_Manager::get_texture_heart()
         {
             throw std::invalid_argument("cannot open rocket_texture");
         }
-        if(!shield_texture.loadFromFile("resources/textures/shield_texture.png"))
-        {
-            throw std::invalid_argument("cannot open shield_texture");
-        }
+
          if(!speedboost_texture.loadFromFile("resources/textures/speedboost_texture.png"))
         {
             throw std::invalid_argument("cannot open speedboost_texture");
