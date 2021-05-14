@@ -21,7 +21,7 @@ LDFLAGS += -L$(SFML_ROOT)/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-
 MAINFILE := main.cc
 
 # Object modules
-OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o  $(OBJDIR)/Rocket.o
+OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o  $(OBJDIR)/Rocket.o  $(OBJDIR)/Shotgun.o
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
@@ -63,6 +63,9 @@ $(OBJDIR)/Shield.o: $(SRC)/Shield.cc dir
 
 $(OBJDIR)/Rocket.o: $(SRC)/Rocket.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Rocket.cc -o $(OBJDIR)/Rocket.o
+
+$(OBJDIR)/Shotgun.o: $(SRC)/Shotgun.cc dir
+	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Shotgun.cc -o $(OBJDIR)/Shotgun.o
 
 dir:
 	@mkdir -p $(OBJDIR)

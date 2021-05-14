@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "Shield.h"
 #include "Rocket.h"
+#include "Shotgun.h"
 #include <memory>
 
 #include <iostream>
@@ -63,7 +64,7 @@ void Game_Map::update()
     if(tiles.at(t).passable && chance == 0 && tiles.at(t).available_power == nullptr)
     {
         srand(time(0));
-        int rand_num = rand() % 2;
+        int rand_num = rand() % 3;
         switch(rand_num)
         {
             case 0:
@@ -72,8 +73,11 @@ void Game_Map::update()
             case 1:
                     power_ups.push_back(std::make_shared<Rocket>(tiles.at(t).get_position()));
                     break;
+            case 2:
+                    power_ups.push_back(std::make_shared<Shotgun>(tiles.at(t).get_position()));
+                    break;
             default:
-                    std::cout << "da fuq? random numer not 0 or 1" << std::endl;
+                    std::cout << "da fuq? random numer not 0-2" << std::endl;
         }
         //power_ups.push_back(std::make_shared<Shield>(tiles.at(t).get_position()));
         tiles.at(t).setPowerUp(power_ups.back());

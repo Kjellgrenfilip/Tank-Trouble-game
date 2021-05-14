@@ -5,9 +5,13 @@
 class Shotgun : public Power_Up
 {
 public:
-    Shotgun();
+    Shotgun(sf::Vector2f pos);
     
     sf::Sprite power;
+
+    int time;
+
+    sf::Vector2f pos;
 
     virtual void render(sf::RenderTarget & target) override;
 };
