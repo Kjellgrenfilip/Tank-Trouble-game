@@ -5,9 +5,13 @@
 class Rocket : public Power_Up
 {
 public:
-    Rocket();
+    Rocket(sf::Vector2f pos);
     
     sf::Sprite power;
+
+    int time;
+
+    sf::Vector2f pos;
 
     virtual void render(sf::RenderTarget & target) override;
 };
