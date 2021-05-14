@@ -89,7 +89,6 @@ std::string Game_Map::random_map()
     srand(time(0));
     int rnd_val = rand()%3;
     std::string rand_map;
-    // detta kommer inte fungera, vet ej hur man ska hitta till filerna då de ej ligger i samma map.
     switch(rnd_val)
     {
         case 0:
