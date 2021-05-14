@@ -21,7 +21,7 @@ LDFLAGS += -L$(SFML_ROOT)/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-
 MAINFILE := main.cc
 
 # Object modules
-OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o  $(OBJDIR)/Rocket.o  $(OBJDIR)/Shotgun.o
+OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o  $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o  $(OBJDIR)/Rocket.o  $(OBJDIR)/Shotgun.o  $(OBJDIR)/Speed_Boost.o
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
@@ -66,6 +66,9 @@ $(OBJDIR)/Rocket.o: $(SRC)/Rocket.cc dir
 
 $(OBJDIR)/Shotgun.o: $(SRC)/Shotgun.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Shotgun.cc -o $(OBJDIR)/Shotgun.o
+
+$(OBJDIR)/Speed_Boost.o: $(SRC)/Speed_Boost.cc dir
+	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Speed_Boost.cc -o $(OBJDIR)/Speed_Boost.o
 
 dir:
 	@mkdir -p $(OBJDIR)
