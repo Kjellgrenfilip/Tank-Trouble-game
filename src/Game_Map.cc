@@ -15,8 +15,9 @@ Game_Map::Game_Map()
 }
 void Game_Map::generate()
 {
+    //temporärt, finns bara en map just nu som har rätt format.
     std::ifstream map_text{"resources/maps/map1.txt"}; //random_map()};
-    //std::ifstream map_text{"map1.txt"};
+    
     if(map_text.fail())
     {
         //throw error here.
