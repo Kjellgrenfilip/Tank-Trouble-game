@@ -16,6 +16,7 @@ public:
 
     sf::Vector2f pos;
 
+    virtual void update() override;
     virtual void render(sf::RenderTarget & target) override;
 };
 

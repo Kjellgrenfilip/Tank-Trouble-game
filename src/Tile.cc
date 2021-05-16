@@ -19,7 +19,7 @@ std::string Tile::get_name()
     return name;
 }
 
-void Tile::setPowerUp(std::shared_ptr<Power_Up> p)
+void Tile::setPowerUp()
 {
-    available_power = p;
+    available_power = true;
 }

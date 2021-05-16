@@ -15,9 +15,9 @@ public:
     sf::Vector2f get_position();
     std::string get_name();
 
-    void setPowerUp(std::shared_ptr<Power_Up> p);
+    void setPowerUp();
 
     bool passable{};
-    std::shared_ptr<Power_Up> available_power{nullptr};
+    bool available_power{false};
 };
 #endif 

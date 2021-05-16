@@ -62,10 +62,11 @@ void Game_Map::update()
 
     //std::cout << power_ups.size() << std::endl;
 
-    if(tiles.at(t).passable && chance == 0 && tiles.at(t).available_power == nullptr)
+    if(tiles.at(t).passable && chance == 0 && !tiles.at(t).available_power)
     {
         srand(time(0));
         int rand_num = rand() % 4;
+        //std::cout << "Added"<< std::endl;
         switch(rand_num)
         {
             case 0:
@@ -84,8 +85,32 @@ void Game_Map::update()
                     std::cout << "da fuq? random numer not 0-2" << std::endl;
         }
         //power_ups.push_back(std::make_shared<Shield>(tiles.at(t).get_position()));
-        tiles.at(t).setPowerUp(power_ups.back());
+        tiles.at(t).setPowerUp();
     }
+    // Kolla om power_up har gått ut, ta bort
+    for (size_t i{}; i < power_ups.size(); i++)
+    {
+        // std::cout << power_ups.at(i)->expired << std::endl;
+        if(power_ups.at(i) -> expired)
+        {
+            // std::cout << tiles.at(0).available_power.unique() << std::endl;
+            // std::cout << power_ups.at(0).unique() << std::endl;
+            // tiles.at(0).available_power.reset();
+            // std::cout << power_ups.at(0).unique() << std::endl;
+
+            //tiles.at(i).available_power.reset();            // Vet inte om detta faktiskt tar bort power_up
+            power_ups.at(i).reset();                        // Eller om vi får en minnesläcka
+            power_ups.erase(power_ups.begin() + i);
+            i--;
+        }
+    }
+
+    for(auto & p : power_ups)
+    {
+        p->update();
+    }
+
+    //std::cout << power_ups.size() << std::endl;
 }
 
 void Game_Map::render(sf::RenderTarget &window)
