@@ -27,6 +27,7 @@ void Game_State::event_handler(sf::Event event)
 
 void Game_State::game_event_handler(sf::Event event)
 {
+    
     players[0].event_handler(event);
     players[1].event_handler(event);
 }
@@ -35,8 +36,10 @@ void Game_State::update()
 {
     //game_map.update();
     collision_handler();
+    tank_wall_collision_handler();
     players[0].update();
     players[1].update();
+    
 	
     game_map.update();
 	
@@ -88,6 +91,22 @@ void Game_State::collision_handler()
                     bullet.lifetime--;
                     break;
                 }
+            }
+        }
+    }
+}
+
+void Game_State::tank_wall_collision_handler()
+{
+    for(auto & player : players)
+    {
+        for(auto & tile : game_map.tiles)
+        {
+            sf::FloatRect tile_rect{tile.get_position(),sf::Vector2f{gridsize_x,gridsize_y}};
+            if(!tile.passable && player.get_hitbox().intersects(tile_rect))
+            {
+                player.set_tank_pos(player.get_old_position());
+                std::cout << "krock med vägg" << std::endl;
             }
         }
     }

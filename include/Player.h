@@ -19,6 +19,10 @@ public:
 	sf::FloatRect get_hitbox() const;     //Returnar playerns hitbox
 	std::vector<Bullet>& get_bullets();	//Hämtar en vector med bullets
     sf::Vector2f get_position();
+    sf::Vector2f get_old_position();
+    void set_position(sf::Vector2f new_pos);
+    void set_old_position(sf::Vector2f new_pos);
+    void set_tank_pos(sf::Vector2f new_pos);
    
 
 private:
@@ -26,6 +30,7 @@ private:
 	int hp;       				//Spelarens liv - spel startar med 3. Bullet skadar -1
 	int player_ID;				//Spelarens ID, spelare 1, 2, 3 osv..
     sf::Vector2f pos;			//Spelarens position
+    sf::Vector2f old_pos{};       //spelarens gammla position, används vid kollision.
     float rot;					//Spelarens rotation
    
     std::vector<sf::Sprite> hearts;

@@ -18,6 +18,7 @@ public:
     virtual int get_next_state() override;
 
     void collision_handler();
+    void tank_wall_collision_handler();
 private:
     
     bool paus;

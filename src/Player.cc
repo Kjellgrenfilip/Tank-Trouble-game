@@ -51,6 +51,7 @@ void Player::render(sf::RenderTarget & window)
 
 void Player::event_handler(sf::Event event)
 {
+	old_pos = pos;
 	sf::Vector2f forward_direction;
 	forward_direction.x = cos((pi/180)*(tank.getRotation()-90));
 	forward_direction.y = sin((pi/180)*(tank.getRotation()-90));
@@ -92,13 +93,11 @@ void Player::event_handler(sf::Event event)
 	{
 		if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) )
         {
-			
 			tank.move(forward_movement);
 			//pos = tank.getPosition();
         }
        if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) )
         {
-			
 			tank.move (-forward_movement);
 			//pos = tank.getPosition();
         }
@@ -143,7 +142,26 @@ sf::Vector2f Player::get_position()
 {
 	return pos;
 }
-	
+
+sf::Vector2f Player::get_old_position()
+{
+	return old_pos;
+}
+
+void Player::set_position(sf::Vector2f new_pos)
+{
+	pos = new_pos;
+}
+
+void Player::set_old_position(sf::Vector2f new_pos)
+{
+	old_pos = new_pos;
+}
+void Player::set_tank_pos(sf::Vector2f new_pos)
+{
+	tank.setPosition(new_pos);
+}
+
 void Player::set_hearts(sf::Texture& h)
 {
 	sf::Sprite heart{h};
