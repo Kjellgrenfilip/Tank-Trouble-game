@@ -1,6 +1,8 @@
 #include <Player.h>
 #include <Constants.h>
 #include <cmath>
+#include <algorithm>
+
 Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h)
 	: hp{3}, player_ID{ID}, pos{p}, rot{}, hearts{}, bullets{}, tank{t}, destroyed{false}, speed{4.0}
 {
@@ -16,7 +18,13 @@ Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h)
 
 void Player::update()
 {
-	//Uppdatera alla bullets	
+	/*  Ta bort kulor som använt alla studs
+    bullets.erase(remove_if(begin(bullets), end(bullets), [] (Bullet bullet) {
+        return bullet.lifetime <= 0;
+    }), end(bullets));
+    */
+
+    //Uppdatera alla bullets
 	for (auto & bullet : bullets)
 	{
 		bullet.update();

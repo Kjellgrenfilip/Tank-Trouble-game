@@ -17,6 +17,7 @@ public:
     virtual void render(sf::RenderTarget & target) override;
     virtual int get_next_state() override;
 
+    void collision_handler();
 private:
     
     bool paus;

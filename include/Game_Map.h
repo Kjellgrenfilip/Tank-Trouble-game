@@ -12,7 +12,6 @@
 class Game_Map
 {
 private:
-    std::vector<Tile> tiles{};
     std::string random_map();
     void generate();
 public:
@@ -21,7 +20,6 @@ public:
     void update();
 
     std::vector<std::shared_ptr<Power_Up>> power_ups; 
-
-
+    std::vector<Tile> tiles{};
 };
 #endif 

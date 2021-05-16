@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include <cmath>
 
-Bullet::Bullet(sf::Vector2f pos, float rot) : lifetime{3}, velocity{ static_cast<float>(3*std::cos(rot*M_PI/180.0)), static_cast<float>(3*std::sin(rot*M_PI/180.0))}, sprite{5.0}
+Bullet::Bullet(sf::Vector2f pos, float rot) : lifetime{4}, velocity{ static_cast<float>(5*std::cos(rot*M_PI/180.0)), static_cast<float>(5*std::sin(rot*M_PI/180.0))}, sprite{5.0}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(10.0));
     sprite.setOrigin (5, 5);
@@ -21,6 +21,11 @@ void Bullet::render(sf::RenderTarget &target)
 sf::FloatRect Bullet::getBounds()
 {
     return sprite.getGlobalBounds();
+}
+
+sf::Vector2f Bullet::get_velocity()
+{
+    return velocity;
 }
 
 void Bullet::reverse_x()

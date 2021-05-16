@@ -34,6 +34,7 @@ void Game_State::game_event_handler(sf::Event event)
 void Game_State::update()
 {
     //game_map.update();
+    collision_handler();
     players[0].update();
     players[1].update();
 	
@@ -50,6 +51,46 @@ void Game_State::render(sf::RenderTarget & target)
 	
 
 
+}
+
+void Game_State::collision_handler()
+{
+    for(auto & player: players)
+    {
+        for(auto & bullet : player.get_bullets())
+        {   
+            for(auto & tile : game_map.tiles)
+            {
+                sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
+                if(!tile.passable && bullet.getBounds().intersects(tile_rect))
+                {
+                    //Testa ändra hastigheten på kulan i x- och y-led för att se om den kommer befinna sig i samma tile
+                    sf::FloatRect try_x{bullet.getBounds()};
+                    try_x.left = try_x.left - bullet.get_velocity().x;
+                    try_x.top = try_x.top + bullet.get_velocity().y;
+                    sf::FloatRect try_y{bullet.getBounds()};
+                    try_y.left = try_y.left + 2.0*bullet.get_velocity().x;
+                    try_y.top = try_y.top - 2.0*bullet.get_velocity().y;
+
+                    if(!try_x.intersects(tile_rect))
+                    {
+                        bullet.reverse_x();
+                    }
+                    else if(!try_y.intersects(tile_rect))
+                    {
+                        bullet.reverse_y();
+                    }
+                    else
+                    {
+                        bullet.reverse_x();
+                        bullet.reverse_y();
+                    }
+                    bullet.lifetime--;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 int Game_State::get_next_state()
