@@ -19,6 +19,7 @@ public:
 
     void collision_handler();
     void tank_wall_collision_handler();
+    void tank_tank_collision_handler();
 private:
     
     bool paus;

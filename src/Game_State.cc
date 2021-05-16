@@ -37,6 +37,7 @@ void Game_State::update()
     //game_map.update();
     collision_handler();
     tank_wall_collision_handler();
+    tank_tank_collision_handler();
     players[0].update();
     players[1].update();
     
@@ -108,6 +109,15 @@ void Game_State::tank_wall_collision_handler()
                 player.set_tank_pos(player.get_old_position());
             }
         }
+    }
+}
+
+void Game_State::tank_tank_collision_handler()
+{
+    if(players.at(0).get_hitbox().intersects(players.at(1).get_hitbox()))
+    {
+        players.at(0).set_tank_pos(players.at(0).get_old_position());
+        players.at(1).set_tank_pos(players.at(1).get_old_position());
     }
 }
 
