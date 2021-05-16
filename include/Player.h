@@ -20,8 +20,6 @@ public:
 	std::vector<Bullet>& get_bullets();	//Hämtar en vector med bullets
     sf::Vector2f get_position();
     sf::Vector2f get_old_position();
-    void set_position(sf::Vector2f new_pos);
-    void set_old_position(sf::Vector2f new_pos);
     void set_tank_pos(sf::Vector2f new_pos);
    
 

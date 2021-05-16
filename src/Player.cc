@@ -148,15 +148,6 @@ sf::Vector2f Player::get_old_position()
 	return old_pos;
 }
 
-void Player::set_position(sf::Vector2f new_pos)
-{
-	pos = new_pos;
-}
-
-void Player::set_old_position(sf::Vector2f new_pos)
-{
-	old_pos = new_pos;
-}
 void Player::set_tank_pos(sf::Vector2f new_pos)
 {
 	tank.setPosition(new_pos);

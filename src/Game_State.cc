@@ -106,7 +106,6 @@ void Game_State::tank_wall_collision_handler()
             if(!tile.passable && player.get_hitbox().intersects(tile_rect))
             {
                 player.set_tank_pos(player.get_old_position());
-                std::cout << "krock med vägg" << std::endl;
             }
         }
     }
