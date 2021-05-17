@@ -129,7 +129,8 @@ void Game_State::tank_powerup_collision_handler()
     {
         for(size_t i{};i<game_map.power_ups.size();i++)
         {
-            if(player.get_hitbox().intersects(game_map.power_ups.at(i)->get_hitbox()))
+            if(check_collision(player.getPlayerSprite(),game_map.power_ups.at(i)->get_sprite()))
+            //(player.get_hitbox().intersects(game_map.power_ups.at(i)->get_hitbox()))
             {
                 player.my_power = game_map.power_ups.at(i);
                 game_map.power_ups.at(i).reset();

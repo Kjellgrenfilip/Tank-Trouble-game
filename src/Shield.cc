@@ -27,7 +27,9 @@ void Shield::render(sf::RenderTarget & target)
     power.setPosition(pos);
     target.draw(power);
 }
-sf::FloatRect Shield::get_hitbox()
+
+
+sf::Sprite& Shield::get_sprite()
 {
-    return power.getGlobalBounds();
+    return power;
 }

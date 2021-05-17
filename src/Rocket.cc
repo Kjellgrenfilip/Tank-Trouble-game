@@ -19,7 +19,8 @@ void Rocket::render(sf::RenderTarget & target)
     power.setPosition(pos);
     target.draw(power);
 }
-sf::FloatRect Rocket::get_hitbox()
+
+sf::Sprite& Rocket::get_sprite()
 {
-    return power.getGlobalBounds();
+    return power;
 }

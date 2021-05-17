@@ -18,7 +18,8 @@ void Shotgun::render(sf::RenderTarget & target)
     power.setPosition(pos);
     target.draw(power);
 }
-sf::FloatRect Shotgun::get_hitbox()
+
+sf::Sprite& Shotgun::get_sprite()
 {
-    return power.getGlobalBounds();
+    return power;
 }
