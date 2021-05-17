@@ -38,8 +38,8 @@ void Game_State::update()
     collision_handler();
     tank_wall_collision_handler();
     tank_tank_collision_handler();
-    players[0].update();
-    players[1].update();
+    players[0].update(players[1]);
+    players[1].update(players[0]);
     
 	
     game_map.update();

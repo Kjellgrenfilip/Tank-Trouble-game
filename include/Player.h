@@ -12,7 +12,7 @@ class Player
 public:
     Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h);
 
-    void update();
+    void update(Player&);
     void render(sf::RenderTarget & target);
     void event_handler(sf::Event event);
 	
@@ -37,7 +37,7 @@ private:
     
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;
-	
+	void check_bullets(Player&);
 	void set_hearts(sf::Texture& h);
 	void print_player_text(sf::RenderTarget & target);
 };

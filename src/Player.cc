@@ -16,7 +16,7 @@ Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h)
 	
 }
 
-void Player::update()
+void Player::update(Player& p2)
 {
 	/*  Ta bort kulor som använt alla studs
     bullets.erase(remove_if(begin(bullets), end(bullets), [] (Bullet bullet) {
@@ -29,6 +29,8 @@ void Player::update()
 	{
 		bullet.update();
 	}
+	
+	check_bullets(p2);
 	
 	pos = tank.getPosition();
 	rot = tank.getRotation();
@@ -43,6 +45,8 @@ void Player::render(sf::RenderTarget & window)
 	{
 		bullet.render(window);
 	}
+	
+	if (!destroyed)
 	window.draw(tank);
 	
 	print_player_text(window);   //skriver ut "Player1: --hjärtan--. Antalet hjärtan justeras med hjälp av players hp
@@ -114,7 +118,7 @@ void Player::event_handler(sf::Event event)
 		
 		if(event.type == sf::Event::KeyReleased)
 		{
-			if ( event.key.code == sf::Keyboard::Key::Numpad0)
+			if ( event.key.code == sf::Keyboard::Key::RControl)
 			{
 				if (bullets.size() < 4)
 				bullets.push_back(Bullet(pos, rot-90));
@@ -210,8 +214,31 @@ for (int i{0}; i < hp; i++)
 		target.draw(hearts[i]);
 	}
 
+}
 
-
+void Player::check_bullets(Player & p2)
+{
+	for (auto it = bullets.begin(); it != bullets.end();)
+	{
+		if (it->getBounds().intersects(p2.get_hitbox()))
+		{
+			p2.hp--;
+			it->lifetime = 0;
+			if (p2.hp == 0)
+				{
+					p2.destroyed = true;
+				}
+		}
+		
+		if (it->lifetime == 0)
+		{
+			it = bullets.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 
 
