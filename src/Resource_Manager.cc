@@ -1,5 +1,40 @@
 #include "Resource_Manager.h"
 
+void Resource_Manager::get_texture()
+    {
+        if(!player1_texture.loadFromFile("resources/textures/player1_texture.png"))
+        {
+            throw std::invalid_argument("cannot open player1_texture");
+        }
+        if(!player2_texture.loadFromFile("resources/textures/player2_texture.png"))
+        {
+            throw std::invalid_argument("cannot open player2_texture");
+        }
+        if(!heart_texture.loadFromFile("resources/textures/heart.png"))
+        {
+            throw std::invalid_argument("cannot open heart_texture");
+        }
+        if(!shield_texture.loadFromFile("resources/textures/shield_texture1.png"))
+        {
+            throw std::invalid_argument("cannot open shield_texture");
+        }
+       
+        if(!shotgun_texture.loadFromFile("resources/textures/shotgun_boost1.png"))
+        {
+            throw std::invalid_argument("cannot open shotgun_texture");
+        }
+        if(!rocket_texture.loadFromFile("resources/textures/rocket_boost1.png"))
+        {
+            throw std::invalid_argument("cannot open rocket_texture");
+        }
+
+         if(!speedboost_texture.loadFromFile("resources/textures/speed_texture1.png"))
+        {
+            throw std::invalid_argument("cannot open speed_texture1");
+        }
+    }
+
+
 sf::Texture& Resource_Manager::get_texture_player(int player_id)
     {
         sf::Vector2u empty {0,0};
@@ -64,36 +99,9 @@ sf::Texture& Resource_Manager::get_texture_shield()
         }
         return speedboost_texture;
     }
-    void Resource_Manager::get_texture()
-    {
-        if(!player1_texture.loadFromFile("resources/textures/player1_texture.png"))
-        {
-            throw std::invalid_argument("cannot open player1_texture");
-        }
-        if(!player2_texture.loadFromFile("resources/textures/player2_texture.png"))
-        {
-            throw std::invalid_argument("cannot open player2_texture");
-        }
-        if(!heart_texture.loadFromFile("resources/textures/heart.png"))
-        {
-            throw std::invalid_argument("cannot open heart_texture");
-        }
-        if(!shield_texture.loadFromFile("resources/textures/shield_texture1.png"))
-        {
-            throw std::invalid_argument("cannot open shield_texture");
-        }
-       
-        if(!shotgun_texture.loadFromFile("resources/textures/shotgun_boost1.png"))
-        {
-            throw std::invalid_argument("cannot open shotgun_texture");
-        }
-        if(!rocket_texture.loadFromFile("resources/textures/rocket_boost1.png"))
-        {
-            throw std::invalid_argument("cannot open rocket_texture");
-        }
+    
 
-         if(!speedboost_texture.loadFromFile("resources/textures/speed_texture1.png"))
-        {
-            throw std::invalid_argument("cannot open speed_texture1");
-        }
+    Game_Map& Resource_Manager::get_game_map()
+    {
+        return game_map;
     }
