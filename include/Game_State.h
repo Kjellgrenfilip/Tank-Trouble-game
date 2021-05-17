@@ -17,7 +17,7 @@ public:
     virtual void render(sf::RenderTarget & target) override;
     virtual int get_next_state() override;
 
-    void collision_handler();
+    void bullet_wall_collision_handler();
     void tank_wall_collision_handler();
     void tank_tank_collision_handler();
 private:

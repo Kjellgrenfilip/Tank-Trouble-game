@@ -35,7 +35,7 @@ void Game_State::game_event_handler(sf::Event event)
 void Game_State::update()
 {
     //game_map.update();
-    collision_handler();
+    bullet_wall_collision_handler();
     tank_wall_collision_handler();
     tank_tank_collision_handler();
     players[0].update(players[1]);
@@ -57,7 +57,7 @@ void Game_State::render(sf::RenderTarget & target)
 
 }
 
-void Game_State::collision_handler()
+void Game_State::bullet_wall_collision_handler()
 {
     for(auto & player: players)
     {
