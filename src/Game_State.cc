@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 Game_State::Game_State()
-    :   paus{false}, endgame{false}, players{}, game_map{}   // Initiera game_map här   
+    :   paus{false}, endgame{false}, players{}, game_map{}, collision_handler{}   // Initiera game_map här   
 {
     //man måste skriva klassen före get_texture
     //ändrade även width och height till det rätta värdena från constant
@@ -116,7 +116,7 @@ void Game_State::tank_wall_collision_handler()
 
 void Game_State::tank_tank_collision_handler()
 {
-    if(check_collision(players.at(0).getPlayerSprite(), players.at(1).getPlayerSprite()))
+    if(collision_handler.check_collision(players.at(0).getPlayerSprite(), players.at(1).getPlayerSprite()))
     {
         players.at(0).set_tank_pos(players.at(0).get_old_position());
         players.at(1).set_tank_pos(players.at(1).get_old_position());
@@ -129,7 +129,7 @@ void Game_State::tank_powerup_collision_handler()
     {
         for(size_t i{};i<game_map.power_ups.size();i++)
         {
-            if(check_collision(player.getPlayerSprite(),game_map.power_ups.at(i)->get_sprite()))
+            if(collision_handler.check_collision(player.getPlayerSprite(),game_map.power_ups.at(i)->get_sprite()))
             //(player.get_hitbox().intersects(game_map.power_ups.at(i)->get_hitbox()))
             {
                 player.my_power = game_map.power_ups.at(i);

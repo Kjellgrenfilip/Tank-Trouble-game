@@ -6,6 +6,7 @@
 #include "Game_Map.h"
 #include "Player.h"
 #include "Resource_Manager.h"
+#include "Collision_Handler.h"
 class Game_State : public State
 {
 public:
@@ -29,6 +30,7 @@ private:
 	std::vector<Player> players;
     Game_Map game_map;   // Döpte den till game_map för att 
                          // inte skapa förvirring med std::map
+    Collision_Handler collision_handler;
 };
 
 #endif
