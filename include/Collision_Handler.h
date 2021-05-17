@@ -1,6 +1,8 @@
 #ifndef COLLISIONHANDLER_H
 #define COLLISIONHANDLER_H
 #include <SFML/Graphics.hpp>
+#include <cmath>
+#include <iostream>
 
 class CollisionBox
 {
@@ -38,8 +40,19 @@ public:
 
 bool check_collision(sf::Sprite const& object1, sf::Sprite const& object2)
 {
+    sf::Vector2f obj1pos = object1.getPosition();
+    sf::Vector2f obj2pos = object2.getPosition();
+    float x = obj1pos.x - obj2pos.x;
+    float y = obj1pos.y - obj2pos.y;
+    if(sqrt(pow(x, 2) + pow(y, 2)) > 100)
+    {
+        //std::cout << "No collision, distance is X: " << x << " Y: "<< y << std::endl;
+        return false;
+    }
+    
     CollisionBox obj1(object1);
     CollisionBox obj2(object2);
+
     sf::Vector2f Axes[4] =
     {
         sf::Vector2f(   obj1.points[1].x - obj1.points[0].x, 
