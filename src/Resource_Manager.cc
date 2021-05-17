@@ -28,9 +28,14 @@ void Resource_Manager::get_texture()
             throw std::invalid_argument("cannot open rocket_texture");
         }
 
-         if(!speedboost_texture.loadFromFile("resources/textures/speed_texture1.png"))
+        if(!speedboost_texture.loadFromFile("resources/textures/speed_texture1.png"))
         {
             throw std::invalid_argument("cannot open speed_texture1");
+        }
+
+        if(!rocket_projectile_texture.loadFromFile("resources/textures/rocket_projectile.png"))
+        {
+            throw std::invalid_argument("cannot open rocket_projectile_texture");
         }
     }
 
@@ -90,6 +95,14 @@ sf::Texture& Resource_Manager::get_texture_shield()
         return rocket_texture;
     }
 
+    sf::Texture& Resource_Manager::get_texture_rocket_projectile()
+    {
+        if(rocket_projectile_texture.getSize() == sf::Vector2u(0,0))
+        {
+            get_texture();
+        }
+        return rocket_projectile_texture;
+    }
     
     sf::Texture& Resource_Manager::get_texture_speedboost()
     {
