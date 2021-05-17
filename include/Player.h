@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "Bullet.h"
-
-
+#include "Power_Up.h"
+#include <memory>
 #include <vector>
 
 class Player
@@ -21,7 +21,7 @@ public:
     sf::Vector2f get_position();
     sf::Vector2f get_old_position();
     void set_tank_pos(sf::Vector2f new_pos);
-   
+    std::shared_ptr<Power_Up> my_power{};
     sf::Sprite const& getPlayerSprite() const;
 
 private:

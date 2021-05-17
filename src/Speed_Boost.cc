@@ -20,3 +20,7 @@ void Speed_Boost::render(sf::RenderTarget & target)
     power.setPosition(pos);
     target.draw(power);
 }
+sf::FloatRect Speed_Boost::get_hitbox()
+{
+    return power.getGlobalBounds();
+}

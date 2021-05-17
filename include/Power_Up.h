@@ -12,7 +12,7 @@ public:
     //virtual Power_up(sf::Vector2f pos) = 0;
     virtual void update() = 0;
     virtual void render(sf::RenderTarget & target) = 0; 
-
+    virtual sf::FloatRect get_hitbox() = 0;
     bool expired;
 
 protected:

@@ -18,6 +18,7 @@ public:
 
     virtual void update() override;
     virtual void render(sf::RenderTarget & target) override;
+    sf::FloatRect get_hitbox();
 };
 
 #endif

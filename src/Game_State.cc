@@ -39,6 +39,7 @@ void Game_State::update()
     bullet_wall_collision_handler();
     tank_wall_collision_handler();
     tank_tank_collision_handler();
+    tank_powerup_collision_handler();
     players[0].update(players[1]);
     players[1].update(players[0]);
     
@@ -119,6 +120,22 @@ void Game_State::tank_tank_collision_handler()
     {
         players.at(0).set_tank_pos(players.at(0).get_old_position());
         players.at(1).set_tank_pos(players.at(1).get_old_position());
+    }
+}
+
+void Game_State::tank_powerup_collision_handler()
+{
+    for(auto player : players)
+    {
+        for(size_t i{};i<game_map.power_ups.size();i++)
+        {
+            if(player.get_hitbox().intersects(game_map.power_ups.at(i)->get_hitbox()))
+            {
+                player.my_power = game_map.power_ups.at(i);
+                game_map.power_ups.at(i).reset();
+                game_map.power_ups.erase(game_map.power_ups.begin()+i);
+            }
+        }
     }
 }
 
