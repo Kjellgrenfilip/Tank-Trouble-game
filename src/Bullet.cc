@@ -3,7 +3,7 @@
 
 Bullet::Bullet(sf::Vector2f pos, float rot) : lifetime{4}, velocity{ static_cast<float>(5*std::cos(rot*M_PI/180.0)), static_cast<float>(5*std::sin(rot*M_PI/180.0))}, sprite{5.0}
 {
-    sprite.setPosition(pos + velocity*static_cast<float>(10.0));
+    sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     sprite.setOrigin (5, 5);
     sprite.setFillColor(sf::Color(120, 120, 120));
 }
