@@ -2,6 +2,7 @@
 #include "Game_State.h"
 //#include "Game_Map.h"
 #include "Resource_Manager.h"
+#include "Collision_Handler.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 Game_State::Game_State()
@@ -114,7 +115,7 @@ void Game_State::tank_wall_collision_handler()
 
 void Game_State::tank_tank_collision_handler()
 {
-    if(players.at(0).get_hitbox().intersects(players.at(1).get_hitbox()))
+    if(check_collision(players.at(0).getPlayerSprite(), players.at(1).getPlayerSprite()))
     {
         players.at(0).set_tank_pos(players.at(0).get_old_position());
         players.at(1).set_tank_pos(players.at(1).get_old_position());

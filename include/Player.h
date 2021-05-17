@@ -22,13 +22,14 @@ public:
     sf::Vector2f get_old_position();
     void set_tank_pos(sf::Vector2f new_pos);
    
+    sf::Sprite const& getPlayerSprite() const;
 
 private:
 	
 	int hp;       				//Spelarens liv - spel startar med 3. Bullet skadar -1
 	int player_ID;				//Spelarens ID, spelare 1, 2, 3 osv..
     sf::Vector2f pos;			//Spelarens position
-    sf::Vector2f old_pos{};       //spelarens gammla position, används vid kollision.
+    sf::Vector2f old_pos{};     //spelarens gammla position, används vid kollision.
     float rot;					//Spelarens rotation
    
     std::vector<sf::Sprite> hearts;

@@ -130,6 +130,11 @@ void Player::event_handler(sf::Event event)
 }
 
 
+sf::Sprite const& Player::getPlayerSprite() const
+{
+	return tank;
+}
+
 
 sf::FloatRect Player::get_hitbox() const
 {
