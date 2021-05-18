@@ -6,6 +6,9 @@ int const GAME_STATE{2};
 int const PAUSE_STATE{3};
 int const WIN_STATE{4};
 
+int const RESTART_GAME{5};
+int const RESTART_COUNT{6};
+
 int const screen_width{1280};
 int const screen_height{720};
 //tillagda för kartan

@@ -37,6 +37,10 @@ void Resource_Manager::get_texture()
         {
             throw std::invalid_argument("cannot open rocket_projectile_texture");
         }
+		if(!background_texture.loadFromFile("resources/textures/menu_background.png"))
+        {
+            throw std::invalid_argument("cannot open background_texture");
+        }
     }
 
 
@@ -112,8 +116,14 @@ sf::Texture& Resource_Manager::get_texture_shield()
         }
         return speedboost_texture;
     }
-    
-
+    sf::Texture& Resource_Manager::get_texture_background()
+    {
+		if(background_texture.getSize() == sf::Vector2u(0,0))
+        {
+            get_texture();
+        }
+        return background_texture;
+	}
     Game_Map& Resource_Manager::get_game_map()
     {
         return game_map;

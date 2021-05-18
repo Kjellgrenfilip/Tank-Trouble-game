@@ -42,7 +42,16 @@ void Game_State::update()
     tank_powerup_collision_handler();
     players[0].update(players[1]);
     players[1].update(players[0]);
-    
+    if (players[0].is_destroyed())
+		{
+			winner = 2;
+			endgame = true;
+		}
+	else if(players[1].is_destroyed())
+		{
+			winner = 1;
+			endgame = true;
+		}
 	
     game_map.update();
 	
@@ -145,7 +154,7 @@ int Game_State::get_next_state()
     if(endgame)
     {
         endgame = false;
-        return MENU_STATE; // Ska egentligen gå vidare till Win_State
+        return WIN_STATE; // Ska egentligen gå vidare till Win_State
     }
     else if(paus)
     {
@@ -158,7 +167,20 @@ int Game_State::get_next_state()
     }
 }
 
-
+int Game_State::get_winner()
+{
+	if (winner == 1)
+	{
+		winner = 0;
+		return 1;
+	}
+	else if (winner == 2)
+	{
+		winner = 0;
+		return 2;
+	}
+  return 0;
+}
 
 
 

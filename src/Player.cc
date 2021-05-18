@@ -246,6 +246,10 @@ void Player::check_bullets(Player & p2)
 	}
 }
 
+bool Player::is_destroyed()
+{
+	return destroyed;
+}
 
 
 

@@ -2,7 +2,7 @@
 #include "Game_State.h"
 #include "Menu_State.h"
 #include "Pause_State.h"
-//#include "Win_State.h"
+#include "Win_State.h"
 #include "Constants.h"
 
 #include <SFML/Graphics.hpp>
@@ -36,11 +36,11 @@ Game::Game( std::string const& title,
                         {   PAUSE_STATE, 
                             std::make_unique<Pause_State>()})
                 );
-    // states.insert(  std::pair<int,
-    //                 std::unique_ptr<State>>(
-    //                     {   WIN_STATE, 
-    //                         std::make_unique<Win_State>()})
-    //             );
+    states.insert(  std::pair<int,
+                     std::unique_ptr<State>>(
+                         {   WIN_STATE, 
+                             std::make_unique<Win_State>()})
+                 );
 }
 
 void Game::start()
@@ -61,7 +61,27 @@ void Game::start()
         current_state = states.at(current_state) -> get_next_state();
         if(current_state == EXIT_STATE)
             running = false;  
-
+		
+		else if (current_state == RESTART_GAME)
+		    {
+				states.erase(GAME_STATE);
+				states.insert(  std::pair<int,
+                    std::unique_ptr<State>>(
+                        {   GAME_STATE, 
+                            std::make_unique<Game_State>()})
+							);
+				current_state = GAME_STATE;
+			} 
+		else if (current_state == RESTART_COUNT)
+			{
+				states.erase(WIN_STATE);
+				states.insert(  std::pair<int,
+                    std::unique_ptr<State>>(
+                        {   WIN_STATE, 
+                            std::make_unique<Win_State>()})
+                 );
+                 current_state = MENU_STATE;
+			 }
         delay (clock);
     }
 }

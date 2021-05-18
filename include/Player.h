@@ -23,7 +23,8 @@ public:
     void set_tank_pos(sf::Vector2f new_pos);
     std::shared_ptr<Power_Up> my_power{};
     sf::Sprite const& getPlayerSprite() const;
-
+	
+	bool is_destroyed();
 private:
 	
 	int hp;       				//Spelarens liv - spel startar med 3. Bullet skadar -1

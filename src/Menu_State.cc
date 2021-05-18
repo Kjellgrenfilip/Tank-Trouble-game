@@ -1,11 +1,11 @@
 #include "Menu_State.h"
 #include "Constants.h"
-
+#include "Resource_Manager.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 Menu_State::Menu_State()
-    :   font{}, startgame{false}, exit{false}, menu_select{0}  
+    :   font{}, background{}, startgame{false}, exit{false}, menu_select{0}  
 {
     std::string file{"resources/fonts/font.ttf"};
     if(!font.loadFromFile(file))
@@ -21,6 +21,8 @@ Menu_State::Menu_State()
     text[2] = sf::Text{"Quit to desktop", font, 32 };
     text[2].setFillColor(sf::Color(255,255,255));
     text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[2].getGlobalBounds().height + 10));
+	
+	background.setTexture(Resource_Manager::get_texture_background());
 }
 
 void Menu_State::event_handler(sf::Event event)
@@ -81,6 +83,7 @@ void Menu_State::update()
 
 void Menu_State::render(sf::RenderTarget & target)
 {
+	target.draw(background);
     for(int i{}; i < MENU_ITEMS; i++)
     {
         target.draw(text[i]);
@@ -100,7 +103,7 @@ int Menu_State::get_next_state()
     if(startgame)
     {
         startgame = false;
-        return GAME_STATE;
+        return RESTART_GAME;
     }
     else if(exit)
     {

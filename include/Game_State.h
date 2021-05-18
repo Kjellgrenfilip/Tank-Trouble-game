@@ -22,11 +22,14 @@ public:
     void tank_wall_collision_handler();
     void tank_tank_collision_handler();
     void tank_powerup_collision_handler();
+    
+    static int get_winner();
 private:
     
     bool paus;
     bool endgame;
 
+	static inline int winner;
 	std::vector<Player> players;
     Game_Map game_map;   // Döpte den till game_map för att 
                          // inte skapa förvirring med std::map

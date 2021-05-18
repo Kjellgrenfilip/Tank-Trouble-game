@@ -14,7 +14,7 @@ class Resource_Manager
         static inline sf::Texture shotgun_texture;
         static inline sf::Texture rocket_texture;
         static inline sf::Texture speedboost_texture;
-        
+        static inline sf::Texture background_texture;
         static inline Game_Map game_map{};
         static inline sf::Texture rocket_projectile_texture;
     public:
@@ -25,6 +25,7 @@ class Resource_Manager
         static sf::Texture& get_texture_shield();
         static sf::Texture& get_texture_speedboost();
         static sf::Texture& get_texture_rocket_projectile();
+        static sf::Texture& get_texture_background();
         static void get_texture();
         static Game_Map& get_game_map();
 
