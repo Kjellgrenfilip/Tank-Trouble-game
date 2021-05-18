@@ -2,11 +2,14 @@
 #include<SFML/Graphics.hpp>
 #include "Tile.h"
 #include <string>
-Tile::Tile(sf::Vector2f const& pos,bool pas,std::string const& name)
+Tile::Tile(sf::Vector2f const& pos,bool pas,std::string const& name, sf::Texture & tile)
 {
     this->position = pos;
     this->passable = pas;
     this->name = name;
+    this->tile.setTexture(tile);
+    this->tile.setScale(0.2, 0.2);
+    this->tile.setPosition(pos);
 }
 
 sf::Vector2f Tile::get_position()

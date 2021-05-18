@@ -41,6 +41,14 @@ void Resource_Manager::get_texture()
         {
             throw std::invalid_argument("cannot open background_texture");
         }
+        if(!floor_texture.loadFromFile("resources/textures/rusty_texture.png"))
+        {
+            throw std::invalid_argument("cannot open background_texture");
+        }
+        if(!wall_texture.loadFromFile("resources/textures/rusty_wall.png"))
+        {
+            throw std::invalid_argument("cannot open background_texture");
+        }
     }
 
 
@@ -124,6 +132,22 @@ sf::Texture& Resource_Manager::get_texture_shield()
         }
         return background_texture;
 	}
+    sf::Texture& Resource_Manager::get_texture_floor()
+    {
+        if(floor_texture.getSize() == sf::Vector2u(0,0))
+        {
+            get_texture();
+        }
+        return floor_texture;
+    }
+       sf::Texture& Resource_Manager::get_texture_wall()
+    {
+        if(wall_texture.getSize() == sf::Vector2u(0,0))
+        {
+            get_texture();
+        }
+        return wall_texture;
+    }
     Game_Map& Resource_Manager::get_game_map()
     {
         return game_map;

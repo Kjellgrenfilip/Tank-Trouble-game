@@ -7,7 +7,7 @@
 Setting_State::Setting_State()
     :   font{}, exit{false}, menu_select{0}    
 {
-    std::string file{"resources/fonts/font.ttf"};
+    std::string file{"resources/fonts/Amatic-Bold.ttf"};
     if(!font.loadFromFile(file))
     {
         throw std::invalid_argument("No font at location: " + file);

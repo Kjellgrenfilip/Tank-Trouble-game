@@ -8,7 +8,9 @@
 #include "Rocket.h"
 #include "Shotgun.h"
 #include "Speed_Boost.h"
+#include "Resource_Manager.h"
 #include <memory>
+
 
 #include <iostream>
 Game_Map::Game_Map()
@@ -34,12 +36,12 @@ void Game_Map::generate()
         if(temp_string == "1")
         {
             //tilen är en vägg
-            Tile temp_tile(pos,false,"wall");
+            Tile temp_tile(pos, false, "wall", Resource_Manager::get_texture_wall());
             this->tiles.push_back(temp_tile);
         }
         else
         {
-            Tile temp_tile(pos,true,"blank");
+            Tile temp_tile(pos, true, "floor", Resource_Manager::get_texture_floor());
             this->tiles.push_back(temp_tile);
         }
         if(pos_x>=pixel_resolution_x-1)
@@ -119,11 +121,12 @@ void Game_Map::render(sf::RenderTarget &window)
         wall.setFillColor(sf::Color::White);
         for(auto i : tiles)
         {
-            if(i.get_name() == "wall")
-            {
-                wall.setPosition(i.get_position());
-                window.draw(wall);
-            }
+            window.draw(i.tile);
+            // if(i.get_name() == "wall")
+            // {
+            //     wall.setPosition(i.get_position());
+            //     window.draw(wall);
+            // }
         }
         for(auto & i : power_ups)
         {
