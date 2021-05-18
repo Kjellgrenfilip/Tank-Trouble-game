@@ -5,7 +5,7 @@ Bullet::Bullet(sf::Vector2f pos, float rot) : lifetime{4}, velocity{ static_cast
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     sprite.setOrigin (5, 5);
-    sprite.setFillColor(sf::Color(120, 120, 120));
+    sprite.setFillColor(sf::Color(80, 80, 80));
 }
 
 void Bullet::update()

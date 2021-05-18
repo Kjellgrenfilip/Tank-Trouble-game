@@ -114,8 +114,8 @@ void Game_State::tank_wall_collision_handler()
     {
         for(auto & tile : game_map.tiles)
         {
-            sf::FloatRect tile_rect{tile.get_position(),sf::Vector2f{gridsize_x,gridsize_y}};
-            if(!tile.passable && player.get_hitbox().intersects(tile_rect))
+            //sf::FloatRect tile_rect{tile.get_position(),sf::Vector2f{gridsize_x,gridsize_y}};
+            if(!tile.passable && collision_handler.check_collision(player.getPlayerSprite(), tile.tile))
             {
                 player.set_tank_pos(player.get_old_position());
             }
