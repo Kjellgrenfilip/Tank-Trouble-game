@@ -10,8 +10,9 @@ Game_State::Game_State()
 {
     //man måste skriva klassen före get_texture
     //ändrade även width och height till det rätta värdena från constant
-	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/2, screen_height/2}, 1, Resource_Manager::get_texture_heart()));
-	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{screen_width/3, screen_height/2}, 2, Resource_Manager::get_texture_heart()));
+	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart()));
+	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart()));
+    
 }
 void Game_State::event_handler(sf::Event event)
 {

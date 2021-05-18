@@ -7,13 +7,18 @@ Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h)
 	: hp{3}, player_ID{ID}, pos{p}, rot{}, hearts{}, bullets{}, tank{t}, destroyed{false}, speed{4.0}
 {
 	tank.setPosition(pos);
-    tank.setRotation(rot);
     tank.setScale(0.1, 0.1);
     auto size {t.getSize()};
     tank.setOrigin(size.x / 2, size.y / 2); 
-	
 	set_hearts(h);
-	
+	if(ID==1)
+	{
+		tank.setRotation(180);
+	}
+	else
+	{
+		tank.setRotation(rot);
+	}
 }
 
 void Player::update(Player& p2)

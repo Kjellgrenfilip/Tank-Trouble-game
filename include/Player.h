@@ -37,7 +37,6 @@ private:
     std::vector<Bullet> bullets;//Behållare för bullets
     sf::Sprite tank;			
     std::shared_ptr<Power_Up> my_power{};
-    
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;
 	void check_bullets(Player&);
