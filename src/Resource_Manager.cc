@@ -50,6 +50,11 @@ void Resource_Manager::get_texture()
         {
             throw std::invalid_argument("cannot open background_texture");
         }
+        if(!explosion_texture.loadFromFile("resources/textures/explosion.png"))
+        {
+            throw std::invalid_argument("cannot open explosion_texture");
+        }
+		
     }
 
 
@@ -148,6 +153,15 @@ sf::Texture& Resource_Manager::get_texture_shield()
             get_texture();
         }
         return wall_texture;
+    }
+    
+      sf::Texture& Resource_Manager::get_texture_explosion()
+    {
+        if(explosion_texture.getSize() == sf::Vector2u(0,0))
+        {
+            get_texture();
+        }
+        return explosion_texture;
     }
 
     void Resource_Manager::load_game_map(int mapID)

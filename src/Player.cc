@@ -3,8 +3,8 @@
 #include <cmath>
 #include <algorithm>
 
-Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h)
-	: hp{3}, player_ID{ID}, pos{p}, rot{}, hearts{}, bullets{}, rockets{}, tank{t}, destroyed{false}, speed{4.0}
+Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl)
+	: hp{3}, player_ID{ID}, pos{p}, rot{}, hearts{}, bullets{}, rockets{}, tank{t}, explosion{expl}, destroyed{false}, speed{4.0}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);
@@ -19,6 +19,8 @@ Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h)
 	{
 		tank.setRotation(rot);
 	}
+	auto size2{expl.getSize()};
+	explosion.setOrigin(size2.x/2, size2.y/2);
 }
 
 void Player::update(Player& p2)
@@ -60,7 +62,17 @@ void Player::render(sf::RenderTarget & window)
 	}
 	
 	if (!destroyed)
-	window.draw(tank);
+		{
+			window.draw(tank);
+		}
+	else
+	{
+		
+		explosion.setPosition(pos);
+		//explosion.setOrigin(tank.getOrigin());
+		window.draw(explosion);
+		//sf::sleep(delay);
+	}
 	
 	print_player_text(window);   //skriver ut "Player1: --hjärtan--. Antalet hjärtan justeras med hjälp av players hp
 			 

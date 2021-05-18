@@ -12,7 +12,7 @@
 class Player
 {
 public:
-    Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h);
+    Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture& expl);
 
     void update(Player&);
     void render(sf::RenderTarget & target);
@@ -34,11 +34,12 @@ private:
     sf::Vector2f pos;			//Spelarens position
     sf::Vector2f old_pos{};     //spelarens gammla position, används vid kollision.
     float rot;					//Spelarens rotation
-   
+	
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
-    std::vector<Bullet> bullets;//Behållare för bullets
+    std::vector<Bullet> bullets;   //Behållare för bullets
     std::vector<Rocket_Projectile> rockets;
-    sf::Sprite tank;			
+    sf::Sprite tank;
+    sf::Sprite explosion;			
     std::shared_ptr<Power_Up> my_power{nullptr};
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;

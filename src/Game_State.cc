@@ -10,8 +10,8 @@ Game_State::Game_State()
 {
     //man måste skriva klassen före get_texture
     //ändrade även width och height till det rätta värdena från constant
-	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart()));
-	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart()));
+	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion()));
+	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion() ));
     
 }
 void Game_State::event_handler(sf::Event event)
@@ -65,8 +65,6 @@ void Game_State::render(sf::RenderTarget & target)
     players[0].render(target);
     players[1].render(target);
 	
-
-
 }
 
 void Game_State::bullet_wall_collision_handler()
@@ -156,7 +154,9 @@ int Game_State::get_next_state()
 {
     if(endgame)
     {
+		sf::Time delay = sf::seconds(2);
         endgame = false;
+        sf::sleep(delay);
         return WIN_STATE; // Ska egentligen gå vidare till Win_State
     }
     else if(paus)
