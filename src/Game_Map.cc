@@ -14,19 +14,22 @@
 
 #include <iostream>
 Game_Map::Game_Map()
-    : power_ups{}
+    : power_ups{}, loaded{false}
 {
     generate();
 }
-void Game_Map::generate()
+void Game_Map::generate(int mapID)
 {
     //temporärt, finns bara en map just nu som har rätt format.
-    std::ifstream map_text{random_map()};
+    std::ifstream map_text{random_map(mapID)};
     
     if(map_text.fail())
     {
         //throw error here.
     }
+
+    tiles.clear();
+
     std::string temp_string;
     float pos_x{};
     float pos_y{};
@@ -54,6 +57,7 @@ void Game_Map::generate()
             pos_x += 1;
         }
     }
+    loaded = true;
 }
 
 void Game_Map::update()
@@ -86,22 +90,14 @@ void Game_Map::update()
             default:
                     std::cout << "da fuq? random numer not 0-2" << std::endl;
         }
-        //power_ups.push_back(std::make_shared<Shield>(tiles.at(t).get_position()));
         tiles.at(t).setPowerUp();
     }
     // Kolla om power_up har gått ut, ta bort
     for (size_t i{}; i < power_ups.size(); i++)
     {
-        // std::cout << power_ups.at(i)->expired << std::endl;
         if(power_ups.at(i) -> expired)
         {
-            // std::cout << tiles.at(0).available_power.unique() << std::endl;
-            // std::cout << power_ups.at(0).unique() << std::endl;
-            // tiles.at(0).available_power.reset();
-            // std::cout << power_ups.at(0).unique() << std::endl;
-
-            //tiles.at(i).available_power.reset();            // Vet inte om detta faktiskt tar bort power_up
-            power_ups.at(i).reset();                        // Eller om vi får en minnesläcka
+            power_ups.at(i).reset();                        
             power_ups.erase(power_ups.begin() + i);
             i--;
         }
@@ -117,16 +113,9 @@ void Game_Map::update()
 
 void Game_Map::render(sf::RenderTarget &window)
 {
-        sf::RectangleShape wall(sf::Vector2f(gridsize_x,gridsize_y));
-        wall.setFillColor(sf::Color::White);
         for(auto i : tiles)
         {
             window.draw(i.tile);
-            // if(i.get_name() == "wall")
-            // {
-            //     wall.setPosition(i.get_position());
-            //     window.draw(wall);
-            // }
         }
         for(auto & i : power_ups)
         {
@@ -135,12 +124,20 @@ void Game_Map::render(sf::RenderTarget &window)
 }
 
 
-std::string Game_Map::random_map()
+std::string Game_Map::random_map(int mapID)
 {
-    srand(time(0));
-    int rnd_val = rand()%3;
+    int choice{};
+    if(mapID == 0)
+    {
+        srand(time(0));
+        choice = rand()%3;
+    }
+    else
+    {
+        choice = mapID;
+    }
     std::string rand_map;
-    switch(rnd_val)
+    switch(choice)
     {
         case 0:
                 rand_map = "resources/maps/map1.txt";

@@ -1,5 +1,6 @@
 #include "Setting_State.h"
 #include "Constants.h"
+#include "Resource_Manager.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -12,13 +13,13 @@ Setting_State::Setting_State()
     {
         throw std::invalid_argument("No font at location: " + file);
     }
-    text[0] = sf::Text{"Return", font, 32 };
+    text[0] = sf::Text{"Return", font, 52 };
     text[0].setFillColor(sf::Color(255,0,0));
     text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / MENU_ITEMS - (text[0].getGlobalBounds().height + 10));
-    text[1] = sf::Text{"Load Map 1 (inte implementerad)", font, 32 };
+    text[1] = sf::Text{"Load Map 1", font, 52 };
     text[1].setFillColor(sf::Color(255,255,255));
     text[1].setPosition(screen_width / 2 - text[1].getGlobalBounds().width / 2, screen_height / MENU_ITEMS);
-    text[2] = sf::Text{"Load Map 2 (inte implementerad)", font, 32 };
+    text[2] = sf::Text{"Load Map 2", font, 52 };
     text[2].setFillColor(sf::Color(255,255,255));
     text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[2].getGlobalBounds().height + 10));
 }
@@ -35,11 +36,13 @@ void Setting_State::event_handler(sf::Event event)
             }
             else if(menu_select == 1)
             {
-                    // Ladda om map
+                    exit = true;
+                    Resource_Manager::load_game_map(1);
             }
             else if(menu_select == 2)
             {
-                    // Ladda om map
+                    exit = true;
+                    Resource_Manager::load_game_map(2);
             }
         }
         if(event.key.code == sf::Keyboard::Up)

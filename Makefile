@@ -21,7 +21,7 @@ LDFLAGS += -L$(SFML_ROOT)/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-
 MAINFILE := main.cc
 
 # Object modules
-OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o $(OBJDIR)/Win_State.o $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o  $(OBJDIR)/Rocket.o  $(OBJDIR)/Shotgun.o  $(OBJDIR)/Speed_Boost.o  $(OBJDIR)/Power_Up.o  $(OBJDIR)/Collision_Handler.o
+OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o $(OBJDIR)/Win_State.o $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o  $(OBJDIR)/Rocket.o  $(OBJDIR)/Shotgun.o  $(OBJDIR)/Speed_Boost.o  $(OBJDIR)/Power_Up.o  $(OBJDIR)/Collision_Handler.o  $(OBJDIR)/Setting_State.o
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
@@ -45,6 +45,9 @@ $(OBJDIR)/Pause_State.o: $(SRC)/Pause_State.cc dir
 
 $(OBJDIR)/Win_State.o: $(SRC)/Win_State.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Win_State.cc -o $(OBJDIR)/Win_State.o
+
+$(OBJDIR)/Setting_State.o: $(SRC)/Setting_State.cc dir
+	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Setting_State.cc -o $(OBJDIR)/Setting_State.o
 
 $(OBJDIR)/Game_Map.o: $(SRC)/Game_Map.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Game_Map.cc -o $(OBJDIR)/Game_Map.o

@@ -1,4 +1,5 @@
 #include "Resource_Manager.h"
+#include "Game_Map.h"
 
 void Resource_Manager::get_texture()
     {
@@ -148,6 +149,12 @@ sf::Texture& Resource_Manager::get_texture_shield()
         }
         return wall_texture;
     }
+
+    void Resource_Manager::load_game_map(int mapID)
+    {
+        game_map.generate(mapID);
+    }
+
     Game_Map& Resource_Manager::get_game_map()
     {
         return game_map;

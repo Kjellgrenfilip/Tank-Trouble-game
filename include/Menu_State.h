@@ -23,6 +23,7 @@ private:
     sf::Font font;
 	sf::Sprite background;
     bool startgame;
+    bool settings;
     bool exit;
 
     int menu_select;

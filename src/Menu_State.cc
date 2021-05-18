@@ -5,7 +5,7 @@
 #include <iostream>
 
 Menu_State::Menu_State()
-    :   font{}, background{}, startgame{false}, exit{false}, menu_select{0}  
+    :   font{}, background{}, startgame{false}, settings{false}, exit{false}, menu_select{0}  
 {
     std::string file{"resources/fonts/Amatic-Bold.ttf"};
     if(!font.loadFromFile(file))
@@ -37,7 +37,7 @@ void Menu_State::event_handler(sf::Event event)
             }
             else if(menu_select == 1)
             {
-
+                settings = true;
             }
             else if(menu_select == 2)
             {
@@ -88,14 +88,6 @@ void Menu_State::render(sf::RenderTarget & target)
     {
         target.draw(text[i]);
     }
-
-    // auto bounds { text.getGlobalBounds () };
-    // auto size   { target.getSize () };
-
-    // text.setPosition ((size.x - bounds.width) / 2,
-    //                   (size.y - bounds.height) / 2);
-
-    // target.draw (text);
 }
 
 int Menu_State::get_next_state()
@@ -104,6 +96,11 @@ int Menu_State::get_next_state()
     {
         startgame = false;
         return RESTART_GAME;
+    }
+    else if(settings)
+    {
+        settings = false;
+        return SETTING_STATE;
     }
     else if(exit)
     {

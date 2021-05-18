@@ -5,6 +5,7 @@ int const MENU_STATE{1};
 int const GAME_STATE{2};
 int const PAUSE_STATE{3};
 int const WIN_STATE{4};
+int const SETTING_STATE{7};
 
 int const RESTART_GAME{5};
 int const RESTART_COUNT{6};

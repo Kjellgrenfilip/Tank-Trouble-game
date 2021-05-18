@@ -12,14 +12,17 @@
 class Game_Map
 {
 private:
-    std::string random_map();
-    void generate();
+    std::string random_map(int mapID = 0);
 public:
+    void generate(int mapID = 0);
+
     Game_Map();
     void render(sf::RenderTarget &window);
     void update();
 
     std::vector<std::shared_ptr<Power_Up>> power_ups; 
     std::vector<Tile> tiles{};
+
+    bool loaded;
 };
 #endif 

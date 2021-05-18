@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 Game_State::Game_State()
-    :   paus{false}, endgame{false}, players{}, game_map{}, collision_handler{}   // Initiera game_map här   
+    :   paus{false}, endgame{false}, players{}, game_map{Resource_Manager::get_game_map()}, collision_handler{}   // Initiera game_map här   
 {
     //man måste skriva klassen före get_texture
     //ändrade även width och height till det rätta värdena från constant

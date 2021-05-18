@@ -18,7 +18,7 @@ class Resource_Manager
         static inline sf::Texture wall_texture;
         static inline sf::Texture floor_texture;
 
-        static inline Game_Map game_map{};
+        static inline Game_Map game_map;
         static inline sf::Texture rocket_projectile_texture;
     public:
         static sf::Texture& get_texture_player(int player_id);
@@ -32,6 +32,7 @@ class Resource_Manager
         static sf::Texture& get_texture_wall();
         static sf::Texture& get_texture_floor();
 
+        static void load_game_map(int mapID = 0);
         static void get_texture();
         static Game_Map& get_game_map();
 
