@@ -135,16 +135,18 @@ void Game_State::tank_tank_collision_handler()
 
 void Game_State::tank_powerup_collision_handler()
 {
-    for(auto player : players)
+    for(auto & player : players)
     {
         for(size_t i{};i<game_map.power_ups.size();i++)
         {
             if(collision_handler.check_collision(player.getPlayerSprite(),game_map.power_ups.at(i)->get_sprite()))
             //(player.get_hitbox().intersects(game_map.power_ups.at(i)->get_hitbox()))
             {
-                player.set_power_up(game_map.power_ups.at(i));
-                game_map.power_ups.at(i).reset();
-                game_map.power_ups.erase(game_map.power_ups.begin()+i);
+                if(player.set_power_up(game_map.power_ups.at(i)))   //Returnerar false om spelaren redan har en power up
+                {
+                    game_map.power_ups.at(i).reset();
+                    game_map.power_ups.erase(game_map.power_ups.begin()+i);
+                } 
             }
         }
     }

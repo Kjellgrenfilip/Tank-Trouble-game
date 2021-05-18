@@ -21,7 +21,7 @@ public:
     sf::Vector2f get_position();                                // returnerar spelarens position    
     sf::Vector2f get_old_position();                            // returnerar spelaren position på bilden innan
     void set_tank_pos(sf::Vector2f new_pos);                    // flyttar spelaren
-    void set_power_up(std::shared_ptr<Power_Up> &new_power);    // ny pointer till power_up
+    bool set_power_up(std::shared_ptr<Power_Up> &new_power);    // ny pointer till power_up
     sf::Sprite const& getPlayerSprite() const;                  // returnerar spelarens sprite
 	
 	bool is_destroyed();
@@ -36,7 +36,7 @@ private:
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
     std::vector<Bullet> bullets;//Behållare för bullets
     sf::Sprite tank;			
-    std::shared_ptr<Power_Up> my_power{};
+    std::shared_ptr<Power_Up> my_power{nullptr};
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;
 	void check_bullets(Player&);

@@ -96,7 +96,18 @@ void Player::event_handler(sf::Event event)
 				if (bullets.size() < 4)
 				bullets.push_back(Bullet(pos, rot-90));
 			}
-		}
+
+            if(event.key.code == sf::Keyboard::Key::G)
+			{
+                if(my_power)
+                {
+                    bullets.push_back(Bullet(pos, rot-85));
+                    bullets.push_back(Bullet(pos, rot-90));
+                    bullets.push_back(Bullet(pos, rot-95));
+                    my_power = nullptr;
+                }
+			}
+		}   
 	}
 	if (player_ID == 2)
 	{
@@ -256,9 +267,17 @@ bool Player::is_destroyed()
 	return destroyed;
 }
 
-void Player::set_power_up(std::shared_ptr<Power_Up> &new_power)
+bool Player::set_power_up(std::shared_ptr<Power_Up> &new_power)
 {
-	my_power = new_power;
+    if(my_power == nullptr)
+    {
+        my_power = new_power;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 
