@@ -16,13 +16,13 @@ public:
     void render(sf::RenderTarget & target);
     void event_handler(sf::Event event);
 	
-	sf::FloatRect get_hitbox() const;     //Returnar playerns hitbox
-	std::vector<Bullet>& get_bullets();	//Hämtar en vector med bullets
-    sf::Vector2f get_position();
-    sf::Vector2f get_old_position();
-    void set_tank_pos(sf::Vector2f new_pos);
-    std::shared_ptr<Power_Up> my_power{};
-    sf::Sprite const& getPlayerSprite() const;
+	sf::FloatRect get_hitbox() const;                           // Returnar playerns hitbox
+	std::vector<Bullet>& get_bullets();                        	// Hämtar en vector med bullets
+    sf::Vector2f get_position();                                // returnerar spelarens position    
+    sf::Vector2f get_old_position();                            // returnerar spelaren position på bilden innan
+    void set_tank_pos(sf::Vector2f new_pos);                    // flyttar spelaren
+    void set_power_up(std::shared_ptr<Power_Up> &new_power);    // ny pointer till power_up
+    sf::Sprite const& getPlayerSprite() const;                  // returnerar spelarens sprite
 	
 	bool is_destroyed();
 private:
@@ -33,9 +33,10 @@ private:
     sf::Vector2f old_pos{};     //spelarens gammla position, används vid kollision.
     float rot;					//Spelarens rotation
    
-    std::vector<sf::Sprite> hearts;
+    std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
     std::vector<Bullet> bullets;//Behållare för bullets
     sf::Sprite tank;			
+    std::shared_ptr<Power_Up> my_power{};
     
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;

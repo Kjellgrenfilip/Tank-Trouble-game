@@ -251,6 +251,9 @@ bool Player::is_destroyed()
 	return destroyed;
 }
 
-
+void Player::set_power_up(std::shared_ptr<Power_Up> &new_power)
+{
+	my_power = new_power;
+}
 
 
