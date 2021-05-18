@@ -40,7 +40,7 @@ void Bullet::reverse_y()
 
 /////Rocket//////////////////
 
-Rocket_Projectile::Rocket_Projectile(sf::Vector2f pos, float rot) : lifetime{4}, velocity{ static_cast<float>(5*std::cos(rot*M_PI/180.0)), static_cast<float>(5*std::sin(rot*M_PI/180.0))}, sprite{Resource_Manager::get_texture_rocket_projectile()}
+Rocket_Projectile::Rocket_Projectile(sf::Vector2f pos, float rot) : lifetime{1}, velocity{ static_cast<float>(5*std::cos(rot*M_PI/180.0)), static_cast<float>(5*std::sin(rot*M_PI/180.0))}, sprite{Resource_Manager::get_texture_rocket_projectile()}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     sprite.setOrigin (10, 10);

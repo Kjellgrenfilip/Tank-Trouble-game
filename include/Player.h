@@ -6,6 +6,8 @@
 #include "Power_Up.h"
 #include <memory>
 #include <vector>
+#include "Shotgun.h"
+#include "Rocket.h"
 
 class Player
 {
@@ -35,6 +37,7 @@ private:
    
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
     std::vector<Bullet> bullets;//Behållare för bullets
+    std::vector<Rocket_Projectile> rockets;
     sf::Sprite tank;			
     std::shared_ptr<Power_Up> my_power{nullptr};
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"

@@ -4,7 +4,7 @@
 #include <algorithm>
 
 Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h)
-	: hp{3}, player_ID{ID}, pos{p}, rot{}, hearts{}, bullets{}, tank{t}, destroyed{false}, speed{4.0}
+	: hp{3}, player_ID{ID}, pos{p}, rot{}, hearts{}, bullets{}, rockets{}, tank{t}, destroyed{false}, speed{4.0}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);
@@ -34,7 +34,11 @@ void Player::update(Player& p2)
 	{
 		bullet.update();
 	}
-	
+	for (auto & rocket : rockets)
+	{
+		rocket.update();
+	}
+
 	check_bullets(p2);
 	
 	pos = tank.getPosition();
@@ -49,6 +53,10 @@ void Player::render(sf::RenderTarget & window)
 	for (auto & bullet : bullets)
 	{
 		bullet.render(window);
+	}
+    for (auto & rocket : rockets)
+	{
+		rocket.render(window);
 	}
 	
 	if (!destroyed)
@@ -97,14 +105,19 @@ void Player::event_handler(sf::Event event)
 				bullets.push_back(Bullet(pos, rot-90));
 			}
 
-            if(event.key.code == sf::Keyboard::Key::G)
+            if(event.key.code == sf::Keyboard::Key::G && my_power != nullptr)
 			{
-                if(my_power)
+                if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
                 {
                     bullets.push_back(Bullet(pos, rot-85));
                     bullets.push_back(Bullet(pos, rot-90));
                     bullets.push_back(Bullet(pos, rot-95));
-                    my_power = nullptr;
+                    my_power.reset();
+                }
+                if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
+                {
+                    rockets.push_back(Rocket_Projectile(pos, rot-90));
+                    my_power.reset();
                 }
 			}
 		}   
