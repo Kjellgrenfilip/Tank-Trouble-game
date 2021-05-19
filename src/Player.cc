@@ -302,51 +302,59 @@ void Player::set_tank_pos(sf::Vector2f new_pos)
 void Player::set_hearts(sf::Texture& h)
 {
 	sf::Sprite heart{h};
-	heart.setScale(0.05, 0.05);
+	heart.setScale(0.08, 0.08);
 	
 	if (player_ID == 1)
 	{
-		heart.setPosition(100, 0);
+		heart.setPosition(120, 5);
 		for (int i{hp}; i > 0; i--)
 			{
 				hearts.push_back(heart);
 				sf::Vector2f old_pos{heart.getPosition()};
-				heart.setPosition(old_pos.x + 20.0, old_pos.y);
+				heart.setPosition(old_pos.x + heart.getGlobalBounds().width+2, old_pos.y);
 			}
 	}
 	else
 	{	
-		heart.setPosition(screen_width-60, 0);
+		heart.setPosition(screen_width- heart.getGlobalBounds().width*3 -10, 5);
 		for (int i{hp}; i > 0; i--)
 			{
 				hearts.push_back(heart);
 				sf::Vector2f old_pos{heart.getPosition()};
-				heart.setPosition(old_pos.x + 20.0, old_pos.y);
+				heart.setPosition(old_pos.x + heart.getGlobalBounds().width+2, old_pos.y);
 			}
 	}
 }
 
 void Player::print_player_text(sf::RenderTarget & target)
 {
-	std::string file{"resources/fonts/font.ttf"};
+	sf::RectangleShape square;
+	square.setFillColor(sf::Color{255,255,255,100});
+	square.setSize(sf::Vector2f{40*6, 40});
+	
+	std::string file{"resources/fonts/Mandala.ttf"};
     sf::Font font;
     if(!font.loadFromFile(file))
     {
         throw std::invalid_argument("No font at location: " + file);
     }	
-	sf::Text text1{"Player 1:", font, 18};
-	sf::Text text2{"Player 2:", font, 18};
+	sf::Text text1{"Player 1:", font, 32};
+	sf::Text text2{"Player 2:", font, 32};
 	for (int i{1}; i < 3; i++)
 	{
 		if (i == 1)
 		{
-			text1.setFillColor(sf::Color::Red);
+			target.draw(square);
+			text1.setFillColor(sf::Color{175,40,40});
+			text1.setPosition(10, 0);
 			target.draw(text1);
 		}
 		if (i == 2)
-		{
-			text2.setFillColor(sf::Color::Blue);
-			text2.setPosition(screen_width-160, 0);
+		{	
+			square.setPosition(screen_width-square.getGlobalBounds().width, 0);
+			target.draw(square);
+			text2.setFillColor(sf::Color{28,24,128});
+			text2.setPosition(screen_width-220, 0);
 			target.draw(text2);
 		}
 	}

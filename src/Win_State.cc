@@ -98,10 +98,10 @@ void Win_State::update()
     win_text[0].setFillColor(sf::Color::Yellow);
     win_text[0].setPosition(screen_width/2 - win_text[0].getGlobalBounds().width / 2, 0);
     win_text[1] = sf::Text{"Player 1: " + std::to_string(player1wins) + " wins.", font, 36};
-    win_text[1].setFillColor(sf::Color::Red);
+    win_text[1].setFillColor(sf::Color{175,40,40});
     win_text[1].setPosition(screen_width*0.25 - win_text[1].getGlobalBounds().width / 2, screen_height/2);
     win_text[2] = sf::Text{"Player 2: " + std::to_string(player2wins) + " wins.", font, 36};
-    win_text[2].setFillColor(sf::Color::Blue);
+    win_text[2].setFillColor(sf::Color{28,24,128});
     win_text[2].setPosition(screen_width*0.75 - win_text[2].getGlobalBounds().width / 2, screen_height/2);
 	
 }
