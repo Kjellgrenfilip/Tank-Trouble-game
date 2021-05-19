@@ -117,7 +117,7 @@ void Game_State::bullet_wall_collision_handler()
                 sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
                 if(!tile.passable && rocket.getBounds().intersects(tile_rect))
                 {
-
+                    rocket.lifetime = 0;
                 }
             }
         }

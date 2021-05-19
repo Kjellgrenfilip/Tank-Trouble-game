@@ -397,6 +397,36 @@ void Player::check_bullets(Player & p2)
             ++it;
         }
     }
+
+    for (auto it = rockets.begin(); it != rockets.end();)
+    {
+        if (it->getBounds().intersects(p2.get_hitbox()))
+        {   //Kolla om spelaren har aktiv sköld
+            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->active_on_player)
+            {
+                p2.my_power.reset();
+            }
+            else
+            {
+                p2.hp = 0;
+            }
+			hit_sound.play();
+            it->lifetime = 0;
+            if (p2.hp == 0)
+            {
+                p2.destroyed = true;
+            }
+        }
+        
+        if (it->lifetime == 0)
+        {
+            it = rockets.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }
 
 
