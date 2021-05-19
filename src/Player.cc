@@ -3,10 +3,12 @@
 #include <cmath>
 #include <algorithm>
 
-Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot)
+Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl,
+			   sf::SoundBuffer& hit, sf::SoundBuffer& shot, sf::SoundBuffer& rocket, sf::SoundBuffer& shotgun)
 	: 	hp{3}, player_ID{ID}, 
 		pos{p}, rot{}, hit_sound{hit}, 
-		shot_sound{shot}, hearts{}, 
+		shot_sound{shot}, rocket_sound{rocket},
+		shotgun_sound{shotgun}, hearts{}, 
 		bullets{}, rockets{}, 
 		tank{t}, explosion{expl}, 
 		destroyed{false}, speed{4.0},
@@ -153,6 +155,7 @@ void Player::event_handler(sf::Event event)
                 if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
                 {   
                     //Skicka iväg tre kulor med olika vinkel
+                    shotgun_sound.play();
                     bullets.push_back(Bullet(pos, rot-85));
                     bullets.push_back(Bullet(pos, rot-90));
                     bullets.push_back(Bullet(pos, rot-95));
@@ -161,6 +164,7 @@ void Player::event_handler(sf::Event event)
                 if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
                 {
                     //Skicka iväg en raket
+                    rocket_sound.play();
                     rockets.push_back(Rocket_Projectile(pos, rot-90));
                     my_power.reset();
                 }
@@ -221,6 +225,7 @@ void Player::event_handler(sf::Event event)
                 if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
                 {   
                     //Skicka iväg tre kulor med olika vinkel
+                    shotgun_sound.play();
                     bullets.push_back(Bullet(pos, rot-85));
                     bullets.push_back(Bullet(pos, rot-90));
                     bullets.push_back(Bullet(pos, rot-95));
@@ -229,6 +234,7 @@ void Player::event_handler(sf::Event event)
                 if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
                 {
                     //Skicka iväg en raket
+                    rocket_sound.play();
                     rockets.push_back(Rocket_Projectile(pos, rot-90));
                     my_power.reset();
                 }

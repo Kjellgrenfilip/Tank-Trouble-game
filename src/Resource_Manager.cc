@@ -196,6 +196,14 @@ sf::Texture& Resource_Manager::get_texture_shield()
         {
             throw std::invalid_argument("cannot open wall_bounce_sound");
 		}
+		if(!rocket_sound.loadFromFile("resources/sounds/rocket_sound.wav"))
+        {
+            throw std::invalid_argument("cannot open rocket_sound");
+		}
+		if(!shotgun_sound.loadFromFile("resources/sounds/shotgun_sound.wav"))
+        {
+            throw std::invalid_argument("cannot open shotgun_sound");
+		}
 	}
 	
 	sf::SoundBuffer& Resource_Manager::get_soundbuffer_hit()
@@ -237,4 +245,20 @@ sf::Texture& Resource_Manager::get_texture_shield()
 				get_soundbuffer();
 			}
 		return bounce_sound;
+	}
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_rocket()
+	{
+		if(rocket_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+		return rocket_sound;
+	}
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_shotgun()
+	{
+		if(shotgun_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+		return shotgun_sound;
 	}

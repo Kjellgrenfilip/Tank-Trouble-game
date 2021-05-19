@@ -10,8 +10,10 @@ Game_State::Game_State()
 {
     //man måste skriva klassen före get_texture
     //ändrade även width och height till det rätta värdena från constant
-	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot()));
-	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot() ));
+	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1,
+	 Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_rocket(), Resource_Manager::get_soundbuffer_shotgun() ));
+	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2,
+	 Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_rocket(), Resource_Manager::get_soundbuffer_shotgun() ));
     destroyed_sound.setBuffer(Resource_Manager::get_soundbuffer_destroyed());
 	powerup_sound.setBuffer(Resource_Manager::get_soundbuffer_powerup());
 	bounce_sound.setBuffer(Resource_Manager::get_soundbuffer_bounce());
