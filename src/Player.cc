@@ -4,7 +4,13 @@
 #include <algorithm>
 
 Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot)
-	: hp{3}, player_ID{ID}, pos{p}, rot{}, hit_sound{hit}, shot_sound{shot}, hearts{}, bullets{}, rockets{}, tank{t}, explosion{expl}, destroyed{false}, speed{4.0}
+	: 	hp{3}, player_ID{ID}, 
+		pos{p}, rot{}, hit_sound{hit}, 
+		shot_sound{shot}, hearts{}, 
+		bullets{}, rockets{}, 
+		tank{t}, explosion{expl}, 
+		destroyed{false}, speed{4.0},
+		explosion_counter{20}, explosion_scale{0.2}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);
@@ -87,10 +93,12 @@ void Player::render(sf::RenderTarget & window)
 		}
 	else
 	{
-		
 		explosion.setPosition(pos);
 		//explosion.setOrigin(tank.getOrigin());
+		explosion_scale *= 1.1;
+		explosion.setScale(explosion_scale, explosion_scale);
 		window.draw(explosion);
+		explosion_counter--;
 		//sf::sleep(delay);
 	}
 	
@@ -346,7 +354,10 @@ void Player::check_bullets(Player & p2)
 
 bool Player::is_destroyed()
 {
-	return destroyed;
+	if(destroyed && explosion_counter == 0)
+		return true;
+	else
+		return false;
 }
 
 bool Player::set_power_up(std::shared_ptr<Power_Up> &new_power)

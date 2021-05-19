@@ -38,7 +38,6 @@ void Game_State::game_event_handler(sf::Event event)
 
 void Game_State::update()
 {
-    //game_map.update();
     bullet_wall_collision_handler();
     tank_wall_collision_handler();
     tank_tank_collision_handler();
@@ -46,21 +45,18 @@ void Game_State::update()
     players[0].update(players[1]);
     players[1].update(players[0]);
     if (players[0].is_destroyed())
-		{
-			destroyed_sound.play();
-			winner = 2;
-			endgame = true;
-		}
+	{
+		destroyed_sound.play();
+		winner = 2;
+		endgame = true;
+	}
 	else if(players[1].is_destroyed())
-		{
-			destroyed_sound.play();
-			winner = 1;
-			endgame = true;
-		}
-	
+	{
+		destroyed_sound.play();
+		winner = 1;
+		endgame = true;
+	}
     game_map.update();
-	
-	
 }
 
 void Game_State::render(sf::RenderTarget & target)
@@ -174,9 +170,9 @@ int Game_State::get_next_state()
 {
     if(endgame)
     {
-		sf::Time delay = sf::seconds(2);
+		//sf::Time delay = sf::seconds(2);
         endgame = false;
-        sf::sleep(delay);
+        //sf::sleep(delay);
         return WIN_STATE; // Ska egentligen gå vidare till Win_State
     }
     else if(paus)

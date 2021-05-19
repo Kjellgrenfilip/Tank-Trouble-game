@@ -49,6 +49,9 @@ private:
     std::shared_ptr<Power_Up> my_power{nullptr};
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;
+    int explosion_counter;
+    float explosion_scale;
+
 	void check_bullets(Player&);
 	void set_hearts(sf::Texture& h);
 	void print_player_text(sf::RenderTarget & target);
