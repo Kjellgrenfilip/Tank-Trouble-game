@@ -14,7 +14,7 @@
 class Player
 {
 public:
-    Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture& expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot, sf::SoundBuffer& pow);
+    Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture& expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot);
 
     void update(Player&);
     void render(sf::RenderTarget & target);
@@ -40,7 +40,6 @@ private:
 	
 	sf::Sound hit_sound;
 	sf::Sound shot_sound;
-	sf::Sound powerup_sound;
 	
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
     std::vector<Bullet> bullets;   //Behållare för bullets

@@ -25,6 +25,8 @@ Menu_State::Menu_State()
 	background.setTexture(Resource_Manager::get_texture_background());
 	if(!menu_song.openFromFile("resources/sounds/menu_music.ogg"))
 		std::cout << "hej" << std::endl;
+	
+	menu_song.setLoop(true);
 	menu_song.play();
 	
 }
@@ -99,7 +101,7 @@ int Menu_State::get_next_state()
 {
     if(startgame)
     {
-		menu_song.pause();
+		menu_song.setVolume(40);
         startgame = false;
         return RESTART_GAME;
     }

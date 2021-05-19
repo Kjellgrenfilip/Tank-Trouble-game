@@ -6,13 +6,15 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 Game_State::Game_State()
-    :   paus{false}, endgame{false}, destroyed_sound{}, players{}, game_map{Resource_Manager::get_game_map()}, collision_handler{}   // Initiera game_map här   
+    :   paus{false}, endgame{false}, destroyed_sound{}, powerup_sound{}, bounce_sound{}, players{}, game_map{Resource_Manager::get_game_map()}, collision_handler{}   // Initiera game_map här   
 {
     //man måste skriva klassen före get_texture
     //ändrade även width och height till det rätta värdena från constant
-	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_powerup()));
-	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_powerup() ));
+	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot()));
+	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot() ));
     destroyed_sound.setBuffer(Resource_Manager::get_soundbuffer_destroyed());
+	powerup_sound.setBuffer(Resource_Manager::get_soundbuffer_powerup());
+	bounce_sound.setBuffer(Resource_Manager::get_soundbuffer_bounce());
 }
 void Game_State::event_handler(sf::Event event)
 {
@@ -101,6 +103,10 @@ void Game_State::bullet_wall_collision_handler()
                         bullet.reverse_x();
                         bullet.reverse_y();
                     }
+					if (bullet.lifetime > 1)
+						{
+						bounce_sound.play();
+						}	
                     bullet.lifetime--;
                     break;
                 }
@@ -157,6 +163,7 @@ void Game_State::tank_powerup_collision_handler()
                 {
                     game_map.power_ups.at(i).reset();
                     game_map.power_ups.erase(game_map.power_ups.begin()+i);
+					powerup_sound.play();
                 } 
             }
         }

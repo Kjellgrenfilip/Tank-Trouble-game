@@ -3,8 +3,8 @@
 #include <cmath>
 #include <algorithm>
 
-Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot, sf::SoundBuffer& pow)
-	: hp{3}, player_ID{ID}, pos{p}, rot{}, hit_sound{hit}, shot_sound{shot}, powerup_sound{pow}, hearts{}, bullets{}, rockets{}, tank{t}, explosion{expl}, destroyed{false}, speed{4.0}
+Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot)
+	: hp{3}, player_ID{ID}, pos{p}, rot{}, hit_sound{hit}, shot_sound{shot}, hearts{}, bullets{}, rockets{}, tank{t}, explosion{expl}, destroyed{false}, speed{4.0}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);

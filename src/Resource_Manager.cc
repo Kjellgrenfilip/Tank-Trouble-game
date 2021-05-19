@@ -178,20 +178,24 @@ sf::Texture& Resource_Manager::get_texture_shield()
     {
         if(!hit_sound.loadFromFile("resources/sounds/hit_sound.wav"))
         {
-            throw std::invalid_argument("cannot open player1_texture");
+            throw std::invalid_argument("cannot open hit_sound");
         }
         if(!shot_sound.loadFromFile("resources/sounds/shot_sound.wav"))
         {
-            throw std::invalid_argument("cannot open player2_texture");
+            throw std::invalid_argument("cannot open shot_sound");
         }
         if(!destroyed_sound.loadFromFile("resources/sounds/destroyed_sound.wav"))
         {
-            throw std::invalid_argument("cannot open heart_texture");
+            throw std::invalid_argument("cannot open destroyed_sound");
         }
         if(!powerup_sound.loadFromFile("resources/sounds/powerup_sound.wav"))
         {
-            throw std::invalid_argument("cannot open shield_texture");
-        }
+            throw std::invalid_argument("cannot open powerup_sound");
+		}
+		if(!bounce_sound.loadFromFile("resources/sounds/wall_bounce_sound.wav"))
+        {
+            throw std::invalid_argument("cannot open wall_bounce_sound");
+		}
 	}
 	
 	sf::SoundBuffer& Resource_Manager::get_soundbuffer_hit()
@@ -225,4 +229,12 @@ sf::Texture& Resource_Manager::get_texture_shield()
 				get_soundbuffer();
 			}
 		return powerup_sound;
+	}
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_bounce()
+	{
+		if(bounce_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+		return bounce_sound;
 	}

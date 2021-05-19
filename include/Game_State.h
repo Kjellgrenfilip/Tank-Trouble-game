@@ -29,6 +29,8 @@ private:
     bool paus;
     bool endgame;
 	sf::Sound destroyed_sound;
+	sf::Sound powerup_sound;
+	sf::Sound bounce_sound;
 	static inline int winner;
 	std::vector<Player> players;
     Game_Map game_map;   // Döpte den till game_map för att 
