@@ -74,17 +74,16 @@ void Player::render(sf::RenderTarget & window)
 	}
 	if (!destroyed)
 		{
+			window.draw(tank);
 			if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->active_on_player)
 			{
-				sf::Sprite temp = getPlayerSprite();
-				temp.setColor(sf::Color::Green);
-				window.draw(temp);
-			}
-			else
-			{
-				window.draw(tank);
-			}
-			
+				sf::CircleShape circle(40);
+				sf::Color color(0,0,255,100);
+				circle.setFillColor(color);
+				circle.setOrigin(circle.getRadius(),circle.getRadius());
+				circle.setPosition(get_position());
+				window.draw(circle);
+			}	
 		}
 	else
 	{
