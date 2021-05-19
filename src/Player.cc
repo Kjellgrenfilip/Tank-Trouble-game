@@ -72,10 +72,19 @@ void Player::render(sf::RenderTarget & window)
 	{
 		rocket.render(window);
 	}
-	
 	if (!destroyed)
 		{
-			window.draw(tank);
+			if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->active_on_player)
+			{
+				sf::Sprite temp = getPlayerSprite();
+				temp.setColor(sf::Color::Green);
+				window.draw(temp);
+			}
+			else
+			{
+				window.draw(tank);
+			}
+			
 		}
 	else
 	{
@@ -125,9 +134,11 @@ void Player::event_handler(sf::Event event)
 		{
 			if ( event.key.code == sf::Keyboard::Key::F)
 			{
-				shot_sound.play();
 				if (bullets.size() < 4)
-				bullets.push_back(Bullet(pos, rot-90));
+				{
+					bullets.push_back(Bullet(pos, rot-90));
+					shot_sound.play();
+				}
 			}
 
             if(event.key.code == sf::Keyboard::Key::G && my_power != nullptr)
