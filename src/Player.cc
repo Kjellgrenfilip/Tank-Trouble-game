@@ -125,45 +125,45 @@ void Player::event_handler(sf::Event event)
 		{
 			if ( event.key.code == sf::Keyboard::Key::F)
 			{
-				//shot_sound.play();
+				shot_sound.play();
 				if (bullets.size() < 4)
 				bullets.push_back(Bullet(pos, rot-90));
 			}
 
-            // if(event.key.code == sf::Keyboard::Key::G && my_power != nullptr)
-			// {
-            //     if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
-            //     {   
-            //         //Skicka iväg tre kulor med olika vinkel
-            //         bullets.push_back(Bullet(pos, rot-85));
-            //         bullets.push_back(Bullet(pos, rot-90));
-            //         bullets.push_back(Bullet(pos, rot-95));
-            //         my_power.reset();
-            //     }
-            //     if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
-            //     {
-            //         //Skicka iväg en raket
-            //         rockets.push_back(Rocket_Projectile(pos, rot-90));
-            //         my_power.reset();
-            //     }
-            //     if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
-            //     {
-            //         if(!my_power->active_on_player)
-            //         {
-            //             my_power->active_on_player = true;
-            //             my_power->active_timer = 180;   //3 sekunder i 60 FPS
-            //             speed = 8.0;                    //Dubbla hastigheten
-            //         }
-            //     }
-            //     if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
-            //     {
-            //         //Aktivera sköld
-            //         if(!my_power->active_on_player)
-            //         {
-            //            my_power->active_on_player = true;
-            //         }
-            //     }
-			// }
+            if(event.key.code == sf::Keyboard::Key::G && my_power != nullptr)
+			{
+                if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
+                {   
+                    //Skicka iväg tre kulor med olika vinkel
+                    bullets.push_back(Bullet(pos, rot-85));
+                    bullets.push_back(Bullet(pos, rot-90));
+                    bullets.push_back(Bullet(pos, rot-95));
+                    my_power.reset();
+                }
+                if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
+                {
+                    //Skicka iväg en raket
+                    rockets.push_back(Rocket_Projectile(pos, rot-90));
+                    my_power.reset();
+                }
+                if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
+                {
+                    if(!my_power->active_on_player)
+                    {
+                        my_power->active_on_player = true;
+                        my_power->active_timer = 180;   //3 sekunder i 60 FPS
+                        speed = 8.0;                    //Dubbla hastigheten
+                    }
+                }
+                if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
+                {
+                    //Aktivera sköld
+                    if(!my_power->active_on_player)
+                    {
+                       my_power->active_on_player = true;
+                    }
+                }
+			}
 		}   
 	}
 	if (player_ID == 2)
@@ -193,7 +193,7 @@ void Player::event_handler(sf::Event event)
 		{
 			if ( event.key.code == sf::Keyboard::Key::RControl)
 			{
-				// shot_sound.play();
+				shot_sound.play();
 				if (bullets.size() < 4)
 				bullets.push_back(Bullet(pos, rot-90));
 				
