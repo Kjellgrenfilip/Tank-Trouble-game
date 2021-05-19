@@ -2,6 +2,7 @@
 #define MENUSTATE_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "State.h"
 #include "Constants.h"
 
@@ -27,6 +28,8 @@ private:
     bool exit;
 
     int menu_select;
+    
+    sf::Music menu_song;
 };
 
 #endif

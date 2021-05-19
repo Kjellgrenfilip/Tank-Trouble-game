@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
-
+#include <SFML/Audio.hpp>
 #include "Bullet.h"
 #include "Power_Up.h"
 #include <memory>
@@ -14,7 +14,7 @@
 class Player
 {
 public:
-    Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture& expl);
+    Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture& expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot, sf::SoundBuffer& pow);
 
     void update(Player&);
     void render(sf::RenderTarget & target);
@@ -37,6 +37,10 @@ private:
     sf::Vector2f pos;			//Spelarens position
     sf::Vector2f old_pos{};     //spelarens gammla position, används vid kollision.
     float rot;					//Spelarens rotation
+	
+	sf::Sound hit_sound;
+	sf::Sound shot_sound;
+	sf::Sound powerup_sound;
 	
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
     std::vector<Bullet> bullets;   //Behållare för bullets

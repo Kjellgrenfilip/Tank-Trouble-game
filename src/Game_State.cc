@@ -6,13 +6,13 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 Game_State::Game_State()
-    :   paus{false}, endgame{false}, players{}, game_map{Resource_Manager::get_game_map()}, collision_handler{}   // Initiera game_map här   
+    :   paus{false}, endgame{false}, destroyed_sound{}, players{}, game_map{Resource_Manager::get_game_map()}, collision_handler{}   // Initiera game_map här   
 {
     //man måste skriva klassen före get_texture
     //ändrade även width och height till det rätta värdena från constant
-	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion()));
-	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion() ));
-    
+	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_powerup()));
+	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2, Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_powerup() ));
+    destroyed_sound.setBuffer(Resource_Manager::get_soundbuffer_destroyed());
 }
 void Game_State::event_handler(sf::Event event)
 {
@@ -45,11 +45,13 @@ void Game_State::update()
     players[1].update(players[0]);
     if (players[0].is_destroyed())
 		{
+			destroyed_sound.play();
 			winner = 2;
 			endgame = true;
 		}
 	else if(players[1].is_destroyed())
 		{
+			destroyed_sound.play();
 			winner = 1;
 			endgame = true;
 		}

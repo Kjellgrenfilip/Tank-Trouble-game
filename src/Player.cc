@@ -3,8 +3,8 @@
 #include <cmath>
 #include <algorithm>
 
-Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl)
-	: hp{3}, player_ID{ID}, pos{p}, rot{}, hearts{}, bullets{}, rockets{}, tank{t}, explosion{expl}, destroyed{false}, speed{4.0}
+Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl, sf::SoundBuffer& hit, sf::SoundBuffer& shot, sf::SoundBuffer& pow)
+	: hp{3}, player_ID{ID}, pos{p}, rot{}, hit_sound{hit}, shot_sound{shot}, powerup_sound{pow}, hearts{}, bullets{}, rockets{}, tank{t}, explosion{expl}, destroyed{false}, speed{4.0}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);
@@ -125,6 +125,7 @@ void Player::event_handler(sf::Event event)
 		{
 			if ( event.key.code == sf::Keyboard::Key::F)
 			{
+				shot_sound.play();
 				if (bullets.size() < 4)
 				bullets.push_back(Bullet(pos, rot-90));
 			}
@@ -192,6 +193,7 @@ void Player::event_handler(sf::Event event)
 		{
 			if ( event.key.code == sf::Keyboard::Key::RControl)
 			{
+				shot_sound.play();
 				if (bullets.size() < 4)
 				bullets.push_back(Bullet(pos, rot-90));
 				
@@ -303,6 +305,7 @@ void Player::check_bullets(Player & p2)
 	for (auto it = bullets.begin(); it != bullets.end();)
 	{
 		if (it->getBounds().intersects(p2.get_hitbox()))
+<<<<<<< Updated upstream
 		{   //Kolla om spelaren har aktiv sköld
             if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->active_on_player)
             {
@@ -312,6 +315,11 @@ void Player::check_bullets(Player & p2)
             {
                 p2.hp--;
             }
+=======
+		{
+			hit_sound.play();
+			p2.hp--;
+>>>>>>> Stashed changes
 			it->lifetime = 0;
             if (p2.hp == 0)
 			{

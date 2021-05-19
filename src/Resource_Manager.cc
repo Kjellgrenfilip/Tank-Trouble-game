@@ -173,3 +173,56 @@ sf::Texture& Resource_Manager::get_texture_shield()
     {
         return game_map;
     }
+    
+   void Resource_Manager::get_soundbuffer()
+    {
+        if(!hit_sound.loadFromFile("resources/sounds/hit_sound.wav"))
+        {
+            throw std::invalid_argument("cannot open player1_texture");
+        }
+        if(!shot_sound.loadFromFile("resources/sounds/shot_sound.wav"))
+        {
+            throw std::invalid_argument("cannot open player2_texture");
+        }
+        if(!destroyed_sound.loadFromFile("resources/sounds/destroyed_sound.wav"))
+        {
+            throw std::invalid_argument("cannot open heart_texture");
+        }
+        if(!powerup_sound.loadFromFile("resources/sounds/powerup_sound.wav"))
+        {
+            throw std::invalid_argument("cannot open shield_texture");
+        }
+	}
+	
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_hit()
+	{
+		if(hit_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+		return hit_sound;
+	}
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_shot()
+	{
+		if(shot_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+		return shot_sound;
+	}
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_destroyed()
+	{
+		if(destroyed_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+		return destroyed_sound;
+	}
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_powerup()
+	{
+		if(powerup_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+		return powerup_sound;
+	}

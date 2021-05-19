@@ -1,6 +1,7 @@
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <stdexcept>
 #include "Game_Map.h"
 class Resource_Manager
@@ -18,6 +19,11 @@ class Resource_Manager
         static inline sf::Texture wall_texture;
         static inline sf::Texture floor_texture;
         static inline sf::Texture explosion_texture;
+        
+        static inline sf::SoundBuffer hit_sound;
+        static inline sf::SoundBuffer shot_sound;
+        static inline sf::SoundBuffer powerup_sound;
+        static inline sf::SoundBuffer destroyed_sound;
 
         static inline Game_Map game_map;
         static inline sf::Texture rocket_projectile_texture;
@@ -33,9 +39,15 @@ class Resource_Manager
         static sf::Texture& get_texture_wall();
         static sf::Texture& get_texture_floor();
         static sf::Texture& get_texture_explosion();
+        
+        static sf::SoundBuffer& get_soundbuffer_hit();
+        static sf::SoundBuffer& get_soundbuffer_shot();
+        static sf::SoundBuffer& get_soundbuffer_powerup();
+        static sf::SoundBuffer& get_soundbuffer_destroyed();
 
         static void load_game_map(int mapID = 0);
         static void get_texture();
+        static void get_soundbuffer();
         static Game_Map& get_game_map();
 
         

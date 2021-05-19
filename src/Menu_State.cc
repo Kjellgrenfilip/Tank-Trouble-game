@@ -5,7 +5,7 @@
 #include <iostream>
 
 Menu_State::Menu_State()
-    :   font{}, background{}, startgame{false}, settings{false}, exit{false}, menu_select{0}  
+    :   font{}, background{}, startgame{false}, settings{false}, exit{false}, menu_select{0}, menu_song{}  
 {
     std::string file{"resources/fonts/Amatic-Bold.ttf"};
     if(!font.loadFromFile(file))
@@ -23,6 +23,10 @@ Menu_State::Menu_State()
     text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[2].getGlobalBounds().height + 10));
 	
 	background.setTexture(Resource_Manager::get_texture_background());
+	if(!menu_song.openFromFile("resources/sounds/menu_music.ogg"))
+		std::cout << "hej" << std::endl;
+	menu_song.play();
+	
 }
 
 void Menu_State::event_handler(sf::Event event)
@@ -74,6 +78,7 @@ void Menu_State::game_event_handler(sf::Event)
 
 void Menu_State::update()
 {
+    
     for(int i{}; i < MENU_ITEMS; i++)
     {
         text[i].setFillColor(sf::Color(255,255,255));
@@ -94,20 +99,24 @@ int Menu_State::get_next_state()
 {
     if(startgame)
     {
+		menu_song.pause();
         startgame = false;
         return RESTART_GAME;
     }
     else if(settings)
     {
+		
         settings = false;
         return SETTING_STATE;
     }
     else if(exit)
     {
+		menu_song.pause();
         return EXIT_STATE;
     }
     else
     {
+		
         return MENU_STATE;
     }
 }
