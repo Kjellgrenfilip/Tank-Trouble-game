@@ -24,5 +24,6 @@ static float gridsize_y = screen_height/pixel_resolution_y;
 float const fps{60.0};
 
 int const MENU_ITEMS{3};
+int const MENU_ITEMS1{4};
 
 float const pi{3.14159265359};

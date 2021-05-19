@@ -54,6 +54,10 @@ void Resource_Manager::get_texture()
         {
             throw std::invalid_argument("cannot open explosion_texture");
         }
+        if(!controls_texture.loadFromFile("resources/textures/Controls.png"))
+        {
+            throw std::invalid_argument("cannot open controls_texture");
+        }
 		
     }
 
@@ -162,6 +166,14 @@ sf::Texture& Resource_Manager::get_texture_shield()
             get_texture();
         }
         return explosion_texture;
+    }
+     sf::Texture& Resource_Manager::get_texture_controls()
+    {
+        if(controls_texture.getSize() == sf::Vector2u(0,0))
+        {
+            get_texture();
+        }
+        return controls_texture;
     }
 
     void Resource_Manager::load_game_map(int mapID)

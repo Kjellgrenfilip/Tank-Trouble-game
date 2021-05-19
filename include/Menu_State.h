@@ -20,12 +20,14 @@ public:
     
 
 private:
-    sf::Text text[MENU_ITEMS];
+    sf::Text text[MENU_ITEMS1];
     sf::Font font;
 	sf::Sprite background;
+	sf::Sprite control_background;
     bool startgame;
     bool settings;
     bool exit;
+    bool controls;
 
     int menu_select;
     

@@ -16,6 +16,7 @@ class Resource_Manager
         static inline sf::Texture rocket_texture;
         static inline sf::Texture speedboost_texture;
         static inline sf::Texture background_texture;
+        static inline sf::Texture controls_texture;
         static inline sf::Texture wall_texture;
         static inline sf::Texture floor_texture;
         static inline sf::Texture explosion_texture;
@@ -39,6 +40,7 @@ class Resource_Manager
         static sf::Texture& get_texture_speedboost();
         static sf::Texture& get_texture_rocket_projectile();
         static sf::Texture& get_texture_background();
+        static sf::Texture& get_texture_controls();
         static sf::Texture& get_texture_wall();
         static sf::Texture& get_texture_floor();
         static sf::Texture& get_texture_explosion();
