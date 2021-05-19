@@ -8,6 +8,8 @@
 #include <vector>
 #include "Shotgun.h"
 #include "Rocket.h"
+#include "Speed_Boost.h"
+#include "Shield.h"
 
 class Player
 {
@@ -20,6 +22,7 @@ public:
 	
 	sf::FloatRect get_hitbox() const;                           // Returnar playerns hitbox
 	std::vector<Bullet>& get_bullets();                        	// Hämtar en vector med bullets
+    std::vector<Rocket_Projectile>& get_rockets();
     sf::Vector2f get_position();                                // returnerar spelarens position    
     sf::Vector2f get_old_position();                            // returnerar spelaren position på bilden innan
     void set_tank_pos(sf::Vector2f new_pos);                    // flyttar spelaren

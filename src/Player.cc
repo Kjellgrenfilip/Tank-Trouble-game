@@ -31,6 +31,18 @@ void Player::update(Player& p2)
     }), end(bullets));
     */
 
+    //Kolla eventuella power ups som är aktiva
+    if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr && my_power->active_on_player)
+    {
+        if(my_power->active_timer <= 0)
+        {
+            speed = 4.0;
+            my_power.reset();
+        }
+        else
+            my_power->active_timer--;
+    }
+
     //Uppdatera alla bullets
 	for (auto & bullet : bullets)
 	{
@@ -75,7 +87,7 @@ void Player::render(sf::RenderTarget & window)
 	}
 	
 	print_player_text(window);   //skriver ut "Player1: --hjärtan--. Antalet hjärtan justeras med hjälp av players hp
-			 
+	
 }
 
 void Player::event_handler(sf::Event event)
@@ -120,7 +132,8 @@ void Player::event_handler(sf::Event event)
             if(event.key.code == sf::Keyboard::Key::G && my_power != nullptr)
 			{
                 if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
-                {
+                {   
+                    //Skicka iväg tre kulor med olika vinkel
                     bullets.push_back(Bullet(pos, rot-85));
                     bullets.push_back(Bullet(pos, rot-90));
                     bullets.push_back(Bullet(pos, rot-95));
@@ -128,8 +141,26 @@ void Player::event_handler(sf::Event event)
                 }
                 if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
                 {
+                    //Skicka iväg en raket
                     rockets.push_back(Rocket_Projectile(pos, rot-90));
                     my_power.reset();
+                }
+                if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
+                {
+                    if(!my_power->active_on_player)
+                    {
+                        my_power->active_on_player = true;
+                        my_power->active_timer = 180;   //3 sekunder i 60 FPS
+                        speed = 8.0;                    //Dubbla hastigheten
+                    }
+                }
+                if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
+                {
+                    //Aktivera sköld
+                    if(!my_power->active_on_player)
+                    {
+                       my_power->active_on_player = true;
+                    }
                 }
 			}
 		}   
@@ -187,7 +218,12 @@ std::vector<Bullet>& Player::get_bullets()
 {
 	return bullets;
 }
-	
+
+std::vector<Rocket_Projectile>& Player::get_rockets()
+{
+    return rockets;
+}
+
 sf::Vector2f Player::get_position()
 {
 	return pos;
@@ -267,13 +303,20 @@ void Player::check_bullets(Player & p2)
 	for (auto it = bullets.begin(); it != bullets.end();)
 	{
 		if (it->getBounds().intersects(p2.get_hitbox()))
-		{
-			p2.hp--;
+		{   //Kolla om spelaren har aktiv sköld
+            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->active_on_player)
+            {
+                p2.my_power.reset();
+            }
+            else
+            {
+                p2.hp--;
+            }
 			it->lifetime = 0;
-			if (p2.hp == 0)
-				{
-					p2.destroyed = true;
-				}
+            if (p2.hp == 0)
+			{
+				p2.destroyed = true;
+			}
 		}
 		
 		if (it->lifetime == 0)

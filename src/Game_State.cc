@@ -104,6 +104,17 @@ void Game_State::bullet_wall_collision_handler()
                 }
             }
         }
+        for(auto & rocket : player.get_rockets())
+        {
+            for(auto & tile : game_map.tiles)
+            {
+                sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
+                if(!tile.passable && rocket.getBounds().intersects(tile_rect))
+                {
+
+                }
+            }
+        }
     }
 }
 
