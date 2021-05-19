@@ -130,7 +130,7 @@ std::string Game_Map::random_map(int mapID)
     if(mapID == 0)
     {
         srand(time(0));
-        choice = rand()%3;
+        choice = rand()%5;
     }
     else
     {
@@ -147,6 +147,12 @@ std::string Game_Map::random_map(int mapID)
                 break;
         case 2:
                 rand_map = "resources/maps/map3.txt";
+                break;
+        case 3:
+                rand_map = "resources/maps/map4.txt";
+                break;
+        case 4:
+                rand_map = "resources/maps/map5.txt";
                 break;
         default:
                 rand_map = "no such map";
