@@ -15,13 +15,15 @@ Setting_State::Setting_State()
     }
     text[0] = sf::Text{"Return", font, 52 };
     text[0].setFillColor(sf::Color(255,0,0));
-    text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / MENU_ITEMS - (text[0].getGlobalBounds().height + 10));
-    text[1] = sf::Text{"Load Map 1", font, 52 };
-    text[1].setFillColor(sf::Color(255,255,255));
-    text[1].setPosition(screen_width / 2 - text[1].getGlobalBounds().width / 2, screen_height / MENU_ITEMS);
-    text[2] = sf::Text{"Load Map 2", font, 52 };
-    text[2].setFillColor(sf::Color(255,255,255));
-    text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[2].getGlobalBounds().height + 10));
+    text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / SETTING_ITEMS - (text[0].getGlobalBounds().height + 10));
+    for(int i{1}; i < SETTING_ITEMS; i++)
+    {
+        std::string temp{"Load Map "};
+        temp += std::to_string(i);
+        text[i] = sf::Text{temp, font, 52 };
+        text[i].setFillColor(sf::Color(255,0,0));
+        text[i].setPosition(screen_width / 2 - text[i].getGlobalBounds().width / 2, screen_height / SETTING_ITEMS + (text[i].getGlobalBounds().height + 10) * (i - 1));
+    }
 }
 
 void Setting_State::event_handler(sf::Event event)
@@ -44,12 +46,27 @@ void Setting_State::event_handler(sf::Event event)
                     exit = true;
                     Resource_Manager::load_game_map(2);
             }
+            else if(menu_select == 3)
+            {
+                    exit = true;
+                    Resource_Manager::load_game_map(3);
+            }
+            else if(menu_select == 4)
+            {
+                    exit = true;
+                    Resource_Manager::load_game_map(4);
+            }
+            else if(menu_select == 5)
+            {
+                    exit = true;
+                    Resource_Manager::load_game_map(5);
+            }
         }
         if(event.key.code == sf::Keyboard::Up)
         {
             if(menu_select == 0)
             {
-                menu_select = 2;
+                menu_select = 5;
             }
             else
             {
@@ -58,7 +75,7 @@ void Setting_State::event_handler(sf::Event event)
         }
         if(event.key.code == sf::Keyboard::Down)
         {
-            if(menu_select == 2)
+            if(menu_select == 5)
             {
                 menu_select = 0;
             }
@@ -76,7 +93,7 @@ void Setting_State::game_event_handler(sf::Event)
 
 void Setting_State::update()
 {
-    for(int i{}; i < MENU_ITEMS; i++)
+    for(int i{}; i < SETTING_ITEMS; i++)
     {
         text[i].setFillColor(sf::Color(255,255,255));
     }
@@ -85,7 +102,7 @@ void Setting_State::update()
 
 void Setting_State::render(sf::RenderTarget & target)
 {
-    for(int i{}; i < MENU_ITEMS; i++)
+    for(int i{}; i < SETTING_ITEMS; i++)
     {
         target.draw(text[i]);
     }

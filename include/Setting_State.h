@@ -17,7 +17,7 @@ public:
     virtual int get_next_state() override;
 
 private:
-    sf::Text text[MENU_ITEMS];
+    sf::Text text[SETTING_ITEMS];
     sf::Font font;
 
     bool exit;

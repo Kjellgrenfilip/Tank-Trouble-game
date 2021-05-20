@@ -25,5 +25,6 @@ float const fps{60.0};
 
 int const MENU_ITEMS{3};
 int const MENU_ITEMS1{4};
+int const SETTING_ITEMS{6};
 
 float const pi{3.14159265359};
