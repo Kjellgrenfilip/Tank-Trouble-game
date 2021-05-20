@@ -343,34 +343,31 @@ void Player::print_player_text(sf::RenderTarget & target)
     }	
 	sf::Text text1{"Player 1:", font, 32};
 	sf::Text text2{"Player 2:", font, 32};
-	for (int i{1}; i < 3; i++)
-	{
-		if (i == 1)
-		{
-			textsquare.setPosition(0,0);
-			target.draw(textsquare);
-			text1.setFillColor(sf::Color{175,40,40});
-			text1.setPosition(10, 0);
-			target.draw(text1);
-			if(my_power!=nullptr && player_ID == 1)
-			{
-				my_power->get_sprite().setPosition(textsquare.getPosition().x+textsquare.getGlobalBounds().width,0);
-				target.draw(my_power->get_sprite());
-			}
 
+	if (player_ID == 1)
+	{
+		textsquare.setPosition(0,0);
+		target.draw(textsquare);
+		text1.setFillColor(sf::Color{175,40,40});
+		text1.setPosition(10, 0);
+		target.draw(text1);
+		if(my_power!=nullptr && player_ID == 1)
+		{
+			my_power->get_sprite().setPosition(textsquare.getPosition().x+textsquare.getGlobalBounds().width,0);
+			target.draw(my_power->get_sprite());
 		}
-		if (i == 2)
-		{	
-			textsquare.setPosition(screen_width-textsquare.getGlobalBounds().width, 0);
-			target.draw(textsquare);
-			text2.setFillColor(sf::Color{28,24,128});
-			text2.setPosition(screen_width-220, 0);
-			target.draw(text2);
-			if(my_power!=nullptr && player_ID == 2)
-			{
-				my_power->get_sprite().setPosition(textsquare.getPosition().x-gridsize_x,0);
-				target.draw(my_power->get_sprite());
-			}
+	}
+	if (player_ID == 2)
+	{	
+		textsquare.setPosition(screen_width-textsquare.getGlobalBounds().width, 0);
+		target.draw(textsquare);
+		text2.setFillColor(sf::Color{28,24,128});
+		text2.setPosition(screen_width-220, 0);
+		target.draw(text2);
+		if(my_power!=nullptr && player_ID == 2)
+		{
+			my_power->get_sprite().setPosition(textsquare.getPosition().x-gridsize_x,0);
+			target.draw(my_power->get_sprite());
 		}
 	}
 
