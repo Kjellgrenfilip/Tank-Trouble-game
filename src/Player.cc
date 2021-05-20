@@ -352,6 +352,14 @@ void Player::print_player_text(sf::RenderTarget & target)
 			text1.setFillColor(sf::Color{175,40,40});
 			text1.setPosition(10, 0);
 			target.draw(text1);
+			if(getPowerUp()!=nullptr && player_ID == 1)
+			{
+				//sf::Sprite temp{getPlayerPowerSprite()};
+				//temp.setPosition(textsquare.getPosition().x+textsquare.getGlobalBounds().width,0);
+				my_power->get_sprite().setPosition(textsquare.getPosition().x+textsquare.getGlobalBounds().width,0);
+				target.draw(my_power->get_sprite());
+			}
+
 		}
 		if (i == 2)
 		{	
@@ -360,6 +368,14 @@ void Player::print_player_text(sf::RenderTarget & target)
 			text2.setFillColor(sf::Color{28,24,128});
 			text2.setPosition(screen_width-220, 0);
 			target.draw(text2);
+			if(getPowerUp()!=nullptr && player_ID == 2)
+			{
+				//sf::Sprite temp{getPlayerPowerSprite()};
+				//temp.setPosition(textsquare.getPosition().x-gridsize_x,0);
+				//target.draw(temp);
+				my_power->get_sprite().setPosition(textsquare.getPosition().x-gridsize_x,0);
+				target.draw(my_power->get_sprite());
+			}
 		}
 	}
 
@@ -454,5 +470,12 @@ bool Player::set_power_up(std::shared_ptr<Power_Up> &new_power)
         return false;
     }
 }
+sf::Sprite& Player::getPlayerPowerSprite()
+{
+	return my_power->get_sprite();
+}
 
-
+std::shared_ptr<Power_Up>& Player::getPowerUp()
+{
+	return my_power;
+}

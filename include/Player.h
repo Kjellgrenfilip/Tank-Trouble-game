@@ -29,7 +29,8 @@ public:
     void set_tank_pos(sf::Vector2f new_pos);                    // flyttar spelaren
     bool set_power_up(std::shared_ptr<Power_Up> &new_power);    // ny pointer till power_up
     sf::Sprite const& getPlayerSprite() const;                  // returnerar spelarens sprite
-	
+	sf::Sprite& getPlayerPowerSprite();
+    std::shared_ptr<Power_Up>& getPowerUp();
 	bool is_destroyed();
 private:
 	
