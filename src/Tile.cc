@@ -2,12 +2,9 @@
 #include<SFML/Graphics.hpp>
 #include "Tile.h"
 #include <string>
-Tile::Tile(sf::Vector2f const& pos,bool pas,std::string const& name, sf::Texture & tile)
+Tile::Tile(sf::Vector2f const& pos, bool pas, sf::Texture & tile, std::string const& name)
+    : position{pos}, name{name}, tile{tile}, passable{pas}
 {
-    this->position = pos;
-    this->passable = pas;
-    this->name = name;
-    this->tile.setTexture(tile);
     this->tile.setScale(0.2, 0.2);
     this->tile.setPosition(pos);
 }
@@ -25,4 +22,9 @@ std::string Tile::get_name()
 void Tile::setPowerUp()
 {
     available_power = true;
+}
+
+sf::Sprite & Tile::get_sprite()
+{
+    return tile;
 }

@@ -39,12 +39,12 @@ void Game_Map::generate(int mapID)
         if(temp_string == "1")
         {
             //tilen är en vägg
-            Tile temp_tile(pos, false, "wall", Resource_Manager::get_texture_wall());
+            Tile temp_tile(pos, false, Resource_Manager::get_texture_wall(), "wall");
             this->tiles.push_back(temp_tile);
         }
         else
         {
-            Tile temp_tile(pos, true, "floor", Resource_Manager::get_texture_floor());
+            Tile temp_tile(pos, true, Resource_Manager::get_texture_floor(), "floor");
             this->tiles.push_back(temp_tile);
         }
         if(pos_x>=pixel_resolution_x-1)
@@ -113,9 +113,9 @@ void Game_Map::update()
 
 void Game_Map::render(sf::RenderTarget &window)
 {
-        for(auto i : tiles)
+        for(auto tile : tiles)
         {
-            window.draw(i.tile);
+            window.draw(tile.get_sprite());
         }
         for(auto & i : power_ups)
         {
