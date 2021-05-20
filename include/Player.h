@@ -48,7 +48,8 @@ private:
     std::vector<Bullet> bullets;   //Behållare för bullets
     std::vector<Rocket_Projectile> rockets;
     sf::Sprite tank;
-    sf::Sprite explosion;			
+    sf::Sprite explosion;
+    sf::RectangleShape textsquare;			
     std::shared_ptr<Power_Up> my_power{nullptr};
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;

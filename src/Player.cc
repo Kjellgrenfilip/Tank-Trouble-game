@@ -10,7 +10,7 @@ Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, 
 		shot_sound{shot}, rocket_sound{rocket},
 		shotgun_sound{shotgun}, hearts{}, 
 		bullets{}, rockets{}, 
-		tank{t}, explosion{expl}, 
+		tank{t}, explosion{expl}, textsquare{},
 		destroyed{false}, speed{4.0},
 		explosion_counter{20}, explosion_scale{0.2}
 {
@@ -29,6 +29,10 @@ Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, 
 	}
 	auto size2{expl.getSize()};
 	explosion.setOrigin(size2.x/2, size2.y/2);
+
+	textsquare.setFillColor(sf::Color{255,255,255,100});
+	textsquare.setSize(sf::Vector2f{40*6, 40});
+	
 }
 
 void Player::update(Player& p2)
@@ -328,9 +332,8 @@ void Player::set_hearts(sf::Texture& h)
 
 void Player::print_player_text(sf::RenderTarget & target)
 {
-	sf::RectangleShape square;
-	square.setFillColor(sf::Color{255,255,255,100});
-	square.setSize(sf::Vector2f{40*6, 40});
+	
+	
 	
 	std::string file{"resources/fonts/Mandala.ttf"};
     sf::Font font;
@@ -344,15 +347,16 @@ void Player::print_player_text(sf::RenderTarget & target)
 	{
 		if (i == 1)
 		{
-			target.draw(square);
+			textsquare.setPosition(0,0);
+			target.draw(textsquare);
 			text1.setFillColor(sf::Color{175,40,40});
 			text1.setPosition(10, 0);
 			target.draw(text1);
 		}
 		if (i == 2)
 		{	
-			square.setPosition(screen_width-square.getGlobalBounds().width, 0);
-			target.draw(square);
+			textsquare.setPosition(screen_width-textsquare.getGlobalBounds().width, 0);
+			target.draw(textsquare);
 			text2.setFillColor(sf::Color{28,24,128});
 			text2.setPosition(screen_width-220, 0);
 			target.draw(text2);
