@@ -8,8 +8,8 @@ Player::Player(int ID, sf::Vector2f const& p)
 	: 	hp{3}, player_ID{ID}, 
 		pos{p}, rot{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
 		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
-		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, hearts{}, 
-		bullets{}, rockets{}, 
+		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, up{}, down{}, left{}, right{}, fire{}, activate_powerup{},
+		hearts{}, bullets{}, rockets{}, 
 		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
 		destroyed{false}, speed{4.0},
 		explosion_counter{20}, explosion_scale{0.2}
@@ -32,17 +32,28 @@ Player::Player(int ID, sf::Vector2f const& p)
 
 	textsquare.setFillColor(sf::Color{255,255,255,100});
 	textsquare.setSize(sf::Vector2f{40*6, 40});
-	
+	if (ID == 1)
+	{
+		up = sf::Keyboard::Key::W;
+		down = sf::Keyboard::Key::S;
+		left = sf::Keyboard::Key::A;
+		right = sf::Keyboard::Key::D;
+		fire = sf::Keyboard::Key::F;
+		activate_powerup = sf::Keyboard::Key::G;
+	}
+	else if (ID == 2)
+	{
+		up = sf::Keyboard::Key::Up;
+		down = sf::Keyboard::Key::Down;
+		left = sf::Keyboard::Key::Left;
+		right = sf::Keyboard::Key::Right;
+		fire = sf::Keyboard::Key::RControl;
+		activate_powerup = sf::Keyboard::Key::RShift;
+	}
 }
 
 void Player::update(Player& p2)
 {
-	/*  Ta bort kulor som använt alla studs
-    bullets.erase(remove_if(begin(bullets), end(bullets), [] (Bullet bullet) {
-        return bullet.lifetime <= 0;
-    }), end(bullets));
-    */
-
     //Kolla eventuella power ups som är aktiva
     if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr && my_power->active_on_player)
     {
@@ -120,32 +131,26 @@ void Player::event_handler(sf::Event event)
 	forward_direction.y = sin((pi/180)*(tank.getRotation()-90));
 	sf::Vector2f forward_movement = forward_direction * speed;
 	
-	if (player_ID == 1)
-	{
-		if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W) )
+		if ( sf::Keyboard::isKeyPressed (up) )
         {
 			tank.move(forward_movement);
-			//pos = tank.getPosition();
         }
-       if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S) )
+       if ( sf::Keyboard::isKeyPressed (down) )
         {
 			tank.move (-forward_movement);
-			//pos = tank.getPosition();
         }
-        if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::A) )
+        if ( sf::Keyboard::isKeyPressed (left) )
         {
             tank.rotate (-3);    
-			//rot = tank.getRotation();
         }
-       if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::D) )
+       if ( sf::Keyboard::isKeyPressed (right) )
         {
             tank.rotate (3);
-			//rot = tank.getRotation();
 		}
 		
 	if(event.type == sf::Event::KeyReleased)
 		{
-			if ( event.key.code == sf::Keyboard::Key::F)
+			if ( event.key.code == fire)
 			{
 				if (bullets.size() < 4)
 				{
@@ -154,7 +159,7 @@ void Player::event_handler(sf::Event event)
 				}
 			}
 
-            if(event.key.code == sf::Keyboard::Key::G && my_power != nullptr)
+            if(event.key.code == activate_powerup && my_power != nullptr)
 			{
                 if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
                 {   
@@ -191,79 +196,8 @@ void Player::event_handler(sf::Event event)
                 }
 			}
 		}   
-	}
-	if (player_ID == 2)
-	{
-		if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Up) )
-        {
-			tank.move(forward_movement);
-			//pos = tank.getPosition();
-        }
-       if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Down) )
-        {
-			tank.move (-forward_movement);
-			//pos = tank.getPosition();
-        }
-        if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Left) )
-        {
-            tank.rotate (-3);    
-			//rot = tank.getRotation();
-        }
-       if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Right) )
-        {
-            tank.rotate (3);
-			//rot = tank.getRotation();
-		}
-		
-		if(event.type == sf::Event::KeyReleased)
-		{
-			if ( event.key.code == sf::Keyboard::Key::RControl)
-			{
-				shot_sound.play();
-				if (bullets.size() < 4)
-				bullets.push_back(Bullet(pos, rot-90));
-				
-			}
-			if(event.key.code == sf::Keyboard::Key::RShift && my_power != nullptr)
-			{
-                if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
-                {   
-                    //Skicka iväg tre kulor med olika vinkel
-                    shotgun_sound.play();
-                    bullets.push_back(Bullet(pos, rot-85));
-                    bullets.push_back(Bullet(pos, rot-90));
-                    bullets.push_back(Bullet(pos, rot-95));
-                    my_power.reset();
-                }
-                if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
-                {
-                    //Skicka iväg en raket
-                    rocket_sound.play();
-                    rockets.push_back(Rocket_Projectile(pos, rot-90));
-                    my_power.reset();
-                }
-                if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
-                {
-                    if(!my_power->active_on_player)
-                    {
-                        my_power->active_on_player = true;
-                        my_power->active_timer = 180;   //3 sekunder i 60 FPS
-                        speed = 8.0;                    //Dubbla hastigheten
-                    }
-                }
-                if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
-                {
-                    //Aktivera sköld
-                    if(!my_power->active_on_player)
-                    {
-                       my_power->active_on_player = true;
-                    }
-                }
-			}
-		}
-	}
-
 }
+	
 
 
 sf::Sprite const& Player::getPlayerSprite() const

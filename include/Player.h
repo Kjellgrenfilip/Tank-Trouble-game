@@ -42,6 +42,13 @@ private:
 	sf::Sound rocket_sound;
 	sf::Sound shotgun_sound;
 	
+	sf::Keyboard::Key up;
+	sf::Keyboard::Key down;
+	sf::Keyboard::Key left;
+	sf::Keyboard::Key right;
+	sf::Keyboard::Key fire;
+	sf::Keyboard::Key activate_powerup;
+	
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
     std::vector<Bullet> bullets;   //Behållare för bullets
     std::vector<Rocket_Projectile> rockets;
