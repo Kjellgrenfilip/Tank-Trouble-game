@@ -81,16 +81,7 @@ void Game::start()
 							);
 				current_state = GAME_STATE;
 			} 
-		else if (current_state == RESTART_COUNT)
-			{
-				states.erase(WIN_STATE);
-				states.insert(  std::pair<int,
-                    std::unique_ptr<State>>(
-                        {   WIN_STATE, 
-                            std::make_unique<Win_State>()})
-                 );
-                 current_state = MENU_STATE;
-			 }
+		
         delay (clock);
     }
 }

@@ -14,13 +14,13 @@ Pause_State::Pause_State()
     }
     text[0] = sf::Text{"Resume", font, 52 };
     text[0].setFillColor(sf::Color(255,0,0));
-    text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / MENU_ITEMS - (text[0].getGlobalBounds().height + 15));
+    text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS - (text[0].getGlobalBounds().height + 15));
     text[1] = sf::Text{"Return to Menu", font, 52 };
     text[1].setFillColor(sf::Color(255,255,255));
-    text[1].setPosition(screen_width / 2 - text[1].getGlobalBounds().width / 2, screen_height / MENU_ITEMS);
+    text[1].setPosition(screen_width / 2 - text[1].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS);
     text[2] = sf::Text{"Quit to desktop", font, 52 };
     text[2].setFillColor(sf::Color(255,255,255));
-    text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[2].getGlobalBounds().height + 10));
+    text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS + (text[2].getGlobalBounds().height + 10));
 }
 
 void Pause_State::event_handler(sf::Event event)
@@ -46,7 +46,7 @@ void Pause_State::event_handler(sf::Event event)
         {
             if(menu_select == 0)
             {
-                menu_select = 2;
+                menu_select = PAUSE_ITEMS;
             }
             else
             {
@@ -55,7 +55,7 @@ void Pause_State::event_handler(sf::Event event)
         }
         if(event.key.code == sf::Keyboard::Down)
         {
-            if(menu_select == 2)
+            if(menu_select == PAUSE_ITEMS)
             {
                 menu_select = 0;
             }
@@ -73,7 +73,7 @@ void Pause_State::game_event_handler(sf::Event)
 
 void Pause_State::update()
 {
-    for(int i{}; i < MENU_ITEMS; i++)
+    for(int i{}; i < PAUSE_ITEMS; i++)
     {
         text[i].setFillColor(sf::Color(255,255,255));
     }
@@ -82,18 +82,10 @@ void Pause_State::update()
 
 void Pause_State::render(sf::RenderTarget & target)
 {
-    for(int i{}; i < MENU_ITEMS; i++)
+    for(int i{}; i < PAUSE_ITEMS; i++)
     {
         target.draw(text[i]);
     }
-
-    // auto bounds { text.getGlobalBounds () };
-    // auto size   { target.getSize () };
-
-    // text.setPosition ((size.x - bounds.width) / 2,
-    //                   (size.y - bounds.height) / 2);
-
-    // target.draw (text);
 }
 
 int Pause_State::get_next_state()

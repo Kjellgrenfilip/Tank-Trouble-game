@@ -32,41 +32,33 @@ void Setting_State::event_handler(sf::Event event)
     {
         if(event.key.code == sf::Keyboard::Return)
         {
-            if(menu_select == 0)
+            if(menu_select == 1)
             {
-                exit = true;
-            }
-            else if(menu_select == 1)
-            {
-                    exit = true;
                     Resource_Manager::load_game_map(1);
             }
             else if(menu_select == 2)
             {
-                    exit = true;
                     Resource_Manager::load_game_map(2);
             }
             else if(menu_select == 3)
             {
-                    exit = true;
                     Resource_Manager::load_game_map(3);
             }
             else if(menu_select == 4)
             {
-                    exit = true;
                     Resource_Manager::load_game_map(4);
             }
             else if(menu_select == 5)
             {
-                    exit = true;
                     Resource_Manager::load_game_map(5);
             }
+            exit = true;
         }
         if(event.key.code == sf::Keyboard::Up)
         {
             if(menu_select == 0)
             {
-                menu_select = 5;
+                menu_select = SETTING_ITEMS;
             }
             else
             {
@@ -75,7 +67,7 @@ void Setting_State::event_handler(sf::Event event)
         }
         if(event.key.code == sf::Keyboard::Down)
         {
-            if(menu_select == 5)
+            if(menu_select == SETTING_ITEMS)
             {
                 menu_select = 0;
             }

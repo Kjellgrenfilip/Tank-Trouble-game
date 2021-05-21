@@ -10,6 +10,10 @@ public:
     Collision_Handler();
 
     bool check_collision(sf::Sprite const& object1, sf::Sprite const& object2);
+    void tank_wall_collision(std::vector<Player> & players);
+    void bullet_wall_collision(std::vector<Player> & players);
+    void tank_tank_collision(std::vector<Player> & players);
+    void tank_powerup_collision(std::vector<Player> & players);
 
 private:
 
@@ -30,10 +34,13 @@ private:
         sf::IntRect boundery;
     };
 
+    Game_Map & game_map;
+
     sf::Vector2f obj1pos;
     sf::Vector2f obj2pos;
-
     sf::Vector2f axes[4];
 
+    sf::Sound bounce_sound;
+    sf::Sound powerup_sound;
 };
 #endif

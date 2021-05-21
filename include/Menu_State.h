@@ -18,12 +18,12 @@ public:
     
     virtual int get_next_state() override;
     
-
 private:
-    sf::Text text[MENU_ITEMS1];
+    sf::Text text[MENU_ITEMS];
     sf::Font font;
-	sf::Sprite background;
+	sf::Sprite menu_background;
 	sf::Sprite control_background;
+    
     bool startgame;
     bool settings;
     bool exit;

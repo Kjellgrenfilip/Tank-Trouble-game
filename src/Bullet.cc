@@ -1,7 +1,29 @@
 #include "Bullet.h"
 #include <cmath>
 
-Bullet::Bullet(sf::Vector2f pos, float rot) : lifetime{4}, velocity{ static_cast<float>(5*std::cos(rot*M_PI/180.0)), static_cast<float>(5*std::sin(rot*M_PI/180.0))}, sprite{5.0}
+Projectile::Projectile(float rot, int life) 
+    :   lifetime{life}, velocity{   static_cast<float>(5*std::cos(rot*M_PI/180.0)), 
+                                    static_cast<float>(5*std::sin(rot*M_PI/180.0))}
+{
+}
+
+sf::Vector2f & Projectile::get_velocity()
+{
+    return velocity;
+}
+
+void Projectile::reverse_x()
+{
+    velocity.x = velocity.x * (-1.0);
+}
+
+void Projectile::reverse_y()
+{
+    velocity.y = velocity.y * (-1.0);
+}
+
+Bullet::Bullet(sf::Vector2f const & pos, float rot) 
+    :   Projectile{rot, 4}, sprite{5.0}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     sprite.setOrigin (5, 5);
@@ -23,24 +45,8 @@ sf::FloatRect Bullet::getBounds()
     return sprite.getGlobalBounds();
 }
 
-sf::Vector2f Bullet::get_velocity()
-{
-    return velocity;
-}
-
-void Bullet::reverse_x()
-{
-    velocity.x = velocity.x * (-1.0);
-}
-
-void Bullet::reverse_y()
-{
-    velocity.y = velocity.y * (-1.0);
-}
-
-/////Rocket//////////////////
-
-Rocket_Projectile::Rocket_Projectile(sf::Vector2f pos, float rot) : lifetime{1}, velocity{ static_cast<float>(5*std::cos(rot*M_PI/180.0)), static_cast<float>(5*std::sin(rot*M_PI/180.0))}, sprite{Resource_Manager::get_texture_rocket_projectile()}
+Rocket_Projectile::Rocket_Projectile(sf::Vector2f const & pos, float rot) 
+    :   Projectile{rot, 1}, sprite{Resource_Manager::get_texture_rocket_projectile()}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     sprite.setOrigin (10, 10);
@@ -62,17 +68,3 @@ sf::FloatRect Rocket_Projectile::getBounds()
     return sprite.getGlobalBounds();
 }
 
-sf::Vector2f Rocket_Projectile::get_velocity()
-{
-    return velocity;
-}
-
-void Rocket_Projectile::reverse_x()
-{
-    velocity.x = velocity.x * (-1.0);
-}
-
-void Rocket_Projectile::reverse_y()
-{
-    velocity.y = velocity.y * (-1.0);
-}

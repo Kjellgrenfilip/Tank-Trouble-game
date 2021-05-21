@@ -332,9 +332,6 @@ void Player::set_hearts(sf::Texture& h)
 
 void Player::print_player_text(sf::RenderTarget & target)
 {
-	
-	
-	
 	std::string file{"resources/fonts/Mandala.ttf"};
     sf::Font font;
     if(!font.loadFromFile(file))

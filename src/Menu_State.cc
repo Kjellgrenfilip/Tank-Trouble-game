@@ -3,9 +3,9 @@
 #include "Resource_Manager.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
+#include <stdexcept>
 Menu_State::Menu_State()
-    :   font{}, background{}, control_background{}, startgame{false}, settings{false}, exit{false}, controls{false}, menu_select{0}, menu_song{}  
+    :   font{}, menu_background{}, control_background{}, startgame{false}, settings{false}, exit{false}, controls{false}, menu_select{0}, menu_song{}  
 {
     std::string file{"resources/fonts/Amatic-Bold.ttf"};
     if(!font.loadFromFile(file))
@@ -14,21 +14,23 @@ Menu_State::Menu_State()
     }
     text[0] = sf::Text{"Play", font, 52 };
     text[0].setFillColor(sf::Color(255,0,0));
-    text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / MENU_ITEMS1 - (text[0].getGlobalBounds().height + 10));
+    text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / MENU_ITEMS - (text[0].getGlobalBounds().height + 10));
     text[1] = sf::Text{"Settings", font, 52 };
     text[1].setFillColor(sf::Color(255,255,255));
-    text[1].setPosition(screen_width / 2 - text[1].getGlobalBounds().width / 2, screen_height / MENU_ITEMS1 );
+    text[1].setPosition(screen_width / 2 - text[1].getGlobalBounds().width / 2, screen_height / MENU_ITEMS );
     text[2] = sf::Text{"Controls", font, 52 };
     text[2].setFillColor(sf::Color(255,255,255));
-    text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS1 + (text[2].getGlobalBounds().height + 10));
+    text[2].setPosition(screen_width / 2 - text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[2].getGlobalBounds().height + 10));
     text[3] = sf::Text{"Quit to desktop", font, 52 };
     text[3].setFillColor(sf::Color(255,255,255));
-    text[3].setPosition(screen_width / 2 - text[3].getGlobalBounds().width / 2, screen_height / MENU_ITEMS1 + (text[3].getGlobalBounds().height + 10)*2);
+    text[3].setPosition(screen_width / 2 - text[3].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[3].getGlobalBounds().height + 10)*2);
 	
-	background.setTexture(Resource_Manager::get_texture_background());
+	menu_background.setTexture(Resource_Manager::get_texture_background());
 	control_background.setTexture(Resource_Manager::get_texture_controls());
 	if(!menu_song.openFromFile("resources/sounds/menu_music.ogg"))
-		std::cout << "hej" << std::endl;
+    {
+        throw std::logic_error("Can't open menu_music");
+    }
 	
 	menu_song.setLoop(true);
 	menu_song.play();
@@ -51,12 +53,14 @@ void Menu_State::event_handler(sf::Event event)
             }
             else if(menu_select == 2)
             {
-                if (controls==false)
-					{
-						controls = true;
-					}
+                if (controls == false)
+				{
+					controls = true;
+				}
 				else if(controls == true)
+                {
 					controls = false;
+                }
             }
             else if(menu_select == 3)
             {
@@ -67,7 +71,7 @@ void Menu_State::event_handler(sf::Event event)
         {
             if(menu_select == 0)
             {
-                menu_select = 3;
+                menu_select = MENU_ITEMS;
             }
             else
             {
@@ -76,7 +80,7 @@ void Menu_State::event_handler(sf::Event event)
         }
         if(event.key.code == sf::Keyboard::Down)
         {
-            if(menu_select == 3)
+            if(menu_select == MENU_ITEMS)
             {
                 menu_select = 0;
             }
@@ -93,8 +97,7 @@ void Menu_State::game_event_handler(sf::Event)
 
 void Menu_State::update()
 {
-    
-    for(int i{}; i < MENU_ITEMS1; i++)
+    for(int i{}; i < MENU_ITEMS; i++)
     {
         text[i].setFillColor(sf::Color(255,255,255));
     }
@@ -106,9 +109,9 @@ void Menu_State::render(sf::RenderTarget & target)
 	
 	if (!controls)
 	{
-	target.draw(background);
+	target.draw(menu_background);
     
-		for(int i{}; i < MENU_ITEMS1; i++)
+		for(int i{}; i < MENU_ITEMS; i++)
 		{
         target.draw(text[i]);
 		}
@@ -129,18 +132,15 @@ int Menu_State::get_next_state()
     }
     else if(settings)
     {
-		
         settings = false;
         return SETTING_STATE;
     }
     else if(exit)
     {
-		menu_song.pause();
         return EXIT_STATE;
     }
     else
     {
-		
         return MENU_STATE;
     }
 }

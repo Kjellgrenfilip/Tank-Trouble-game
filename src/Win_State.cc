@@ -13,16 +13,15 @@ Win_State::Win_State()
         throw std::invalid_argument("No font at location: " + file);
     }
     
-    
     menu_text[0] = sf::Text{"Play new round!", font, 52 };
     menu_text[0].setFillColor(sf::Color(255,0,0));
-    menu_text[0].setPosition(screen_width / 2 - menu_text[0].getGlobalBounds().width / 2, screen_height / MENU_ITEMS - (menu_text[0].getGlobalBounds().height + 15));
+    menu_text[0].setPosition(screen_width / 2 - menu_text[0].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS - (menu_text[0].getGlobalBounds().height + 15));
     menu_text[1] = sf::Text{"Return to Menu", font, 52 };
     menu_text[1].setFillColor(sf::Color(255,255,255));
-    menu_text[1].setPosition(screen_width / 2 - menu_text[1].getGlobalBounds().width / 2, screen_height / MENU_ITEMS);
+    menu_text[1].setPosition(screen_width / 2 - menu_text[1].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS);
     menu_text[2] = sf::Text{"Quit to desktop", font, 52 };
     menu_text[2].setFillColor(sf::Color(255,255,255));
-    menu_text[2].setPosition(screen_width / 2 - menu_text[2].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (menu_text[2].getGlobalBounds().height + 10));
+    menu_text[2].setPosition(screen_width / 2 - menu_text[2].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS + (menu_text[2].getGlobalBounds().height + 10));
 }
 
 void Win_State::event_handler(sf::Event event)
@@ -43,6 +42,7 @@ void Win_State::event_handler(sf::Event event)
             {
                 exit = true;
             }
+            Resource_Manager::load_game_map();
         }
         if(event.key.code == sf::Keyboard::Up)
         {
@@ -67,7 +67,6 @@ void Win_State::event_handler(sf::Event event)
             }
         }    
     }
-	
 }
 
 void Win_State::game_event_handler(sf::Event)
@@ -76,7 +75,7 @@ void Win_State::game_event_handler(sf::Event)
 
 void Win_State::update()
 {
-    for(int i{}; i < MENU_ITEMS; i++)
+    for(int i{}; i < PAUSE_ITEMS; i++)
     {
         menu_text[i].setFillColor(sf::Color(255,255,255));
     }
@@ -85,15 +84,15 @@ void Win_State::update()
 	winner = Game_State::get_winner();
 		
     if (winner == 1)
-		{
-			++player1wins;
-			win_text[0] = sf::Text{"Player " + std::to_string(winner) + " WON!", font, 100};
-		}
+	{
+		++player1wins;
+		win_text[0] = sf::Text{"Player " + std::to_string(winner) + " WON!", font, 100};
+	}
 	else if (winner == 2)
-		{
-			++player2wins;
-			win_text[0] = sf::Text{"Player " + std::to_string(winner) + " WON!", font, 100};
-		}
+	{
+		++player2wins;
+		win_text[0] = sf::Text{"Player " + std::to_string(winner) + " WON!", font, 100};
+	}
 	
     win_text[0].setFillColor(sf::Color::Yellow);
     win_text[0].setPosition(screen_width/2 - win_text[0].getGlobalBounds().width / 2, 0);
@@ -103,21 +102,18 @@ void Win_State::update()
     win_text[2] = sf::Text{"Player 2: " + std::to_string(player2wins) + " wins.", font, 36};
     win_text[2].setFillColor(sf::Color{28,24,128});
     win_text[2].setPosition(screen_width*0.75 - win_text[2].getGlobalBounds().width / 2, screen_height/2);
-	
 }
 
 void Win_State::render(sf::RenderTarget & target)
 {
-	for (int i{}; i < MENU_ITEMS; i++)
+	for (int i{}; i < PAUSE_ITEMS; i++)
 	{
 		target.draw(win_text[i]);
 	}
-	for(int i{}; i < MENU_ITEMS; i++)
+	for(int i{}; i < PAUSE_ITEMS; i++)
     {
         target.draw(menu_text[i]);
     }
-
- 
 }
 
 int Win_State::get_next_state()
@@ -130,7 +126,9 @@ int Win_State::get_next_state()
     else if(menu)
     {
         menu = false;
-        return RESTART_COUNT;
+        player1wins = 0;
+        player2wins = 0;
+        return MENU_STATE;
     }
     else if(exit)
     {

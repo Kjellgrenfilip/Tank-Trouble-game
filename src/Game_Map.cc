@@ -1,7 +1,10 @@
 #include <SFML/Graphics.hpp>
-#include "Game_Map.h"
 #include <fstream>
-#include <exception>
+#include <stdexcept>
+#include <memory>
+#include <iostream>
+
+#include "Game_Map.h"
 #include "Tile.h"
 #include "Constants.h"
 #include "Shield.h"
@@ -9,12 +12,9 @@
 #include "Shotgun.h"
 #include "Speed_Boost.h"
 #include "Resource_Manager.h"
-#include <memory>
 
-
-#include <iostream>
 Game_Map::Game_Map()
-    : power_ups{}, loaded{false}
+    : powerups{}, tiles{}
 {
     generate();
 }
@@ -25,7 +25,7 @@ void Game_Map::generate(int mapID)
     
     if(map_text.fail())
     {
-        //throw error here.
+        throw std::logic_error("No map at file location");
     }
 
     tiles.clear();
@@ -33,9 +33,9 @@ void Game_Map::generate(int mapID)
     std::string temp_string;
     float pos_x{};
     float pos_y{};
-    while(map_text>>temp_string)
+    while(map_text >> temp_string)
     {
-        sf::Vector2f pos{pos_x*gridsize_x,pos_y*gridsize_y};
+        sf::Vector2f pos{pos_x*gridsize_x, pos_y*gridsize_y};
         if(temp_string == "1")
         {
             //tilen är en vägg
@@ -47,7 +47,7 @@ void Game_Map::generate(int mapID)
             Tile temp_tile(pos, true, Resource_Manager::get_texture_floor(), "floor");
             this->tiles.push_back(temp_tile);
         }
-        if(pos_x>=pixel_resolution_x-1)
+        if(pos_x >= pixel_resolution_x - 1)
         {
             pos_x = 0;
             pos_y += 1;
@@ -57,7 +57,6 @@ void Game_Map::generate(int mapID)
             pos_x += 1;
         }
     }
-    loaded = true;
 }
 
 void Game_Map::update()
@@ -76,39 +75,37 @@ void Game_Map::update()
         switch(rand_num)
         {
             case 0:
-                    power_ups.push_back(std::make_shared<Shield>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Shield>(tiles.at(t).get_position()));
                     break;
             case 1:
-                    power_ups.push_back(std::make_shared<Rocket>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Rocket>(tiles.at(t).get_position()));
                     break;
             case 2:
-                    power_ups.push_back(std::make_shared<Shotgun>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Shotgun>(tiles.at(t).get_position()));
                     break;
             case 3:
-                    power_ups.push_back(std::make_shared<Speed_Boost>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Speed_Boost>(tiles.at(t).get_position()));
                     break;
             default:
-                    std::cout << "da fuq? random numer not 0-2" << std::endl;
+                    throw std::logic_error("Random number not 0-3");
         }
         tiles.at(t).setPowerUp();
     }
     // Kolla om power_up har gått ut, ta bort
-    for (size_t i{}; i < power_ups.size(); i++)
+    for (size_t i{}; i < powerups.size(); i++)
     {
-        if(power_ups.at(i) -> expired)
+        if(powerups.at(i) -> expired)
         {
-            power_ups.at(i).reset();                        
-            power_ups.erase(power_ups.begin() + i);
+            powerups.at(i).reset();                        
+            powerups.erase(powerups.begin() + i);
             i--;
         }
     }
 
-    for(auto & p : power_ups)
+    for(auto & p : powerups)
     {
         p->update();
     }
-
-    //std::cout << power_ups.size() << std::endl;
 }
 
 void Game_Map::render(sf::RenderTarget &window)
@@ -117,7 +114,7 @@ void Game_Map::render(sf::RenderTarget &window)
         {
             window.draw(tile.get_sprite());
         }
-        for(auto & i : power_ups)
+        for(auto & i : powerups)
         {
             i->render(window);
         }
@@ -160,3 +157,11 @@ std::string Game_Map::random_map(int mapID)
     }
     return rand_map;
 }
+    std::vector<Tile>& Game_Map::get_tiles()
+    {
+        return tiles;
+    }
+    std::vector<std::shared_ptr<Power_Up>>& Game_Map::get_powerups()
+    {
+        return powerups;
+    }

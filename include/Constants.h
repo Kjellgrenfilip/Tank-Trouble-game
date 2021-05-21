@@ -12,8 +12,6 @@ int const RESTART_COUNT{6};
 
 int const screen_width{1280};
 int const screen_height{720};
-//tillagda för kartan
-//static float resolution_gridsize = 32;
 
 static float pixel_resolution_x = 32;
 static float pixel_resolution_y = 18;
@@ -23,8 +21,8 @@ static float gridsize_y = screen_height/pixel_resolution_y;
 
 float const fps{60.0};
 
-int const MENU_ITEMS{3};
-int const MENU_ITEMS1{4};
+int const PAUSE_ITEMS{3};
+int const MENU_ITEMS{4};
 int const SETTING_ITEMS{6};
 
 float const pi{3.14159265359};
