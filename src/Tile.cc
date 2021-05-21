@@ -14,11 +14,6 @@ sf::Vector2f Tile::get_position()
     return position;
 }
 
-std::string Tile::get_name()
-{
-    return name;
-}
-
 void Tile::setPowerUp()
 {
     available_power = true;

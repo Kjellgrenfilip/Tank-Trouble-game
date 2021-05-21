@@ -81,7 +81,6 @@ void Game::start()
 							);
 				current_state = GAME_STATE;
 			} 
-		
         delay (clock);
     }
 }

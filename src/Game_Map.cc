@@ -35,7 +35,7 @@ void Game_Map::generate(int mapID)
     float pos_y{};
     while(map_text >> temp_string)
     {
-        sf::Vector2f pos{pos_x*gridsize_x, pos_y*gridsize_y};
+        sf::Vector2f pos{pos_x * gridsize_x, pos_y * gridsize_y};
         if(temp_string == "1")
         {
             //tilen är en vägg

@@ -73,7 +73,7 @@ bool Collision_Handler::check_collision(sf::Sprite const& object1, sf::Sprite co
     axes.push_back(sf::Vector2f(obj1.points[1].x - obj1.points[0].x, obj1.points[1].y - obj1.points[0].y));
     axes.push_back(sf::Vector2f(obj1.points[1].x - obj1.points[2].x, obj1.points[1].y - obj1.points[2].y));
     axes.push_back(sf::Vector2f(obj2.points[0].x - obj2.points[3].x, obj2.points[0].y - obj2.points[3].y));
-    axes.push_back(sf::Vector2f(obj2.points[0].x - obj2.points[1].x,obj2.points[0].y - obj2.points[1].y));
+    axes.push_back(sf::Vector2f(obj2.points[0].x - obj2.points[1].x, obj2.points[0].y - obj2.points[1].y));
 
     for(size_t i{0}; i < axes.size(); i++)
     {

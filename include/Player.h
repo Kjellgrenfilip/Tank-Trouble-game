@@ -29,8 +29,8 @@ public:
     bool set_power_up(std::shared_ptr<Power_Up> &new_power);    // ny pointer till power_up
     sf::Sprite const& getPlayerSprite() const;                  // returnerar spelarens sprite
 	bool is_destroyed();
-private:
-	
+
+private:	
 	int hp;       				//Spelarens liv - spel startar med 3. Bullet skadar -1
 	int player_ID;				//Spelarens ID, spelare 1, 2, 3 osv..
     sf::Vector2f pos;			//Spelarens position
