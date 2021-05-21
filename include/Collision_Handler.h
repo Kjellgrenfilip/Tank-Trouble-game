@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 class Collision_Handler
 {
@@ -24,7 +25,8 @@ private:
 
         void project(sf::Vector2f const& axis, float & min, float & max);
 
-        sf::Vector2f points[4];
+        std::vector<sf::Vector2f> points;
+        //sf::Vector2f points[4];
 
     private:    
 

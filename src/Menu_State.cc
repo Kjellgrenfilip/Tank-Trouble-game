@@ -71,7 +71,7 @@ void Menu_State::event_handler(sf::Event event)
         {
             if(menu_select == 0)
             {
-                menu_select = MENU_ITEMS;
+                menu_select = 3;
             }
             else
             {
@@ -80,7 +80,7 @@ void Menu_State::event_handler(sf::Event event)
         }
         if(event.key.code == sf::Keyboard::Down)
         {
-            if(menu_select == MENU_ITEMS)
+            if(menu_select == 3)
             {
                 menu_select = 0;
             }

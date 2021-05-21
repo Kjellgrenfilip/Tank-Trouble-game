@@ -46,7 +46,7 @@ void Pause_State::event_handler(sf::Event event)
         {
             if(menu_select == 0)
             {
-                menu_select = PAUSE_ITEMS;
+                menu_select = 2;
             }
             else
             {
@@ -55,7 +55,7 @@ void Pause_State::event_handler(sf::Event event)
         }
         if(event.key.code == sf::Keyboard::Down)
         {
-            if(menu_select == PAUSE_ITEMS)
+            if(menu_select == 0)
             {
                 menu_select = 0;
             }

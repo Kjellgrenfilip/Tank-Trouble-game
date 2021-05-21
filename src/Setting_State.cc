@@ -58,7 +58,7 @@ void Setting_State::event_handler(sf::Event event)
         {
             if(menu_select == 0)
             {
-                menu_select = SETTING_ITEMS;
+                menu_select = 5;
             }
             else
             {
@@ -67,7 +67,7 @@ void Setting_State::event_handler(sf::Event event)
         }
         if(event.key.code == sf::Keyboard::Down)
         {
-            if(menu_select == SETTING_ITEMS)
+            if(menu_select == 5)
             {
                 menu_select = 0;
             }
