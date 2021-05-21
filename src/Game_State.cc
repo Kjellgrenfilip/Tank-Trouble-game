@@ -9,10 +9,8 @@ Game_State::Game_State()
     :   paus{false}, endgame{false}, destroyed_sound{}, players{}, game_map{Resource_Manager::get_game_map()}, 
         collision_handler{}
 {
-	players.push_back(Player(Resource_Manager::get_texture_player(1), sf::Vector2f{screen_width/10, screen_height/10}, 1,
-	Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_rocket(), Resource_Manager::get_soundbuffer_shotgun() ));
-	players.push_back(Player(Resource_Manager::get_texture_player(2), sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}, 2,
-	Resource_Manager::get_texture_heart(), Resource_Manager::get_texture_explosion(), Resource_Manager::get_soundbuffer_hit(), Resource_Manager::get_soundbuffer_shot(), Resource_Manager::get_soundbuffer_rocket(), Resource_Manager::get_soundbuffer_shotgun() ));
+	players.push_back(Player(1, sf::Vector2f{screen_width/10, screen_height/10}));
+	players.push_back(Player(2, sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}));
     
     destroyed_sound.setBuffer(Resource_Manager::get_soundbuffer_destroyed());
 }

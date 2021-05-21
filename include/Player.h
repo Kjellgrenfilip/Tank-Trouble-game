@@ -14,8 +14,7 @@
 class Player
 {
 public:
-    Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture& expl,
-		   sf::SoundBuffer& hit, sf::SoundBuffer& shot, sf::SoundBuffer& rocket, sf::SoundBuffer& shotgun);
+    Player(int ID, sf::Vector2f const& pos);
 
     void update(Player&);
     void render(sf::RenderTarget & target);

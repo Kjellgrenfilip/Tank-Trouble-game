@@ -1,24 +1,24 @@
 #include <Player.h>
 #include <Constants.h>
+#include "Resource_Manager.h"
 #include <cmath>
 #include <algorithm>
 
-Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, sf::Texture & expl,
-			   sf::SoundBuffer& hit, sf::SoundBuffer& shot, sf::SoundBuffer& rocket, sf::SoundBuffer& shotgun)
+Player::Player(int ID, sf::Vector2f const& p)
 	: 	hp{3}, player_ID{ID}, 
-		pos{p}, rot{}, hit_sound{hit}, 
-		shot_sound{shot}, rocket_sound{rocket},
-		shotgun_sound{shotgun}, hearts{}, 
+		pos{p}, rot{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
+		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
+		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, hearts{}, 
 		bullets{}, rockets{}, 
-		tank{t}, explosion{expl}, textsquare{},
+		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
 		destroyed{false}, speed{4.0},
 		explosion_counter{20}, explosion_scale{0.2}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);
-    auto size {t.getSize()};
+    auto size {Resource_Manager::get_texture_player(ID).getSize()};
     tank.setOrigin(size.x / 2, size.y / 2); 
-	set_hearts(h);
+	set_hearts(Resource_Manager::get_texture_heart());
 	if(ID==1)
 	{
 		tank.setRotation(180);
@@ -27,7 +27,7 @@ Player::Player(sf::Texture & t, sf::Vector2f const& p, int ID, sf::Texture & h, 
 	{
 		tank.setRotation(rot);
 	}
-	auto size2{expl.getSize()};
+	auto size2{Resource_Manager::get_texture_explosion().getSize()};
 	explosion.setOrigin(size2.x/2, size2.y/2);
 
 	textsquare.setFillColor(sf::Color{255,255,255,100});
@@ -119,7 +119,7 @@ void Player::event_handler(sf::Event event)
 	forward_direction.x = cos((pi/180)*(tank.getRotation()-90));
 	forward_direction.y = sin((pi/180)*(tank.getRotation()-90));
 	sf::Vector2f forward_movement = forward_direction * speed;
-
+	
 	if (player_ID == 1)
 	{
 		if ( sf::Keyboard::isKeyPressed (sf::Keyboard::Key::W) )
