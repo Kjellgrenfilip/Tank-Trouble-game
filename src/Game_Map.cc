@@ -94,7 +94,7 @@ void Game_Map::update()
     // Kolla om power_up har gått ut, ta bort
     for (size_t i{}; i < powerups.size(); i++)
     {
-        if(powerups.at(i) -> expired)
+        if(powerups.at(i) -> is_expired())
         {
             powerups.at(i).reset();                        
             powerups.erase(powerups.begin() + i);

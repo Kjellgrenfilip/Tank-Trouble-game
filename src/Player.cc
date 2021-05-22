@@ -55,15 +55,15 @@ Player::Player(int ID, sf::Vector2f const& p)
 void Player::update(Player& p2)
 {
     //Kolla eventuella power ups som är aktiva
-    if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr && my_power->active_on_player)
+    if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr && my_power->is_active_on_player())
     {
-        if(my_power->active_timer <= 0)
+        if(my_power->get_active_time() <= 0)
         {
             speed = 4.0;
             my_power.reset();
         }
         else
-            my_power->active_timer--;
+            my_power->dec_active_timer();
     }
 
     //Uppdatera alla bullets
@@ -98,7 +98,7 @@ void Player::render(sf::RenderTarget & window)
 	if (!destroyed)
 		{
 			window.draw(tank);
-			if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->active_on_player)
+			if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->is_active_on_player())
 			{
 				sf::CircleShape circle(40);
 				sf::Color color(0,0,255,100);
@@ -179,19 +179,19 @@ void Player::event_handler(sf::Event event)
                 }
                 if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
                 {
-                    if(!my_power->active_on_player)
+                    if(!my_power->is_active_on_player())
                     {
-                        my_power->active_on_player = true;
-                        my_power->active_timer = 180;   //3 sekunder i 60 FPS
+                        my_power->set_active_on_player(true);
+                        my_power->set_active_time(180);   //3 sekunder i 60 FPS
                         speed = 8.0;                    //Dubbla hastigheten
                     }
                 }
                 if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
                 {
                     //Aktivera sköld
-                    if(!my_power->active_on_player)
+                    if(!my_power->is_active_on_player())
                     {
-                       my_power->active_on_player = true;
+                       my_power->set_active_on_player(true);
                     }
                 }
 			}
@@ -315,7 +315,7 @@ void Player::check_bullets(Player & p2)
     {
         if (it->getBounds().intersects(p2.get_hitbox()))
         {   //Kolla om spelaren har aktiv sköld
-            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->active_on_player)
+            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->is_active_on_player())
             {
                 p2.my_power.reset();
             }
@@ -345,7 +345,7 @@ void Player::check_bullets(Player & p2)
     {
         if (it->getBounds().intersects(p2.get_hitbox()))
         {   //Kolla om spelaren har aktiv sköld
-            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->active_on_player)
+            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->is_active_on_player())
             {
                 p2.my_power.reset();
             }
