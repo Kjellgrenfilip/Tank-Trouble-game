@@ -13,6 +13,7 @@ public:
     virtual void update() = 0;
     virtual void render(sf::RenderTarget & target) = 0; 
     virtual sf::Sprite& get_sprite() = 0;
+    
     bool is_expired(){return expired;};
     bool is_active_on_player(){return active_on_player;};
     void set_active_on_player(bool x){active_on_player = x;};
