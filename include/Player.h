@@ -21,8 +21,8 @@ public:
     void event_handler(sf::Event event);
 	
 	sf::FloatRect get_hitbox() const;                           // Returnar playerns hitbox
-	std::vector<Bullet>& get_bullets();                        	// Hämtar en vector med bullets
-    std::vector<Rocket_Projectile>& get_rockets();
+
+    std::vector<Projectile*> get_projectiles();
     sf::Vector2f get_position();                                // returnerar spelarens position    
     sf::Vector2f get_old_position();                            // returnerar spelaren position på bilden innan
     void set_tank_pos(sf::Vector2f new_pos);                    // flyttar spelaren
@@ -50,8 +50,8 @@ private:
 	sf::Keyboard::Key activate_powerup;
 	
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
-    std::vector<Bullet> bullets;   //Behållare för bullets
-    std::vector<Rocket_Projectile> rockets;
+
+    std::vector<Projectile*> projectiles;
     sf::Sprite tank;
     sf::Sprite explosion;
     sf::RectangleShape textsquare;			

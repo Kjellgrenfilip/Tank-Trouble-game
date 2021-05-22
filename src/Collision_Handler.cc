@@ -106,51 +106,45 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
 {
     for(auto & player : players)
     {
-        for(auto & bullet : player.get_bullets())
+        for(auto projectile : player.get_projectiles())
         {   
             for(auto & tile : game_map.get_tiles())
             {
                 sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
-                if(!tile.is_passable() && bullet.getBounds().intersects(tile_rect))
+                if(!tile.is_passable() && projectile->getBounds().intersects(tile_rect))
                 {
+                    if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
+                    {
+                        projectile->lifetime = 0;
+                        break;
+                    }
                     //Testa ändra hastigheten på kulan i x- och y-led för att se om den kommer befinna sig i samma tile
-                    sf::FloatRect try_x{bullet.getBounds()};
-                    try_x.left = try_x.left - bullet.get_velocity().x;
-                    try_x.top = try_x.top + bullet.get_velocity().y;
-                    sf::FloatRect try_y{bullet.getBounds()};
-                    try_y.left = try_y.left + 2.0*bullet.get_velocity().x;
-                    try_y.top = try_y.top - 2.0*bullet.get_velocity().y;
+                    sf::FloatRect try_x{projectile->getBounds()};
+                    try_x.left = try_x.left - projectile->get_velocity().x;
+                    try_x.top = try_x.top + projectile->get_velocity().y;
+                    sf::FloatRect try_y{projectile->getBounds()};
+                    try_y.left = try_y.left + 2.0*projectile->get_velocity().x;
+                    try_y.top = try_y.top - 2.0*projectile->get_velocity().y;
 
                     if(!try_x.intersects(tile_rect))
                     {
-                        bullet.reverse_x();
+                        projectile->reverse_x();
                     }
                     else if(!try_y.intersects(tile_rect))
                     {
-                        bullet.reverse_y();
+                        projectile->reverse_y();
                     }
                     else
                     {
-                        bullet.reverse_x();
-                        bullet.reverse_y();
+                        projectile->reverse_x();
+                        projectile->reverse_y();
                     }
-					if (bullet.lifetime > 1)
+					if (projectile->lifetime > 1)
 						{
 						bounce_sound.play();
 						}	
-                    bullet.lifetime--;
+                    projectile->lifetime--;
                     break;
-                }
-            }
-        }
-        for(auto & rocket : player.get_rockets())
-        {
-            for(auto & tile : game_map.get_tiles())
-            {
-                sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
-                if(!tile.is_passable() && rocket.getBounds().intersects(tile_rect))
-                {
-                    rocket.lifetime = 0;
                 }
             }
         }

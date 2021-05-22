@@ -9,7 +9,7 @@ Player::Player(int ID, sf::Vector2f const& p)
 		pos{p}, rot{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
 		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
 		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, up{}, down{}, left{}, right{}, fire{}, activate_powerup{},
-		hearts{}, bullets{}, rockets{}, 
+		hearts{}, projectiles{}, 
 		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
 		destroyed{false}, speed{4.0},
 		explosion_counter{20}, explosion_scale{0.2}
@@ -66,15 +66,12 @@ void Player::update(Player& p2)
             my_power->dec_active_timer();
     }
 
-    //Uppdatera alla bullets
-	for (auto & bullet : bullets)
-	{
-		bullet.update();
-	}
-	for (auto & rocket : rockets)
-	{
-		rocket.update();
-	}
+    //Uppdatera alla projektiler
+
+    for(auto projectile : projectiles)
+    {
+        projectile->update();
+    }
 
 	check_bullets(p2);
 	
@@ -87,14 +84,11 @@ void Player::update(Player& p2)
 void Player::render(sf::RenderTarget & window)
 {
 	//Skriva ut, alla skott samt tanken
-	for (auto & bullet : bullets)
-	{
-		bullet.render(window);
-	}
-    for (auto & rocket : rockets)
-	{
-		rocket.render(window);
-	}
+    for(auto projectile : projectiles)
+    {
+        projectile->render(window);
+    }
+
 	if (!destroyed)
 		{
 			window.draw(tank);
@@ -152,9 +146,9 @@ void Player::event_handler(sf::Event event)
 		{
 			if ( event.key.code == fire)
 			{
-				if (bullets.size() < 4)
+				if (projectiles.size() < 4)
 				{
-					bullets.push_back(Bullet(pos, rot-90));
+					projectiles.push_back(new Bullet(pos, rot-90));
 					shot_sound.play();
 				}
 			}
@@ -165,16 +159,16 @@ void Player::event_handler(sf::Event event)
                 {   
                     //Skicka iväg tre kulor med olika vinkel
                     shotgun_sound.play();
-                    bullets.push_back(Bullet(pos, rot-85));
-                    bullets.push_back(Bullet(pos, rot-90));
-                    bullets.push_back(Bullet(pos, rot-95));
+                    projectiles.push_back(new Bullet(pos, rot-85));
+                    projectiles.push_back(new Bullet(pos, rot-90));
+                    projectiles.push_back(new Bullet(pos, rot-95));
                     my_power.reset();
                 }
                 if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
                 {
                     //Skicka iväg en raket
                     rocket_sound.play();
-                    rockets.push_back(Rocket_Projectile(pos, rot-90));
+                    projectiles.push_back(new Rocket_Projectile(pos, rot-90));
                     my_power.reset();
                 }
                 if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
@@ -198,7 +192,10 @@ void Player::event_handler(sf::Event event)
 		}   
 }
 	
-
+std::vector<Projectile*> Player::get_projectiles()
+{
+    return projectiles;
+}
 
 sf::Sprite const& Player::getPlayerSprite() const
 {
@@ -210,16 +207,6 @@ sf::FloatRect Player::get_hitbox() const
 {
 	return tank.getGlobalBounds();
 
-}
-
-std::vector<Bullet>& Player::get_bullets()
-{
-	return bullets;
-}
-
-std::vector<Rocket_Projectile>& Player::get_rockets()
-{
-    return rockets;
 }
 
 sf::Vector2f Player::get_position()
@@ -311,65 +298,39 @@ for (int i{0}; i < hp; i++)
 
 void Player::check_bullets(Player & p2)
 {
-	for (auto it = bullets.begin(); it != bullets.end();)
+	for (auto & projectile : projectiles)
     {
-        if (it->getBounds().intersects(p2.get_hitbox()))
-        {   //Kolla om spelaren har aktiv sköld
+        if (projectile->getBounds().intersects(p2.get_hitbox()))
+        {   
+            //Kolla om spelaren har aktiv sköld
             if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->is_active_on_player())
             {
                 p2.my_power.reset();
             }
-            else
+            else if(dynamic_cast<Bullet*>(projectile) != nullptr)
             {
                 p2.hp--;
             }
-			hit_sound.play();
-            it->lifetime = 0;
-            if (p2.hp == 0)
-            {
-                p2.destroyed = true;
-            }
-        }
-        
-        if (it->lifetime == 0)
-        {
-            it = bullets.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-
-    for (auto it = rockets.begin(); it != rockets.end();)
-    {
-        if (it->getBounds().intersects(p2.get_hitbox()))
-        {   //Kolla om spelaren har aktiv sköld
-            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->is_active_on_player())
-            {
-                p2.my_power.reset();
-            }
-            else
+            else if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
             {
                 p2.hp = 0;
             }
+            
 			hit_sound.play();
-            it->lifetime = 0;
+            projectile->lifetime = 0;
             if (p2.hp == 0)
             {
                 p2.destroyed = true;
             }
         }
+        if(projectile->lifetime <= 0)
+        {
+            delete projectile;
+            projectile = nullptr;
+        }
         
-        if (it->lifetime == 0)
-        {
-            it = rockets.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
     }
+    projectiles.erase(remove(begin(projectiles), end(projectiles), nullptr), end(projectiles));
 }
 
 
