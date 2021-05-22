@@ -9,17 +9,17 @@ class Tile
 {
 private:
     sf::Vector2f position{};
-    std::string name{};
     sf::Sprite tile{};
+    bool passable{};    
+    bool available_power{false};
 public:
-    Tile(sf::Vector2f const& pos, bool pas, sf::Texture & tile, std::string const& name);
+    Tile(sf::Vector2f const& pos, bool pas, sf::Texture & tile);
     sf::Vector2f get_position();
     sf::Sprite & get_sprite(); 
-    //std::string get_name();
-
+    bool is_passable();
     void setPowerUp();
-
-    bool passable{};        // Gör private
-    bool available_power{false};
+    bool power_is_available();
+    void set_available_power(bool new_val);
+    
 };
 #endif 

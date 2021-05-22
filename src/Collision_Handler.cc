@@ -94,7 +94,7 @@ void Collision_Handler::tank_wall_collision(std::vector<Player> & players)
     {
         for(auto & tile : game_map.get_tiles())
         {
-            if(!tile.passable && check_collision(player.getPlayerSprite(), tile.get_sprite()))
+            if(!tile.is_passable() && check_collision(player.getPlayerSprite(), tile.get_sprite()))
             {
                 player.set_tank_pos(player.get_old_position());
             }
@@ -111,7 +111,7 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
             for(auto & tile : game_map.get_tiles())
             {
                 sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
-                if(!tile.passable && bullet.getBounds().intersects(tile_rect))
+                if(!tile.is_passable() && bullet.getBounds().intersects(tile_rect))
                 {
                     //Testa ändra hastigheten på kulan i x- och y-led för att se om den kommer befinna sig i samma tile
                     sf::FloatRect try_x{bullet.getBounds()};
@@ -148,7 +148,7 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
             for(auto & tile : game_map.get_tiles())
             {
                 sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
-                if(!tile.passable && rocket.getBounds().intersects(tile_rect))
+                if(!tile.is_passable() && rocket.getBounds().intersects(tile_rect))
                 {
                     rocket.lifetime = 0;
                 }

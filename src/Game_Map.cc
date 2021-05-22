@@ -39,12 +39,12 @@ void Game_Map::generate(int mapID)
         if(temp_string == "1")
         {
             //tilen är en vägg
-            Tile temp_tile(pos, false, Resource_Manager::get_texture_wall(), "wall");
+            Tile temp_tile(pos, false, Resource_Manager::get_texture_wall());
             this->tiles.push_back(temp_tile);
         }
         else
         {
-            Tile temp_tile(pos, true, Resource_Manager::get_texture_floor(), "floor");
+            Tile temp_tile(pos, true, Resource_Manager::get_texture_floor());
             this->tiles.push_back(temp_tile);
         }
         if(pos_x >= pixel_resolution_x - 1)
@@ -67,11 +67,11 @@ void Game_Map::update()
 
     //std::cout << power_ups.size() << std::endl;
 
-    if(tiles.at(t).passable && chance == 0 && !tiles.at(t).available_power)
+    if(tiles.at(t).is_passable() && chance == 0 && !tiles.at(t).power_is_available())
     {
         srand(time(0));
         int rand_num = rand() % 4;
-        //std::cout << "Added"<< std::endl;
+        // std::cout << "Added"<< std::endl;
         switch(rand_num)
         {
             case 0:
