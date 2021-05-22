@@ -5,7 +5,8 @@
 #include <iostream>
 #include <stdexcept>
 Menu_State::Menu_State()
-    :   font{}, menu_background{}, control_background{}, startgame{false}, settings{false}, exit{false}, controls{false}, menu_select{0}, menu_song{}  
+    :   font{}, menu_background{Resource_Manager::get_texture_background()}, control_background{Resource_Manager::get_texture_controls()},
+		startgame{false}, settings{false}, exit{false}, controls{false}, menu_select{0}, menu_song{}  
 {
     std::string file{"resources/fonts/Amatic-Bold.ttf"};
     if(!font.loadFromFile(file))
@@ -25,8 +26,6 @@ Menu_State::Menu_State()
     text[3].setFillColor(sf::Color(255,255,255));
     text[3].setPosition(screen_width / 2 - text[3].getGlobalBounds().width / 2, screen_height / MENU_ITEMS + (text[3].getGlobalBounds().height + 10)*2);
 	
-	menu_background.setTexture(Resource_Manager::get_texture_background());
-	control_background.setTexture(Resource_Manager::get_texture_controls());
 	if(!menu_song.openFromFile("resources/sounds/menu_music.ogg"))
     {
         throw std::logic_error("Can't open menu_music");

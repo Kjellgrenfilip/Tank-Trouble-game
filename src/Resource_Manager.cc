@@ -216,6 +216,10 @@ sf::Texture& Resource_Manager::get_texture_shield()
         {
             throw std::invalid_argument("cannot open shotgun_sound");
 		}
+		if(!font_mandala.loadFromFile("resources/fonts/Mandala.ttf"))
+		{
+			throw std::invalid_argument("cannot open mandala font");
+		}
 	}
 	
 	sf::SoundBuffer& Resource_Manager::get_soundbuffer_hit()
@@ -273,4 +277,8 @@ sf::Texture& Resource_Manager::get_texture_shield()
 				get_soundbuffer();
 			}
 		return shotgun_sound;
+	}
+	sf::Font& Resource_Manager::get_font_mandala()
+	{
+		return font_mandala;
 	}

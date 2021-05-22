@@ -20,6 +20,7 @@ class Resource_Manager
         static inline sf::Texture wall_texture;
         static inline sf::Texture floor_texture;
         static inline sf::Texture explosion_texture;
+        static inline sf::Font font_mandala;
         
         static inline sf::SoundBuffer hit_sound;
         static inline sf::SoundBuffer shot_sound;
@@ -44,6 +45,7 @@ class Resource_Manager
         static sf::Texture& get_texture_wall();
         static sf::Texture& get_texture_floor();
         static sf::Texture& get_texture_explosion();
+        static sf::Font& get_font_mandala();
         
         static sf::SoundBuffer& get_soundbuffer_hit();
         static sf::SoundBuffer& get_soundbuffer_shot();

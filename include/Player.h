@@ -28,7 +28,7 @@ public:
     void set_tank_pos(sf::Vector2f new_pos);                    // flyttar spelaren
     bool set_power_up(std::shared_ptr<Power_Up> &new_power);    // ny pointer till power_up
     sf::Sprite const& getPlayerSprite() const;                  // returnerar spelarens sprite
-	bool is_destroyed();
+	bool is_destroyed();								
 
 private:	
 	int hp;       				//Spelarens liv - spel startar med 3. Bullet skadar -1
@@ -36,11 +36,12 @@ private:
     sf::Vector2f pos;			//Spelarens position
     sf::Vector2f old_pos{};     //spelarens gammla position, används vid kollision.
     float rot;					//Spelarens rotation
+	sf::Vector2f movement;		//Spelarens rörelseriktning i x och y led. Uppdateras i event_handlern inför varje knapptryck
 	
-	sf::Sound hit_sound;
-	sf::Sound shot_sound;
-	sf::Sound rocket_sound;
-	sf::Sound shotgun_sound;
+	sf::Sound hit_sound;		//Ljud för träff
+	sf::Sound shot_sound;		//Ljud vid avfyrning av skott
+	sf::Sound rocket_sound;		//Ljud vid avfyrning av rocket powerup
+	sf::Sound shotgun_sound;	//Ljud vid avfyrning av shotgun powerup
 	
 	sf::Keyboard::Key up;
 	sf::Keyboard::Key down;
@@ -50,19 +51,22 @@ private:
 	sf::Keyboard::Key activate_powerup;
 	
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
-
-    std::vector<Projectile*> projectiles;
-    sf::Sprite tank;
-    sf::Sprite explosion;
-    sf::RectangleShape textsquare;			
+	
+    std::vector<Projectile*> projectiles;	//Vektor med projektiler, dvs rockets och bullets
+    sf::Sprite tank;						//tankens sprite
+    sf::Sprite explosion;					//Sprite för explosionsanimationen om en tank förlorar
+    
+    sf::RectangleShape textsquare;				//Vita rutan vid spelarens text
+    sf::Text player_text;						//Spelartexten, "player 1:", "Player 2:"
     std::shared_ptr<Power_Up> my_power{nullptr};
+    sf::Vector2f power_print_pos;				//Positionen som powerupen ska skrivas ut bredvid spelartexten när man tar upp en powerup
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
-	float speed;
-    int explosion_counter;
-    float explosion_scale;
+	float speed;				//"Hastigheten" som tanken ska förflyttas vid knapptrycks
+    int explosion_counter;		//Håller koll på tiden när explosionsspriten skalas upp
+    float explosion_scale;		
 
-	void check_bullets(Player&);
-	void set_hearts(sf::Texture& h);
-	void print_player_text(sf::RenderTarget & target);
+	void check_bullets(Player&); //Kollisionskontroll mellan spelare och bullets
+	void set_hearts(sf::Texture& h);	//Fyller på hearts-vektorn med hjärtan
+	//void print_player_text(sf::RenderTarget & target);
 };
 #endif

@@ -6,27 +6,20 @@
 
 Player::Player(int ID, sf::Vector2f const& p)
 	: 	hp{3}, player_ID{ID}, 
-		pos{p}, rot{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
+		pos{p}, rot{}, movement{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
 		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
 		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, up{}, down{}, left{}, right{}, fire{}, activate_powerup{},
 		hearts{}, projectiles{}, 
 		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
-		destroyed{false}, speed{4.0},
-		explosion_counter{20}, explosion_scale{0.2}
+		player_text{"Player " + std::to_string(ID) + ':', Resource_Manager::get_font_mandala(), 32}, power_print_pos{},
+		destroyed{false}, speed{4.0}, explosion_counter{20}, explosion_scale{0.2}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);
     auto size {Resource_Manager::get_texture_player(ID).getSize()};
     tank.setOrigin(size.x / 2, size.y / 2); 
 	set_hearts(Resource_Manager::get_texture_heart());
-	if(ID==1)
-	{
-		tank.setRotation(180);
-	}
-	else
-	{
-		tank.setRotation(rot);
-	}
+	
 	auto size2{Resource_Manager::get_texture_explosion().getSize()};
 	explosion.setOrigin(size2.x/2, size2.y/2);
 
@@ -40,6 +33,11 @@ Player::Player(int ID, sf::Vector2f const& p)
 		right = sf::Keyboard::Key::D;
 		fire = sf::Keyboard::Key::F;
 		activate_powerup = sf::Keyboard::Key::G;
+		tank.setRotation(180);
+		textsquare.setPosition(0,0);
+		player_text.setFillColor(sf::Color::Red);
+		player_text.setPosition(10,0);
+		power_print_pos = sf::Vector2f{textsquare.getPosition().x+textsquare.getGlobalBounds().width,0};
 	}
 	else if (ID == 2)
 	{
@@ -49,6 +47,11 @@ Player::Player(int ID, sf::Vector2f const& p)
 		right = sf::Keyboard::Key::Right;
 		fire = sf::Keyboard::Key::RControl;
 		activate_powerup = sf::Keyboard::Key::RShift;
+		tank.setRotation(rot);
+		textsquare.setPosition(screen_width-textsquare.getGlobalBounds().width, 0);
+		player_text.setFillColor(sf::Color::Blue);
+		player_text.setPosition(screen_width-220, 0);
+		power_print_pos = sf::Vector2f{textsquare.getPosition().x-gridsize_x,0};
 	}
 }
 
@@ -95,8 +98,7 @@ void Player::render(sf::RenderTarget & window)
 			if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->is_active_on_player())
 			{
 				sf::CircleShape circle(40);
-				sf::Color color(0,0,255,100);
-				circle.setFillColor(color);
+				circle.setFillColor(sf::Color{0,0,255,100});
 				circle.setOrigin(circle.getRadius(),circle.getRadius());
 				circle.setPosition(get_position());
 				window.draw(circle);
@@ -105,33 +107,39 @@ void Player::render(sf::RenderTarget & window)
 	else
 	{
 		explosion.setPosition(pos);
-		//explosion.setOrigin(tank.getOrigin());
 		explosion_scale *= 1.1;
 		explosion.setScale(explosion_scale, explosion_scale);
 		window.draw(explosion);
 		explosion_counter--;
-		//sf::sleep(delay);
 	}
-	
-	print_player_text(window);   //skriver ut "Player1: --hjärtan--. Antalet hjärtan justeras med hjälp av players hp
-	
+	window.draw(textsquare);
+	window.draw(player_text);
+	//print_player_text(window);   //skriver ut "Player1: --hjärtan--. Antalet hjärtan justeras med hjälp av players hp
+	if(my_power!=nullptr)
+	{
+		my_power->get_sprite().setPosition(power_print_pos);
+		window.draw(my_power->get_sprite());
+	}
+
+	for (int i{0}; i < hp; i++)
+	{
+		window.draw(hearts[i]);
+	}
 }
 
 void Player::event_handler(sf::Event event)
 {
 	old_pos = pos;
-	sf::Vector2f forward_direction;
-	forward_direction.x = cos((pi/180)*(tank.getRotation()-90));
-	forward_direction.y = sin((pi/180)*(tank.getRotation()-90));
-	sf::Vector2f forward_movement = forward_direction * speed;
+	movement.x = cos((pi/180)*(tank.getRotation()-90)); //Riktningen som tanken ska röra sig i x-led
+	movement.y = sin((pi/180)*(tank.getRotation()-90));	//Riktningen som tanken ska röra sig i y-led
 	
 		if ( sf::Keyboard::isKeyPressed (up) )
         {
-			tank.move(forward_movement);
+			tank.move(movement*speed);
         }
        if ( sf::Keyboard::isKeyPressed (down) )
         {
-			tank.move (-forward_movement);
+			tank.move (-(movement*speed));
         }
         if ( sf::Keyboard::isKeyPressed (left) )
         {
@@ -251,7 +259,7 @@ void Player::set_hearts(sf::Texture& h)
 	}
 }
 
-void Player::print_player_text(sf::RenderTarget & target)
+/*void Player::print_player_text(sf::RenderTarget & target)
 {
 	std::string file{"resources/fonts/Mandala.ttf"};
     sf::Font font;
@@ -288,13 +296,24 @@ void Player::print_player_text(sf::RenderTarget & target)
 			target.draw(my_power->get_sprite());
 		}
 	}
+		if(my_power!=nullptr && player_ID == 1)
+		{
+			my_power->get_sprite().setPosition(textsquare.getPosition().x+textsquare.getGlobalBounds().width,0);
+			target.draw(my_power->get_sprite());
+		}
 
-for (int i{0}; i < hp; i++)
+		if(my_power!=nullptr)
+		{
+			my_power->get_sprite().setPosition(power_print_pos);
+			target.draw(my_power->get_sprite());
+		}
+
+	for (int i{0}; i < hp; i++)
 	{
 		target.draw(hearts[i]);
 	}
 
-}
+}*/
 
 void Player::check_bullets(Player & p2)
 {
