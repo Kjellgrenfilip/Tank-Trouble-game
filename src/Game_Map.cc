@@ -17,6 +17,7 @@ Game_Map::Game_Map()
 }
 void Game_Map::generate(int mapID)
 {
+    powerups.clear();// rensar powerups om en ny karta laddas.
     std::ifstream map_text{random_map(mapID)};   
     if(map_text.fail())
     {
