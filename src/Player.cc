@@ -8,8 +8,8 @@ Player::Player(int ID, sf::Vector2f const& p)
 	: 	hp{3}, player_ID{ID}, 
 		pos{p}, rot{}, movement{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
 		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
-		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, up{}, down{}, left{}, right{}, fire{}, activate_powerup{},
-		hearts{}, projectiles{}, 
+		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, shield_sound{Resource_Manager::get_soundbuffer_shield()},
+		up{}, down{}, left{}, right{}, fire{}, activate_powerup{}, hearts{}, projectiles{}, 
 		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
 		player_text{"Player " + std::to_string(ID) + ':', Resource_Manager::get_font_mandala(), 32}, power_print_pos{},
 		destroyed{false}, speed{4.0}, explosion_counter{20}, explosion_scale{0.2}
@@ -130,8 +130,8 @@ void Player::render(sf::RenderTarget & window)
 void Player::event_handler(sf::Event event)
 {
 	old_pos = pos;
-	movement.x = cos((pi/180)*(tank.getRotation()-90)); //Riktningen som tanken ska röra sig i x-led
-	movement.y = sin((pi/180)*(tank.getRotation()-90));	//Riktningen som tanken ska röra sig i y-led
+	movement.x = cos((pi/180)*(tank.getRotation()-90)); //Riktningen som tanken ska röra sig i x-led sett från tankens "framdel"
+	movement.y = sin((pi/180)*(tank.getRotation()-90));	//Riktningen som tanken ska röra sig i y-led 		-||-
 	
 		if ( sf::Keyboard::isKeyPressed (up) )
         {
@@ -139,7 +139,7 @@ void Player::event_handler(sf::Event event)
         }
        if ( sf::Keyboard::isKeyPressed (down) )
         {
-			tank.move (-(movement*speed));
+			tank.move (-(movement*speed));		//Eftersom movement är beräknat i riktningen framåt, så blir det en negativ rörelse i motsatt riktning
         }
         if ( sf::Keyboard::isKeyPressed (left) )
         {
@@ -191,9 +191,11 @@ void Player::event_handler(sf::Event event)
                 if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
                 {
                     //Aktivera sköld
+                    shield_sound.play();
                     if(!my_power->is_active_on_player())
                     {
                        my_power->set_active_on_player(true);
+						
                     }
                 }
 			}
