@@ -50,6 +50,7 @@ private:
     std::vector<sf::Sprite> hearts;//Behållare för spelaren hjärtan
 	
     std::vector<Projectile*> projectiles;	//Vektor med projektiler, dvs rockets och bullets
+    sf::CircleShape shield_circle;
     sf::Sprite tank;						//tankens sprite
     sf::Sprite explosion;					//Sprite för explosionsanimationen om en tank förlorar
     

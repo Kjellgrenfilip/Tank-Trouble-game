@@ -14,14 +14,12 @@ Setting_State::Setting_State()
         throw std::invalid_argument("No font at location: " + file);
     }
     text[0] = sf::Text{"Return", font, 52 };
-    text[0].setFillColor(sf::Color(255,0,0));
     text[0].setPosition(screen_width / 2 - text[0].getGlobalBounds().width / 2, screen_height / SETTING_ITEMS - (text[0].getGlobalBounds().height + 10));
     for(int i{1}; i < SETTING_ITEMS; i++)
     {
         std::string temp{"Load Map "};
         temp += std::to_string(i);
         text[i] = sf::Text{temp, font, 52 };
-        text[i].setFillColor(sf::Color(255,0,0));
         text[i].setPosition(screen_width / 2 - text[i].getGlobalBounds().width / 2, screen_height / SETTING_ITEMS + (text[i].getGlobalBounds().height + 10) * (i - 1));
     }
 }

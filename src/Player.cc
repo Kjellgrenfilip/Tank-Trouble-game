@@ -9,7 +9,7 @@ Player::Player(int ID, sf::Vector2f const& p)
 		pos{p}, rot{}, movement{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
 		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
 		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, shield_sound{Resource_Manager::get_soundbuffer_shield()},
-		up{}, down{}, left{}, right{}, fire{}, activate_powerup{}, hearts{}, projectiles{}, 
+		up{}, down{}, left{}, right{}, fire{}, activate_powerup{}, hearts{}, projectiles{}, shield_circle{40},
 		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
 		player_text{"Player " + std::to_string(ID) + ':', Resource_Manager::get_font_mandala(), 32}, power_print_pos{},
 		destroyed{false}, speed{4.0}, explosion_counter{20}, explosion_scale{0.2}
@@ -22,9 +22,9 @@ Player::Player(int ID, sf::Vector2f const& p)
 	
 	auto size2{Resource_Manager::get_texture_explosion().getSize()};
 	explosion.setOrigin(size2.x/2, size2.y/2);
-
+	shield_circle.setOrigin(shield_circle.getRadius(), shield_circle.getRadius());
 	textsquare.setFillColor(sf::Color{255,255,255,100});
-	textsquare.setSize(sf::Vector2f{40*6, 40});
+	textsquare.setSize(sf::Vector2f{gridsize_x*6, gridsize_y});
 	if (ID == 1)
 	{
 		up = sf::Keyboard::Key::W;
@@ -38,6 +38,7 @@ Player::Player(int ID, sf::Vector2f const& p)
 		player_text.setFillColor(sf::Color::Red);
 		player_text.setPosition(10,0);
 		power_print_pos = sf::Vector2f{textsquare.getPosition().x+textsquare.getGlobalBounds().width,0};
+		shield_circle.setFillColor(sf::Color{255,0,0,100});
 	}
 	else if (ID == 2)
 	{
@@ -52,6 +53,7 @@ Player::Player(int ID, sf::Vector2f const& p)
 		player_text.setFillColor(sf::Color::Blue);
 		player_text.setPosition(screen_width-220, 0);
 		power_print_pos = sf::Vector2f{textsquare.getPosition().x-gridsize_x,0};
+		shield_circle.setFillColor(sf::Color{0,0,255,100});
 	}
 }
 
@@ -105,11 +107,8 @@ void Player::render(sf::RenderTarget & window)
 			window.draw(tank);
 			if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->is_active_on_player())
 			{
-				sf::CircleShape circle(40);
-				circle.setFillColor(sf::Color{0,0,255,100});
-				circle.setOrigin(circle.getRadius(),circle.getRadius());
-				circle.setPosition(get_position());
-				window.draw(circle);
+				shield_circle.setPosition(get_position());
+				window.draw(shield_circle);
 			}	
 		}
 	else
@@ -199,11 +198,10 @@ void Player::event_handler(sf::Event event)
                 if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
                 {
                     //Aktivera sköld
-                    shield_sound.play();
                     if(!my_power->is_active_on_player())
                     {
-                       my_power->set_active_on_player(true);
-						
+						shield_sound.play();
+						my_power->set_active_on_player(true);
                     }
                 }
 			}

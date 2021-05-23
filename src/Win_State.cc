@@ -14,13 +14,10 @@ Win_State::Win_State()
     }
     
     menu_text[0] = sf::Text{"Play new round!", font, 52 };
-    menu_text[0].setFillColor(sf::Color(255,0,0));
     menu_text[0].setPosition(screen_width / 2 - menu_text[0].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS - (menu_text[0].getGlobalBounds().height + 15));
     menu_text[1] = sf::Text{"Return to Menu", font, 52 };
-    menu_text[1].setFillColor(sf::Color(255,255,255));
     menu_text[1].setPosition(screen_width / 2 - menu_text[1].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS);
     menu_text[2] = sf::Text{"Quit to desktop", font, 52 };
-    menu_text[2].setFillColor(sf::Color(255,255,255));
     menu_text[2].setPosition(screen_width / 2 - menu_text[2].getGlobalBounds().width / 2, screen_height / PAUSE_ITEMS + (menu_text[2].getGlobalBounds().height + 10));
 }
 
