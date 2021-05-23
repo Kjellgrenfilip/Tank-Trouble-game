@@ -76,5 +76,6 @@ dir:
 clean:
 	rm tank-trouble $(OBJECTS)
 
-
+run:
+	./tank-trouble
 
