@@ -11,16 +11,16 @@
 class Game_Map
 {
 private:
-    std::string random_map(int mapID = 0);
+    std::string random_map(int mapID = 0);  //returnerar filväg till en karta, slumpas om mapID = 0
 
     std::vector<std::shared_ptr<Power_Up>> powerups; 
     std::vector<Tile> tiles;
 public:
     Game_Map();
 
-    void generate(int mapID = 0);
-    void render(sf::RenderTarget &window);
-    void update();
+    void generate(int mapID = 0);           //skapar kartan
+    void render(sf::RenderTarget &window);  //ritar upp kartan och power_ups på kartan
+    void update();                          //updaterar puwer_ups på kartan
 
     std::vector<Tile>& get_tiles();
     std::vector<std::shared_ptr<Power_Up>>& get_powerups();

@@ -20,9 +20,7 @@ Game_Map::Game_Map()
 }
 void Game_Map::generate(int mapID)
 {
-    //temporärt, finns bara en map just nu som har rätt format.
-    std::ifstream map_text{random_map(mapID)};
-    
+    std::ifstream map_text{random_map(mapID)};   
     if(map_text.fail())
     {
         throw std::logic_error("No map at file location");
@@ -65,13 +63,10 @@ void Game_Map::update()
     int t = rand() % tiles.size();
     int chance = rand() % 10;
 
-    //std::cout << power_ups.size() << std::endl;
-
     if(tiles.at(t).is_passable() && chance == 0 && !tiles.at(t).power_is_available())
     {
         srand(time(0));
         int rand_num = rand() % 4;
-        // std::cout << "Added"<< std::endl;
         switch(rand_num)
         {
             case 0:
