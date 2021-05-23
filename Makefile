@@ -21,7 +21,7 @@ LDFLAGS += -L$(SFML_ROOT)/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-
 MAINFILE := main.cc
 
 # Object modules
-OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o $(OBJDIR)/Win_State.o $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Shield.o  $(OBJDIR)/Rocket.o  $(OBJDIR)/Shotgun.o  $(OBJDIR)/Speed_Boost.o  $(OBJDIR)/Power_Up.o  $(OBJDIR)/Collision_Handler.o  $(OBJDIR)/Setting_State.o
+OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o $(OBJDIR)/Win_State.o $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Power_Up.o  $(OBJDIR)/Collision_Handler.o  $(OBJDIR)/Setting_State.o
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
@@ -66,18 +66,6 @@ $(OBJDIR)/Resource_Manager.o: $(SRC)/Resource_Manager.cc dir
 
 $(OBJDIR)/Power_Up.o: $(SRC)/Power_Up.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Power_Up.cc -o $(OBJDIR)/Power_Up.o
-
-$(OBJDIR)/Shield.o: $(SRC)/Shield.cc dir
-	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Shield.cc -o $(OBJDIR)/Shield.o
-
-$(OBJDIR)/Rocket.o: $(SRC)/Rocket.cc dir
-	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Rocket.cc -o $(OBJDIR)/Rocket.o
-
-$(OBJDIR)/Shotgun.o: $(SRC)/Shotgun.cc dir
-	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Shotgun.cc -o $(OBJDIR)/Shotgun.o
-
-$(OBJDIR)/Speed_Boost.o: $(SRC)/Speed_Boost.cc dir
-	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Speed_Boost.cc -o $(OBJDIR)/Speed_Boost.o
 
 $(OBJDIR)/Collision_Handler.o: $(SRC)/Collision_Handler.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Collision_Handler.cc -o $(OBJDIR)/Collision_Handler.o

@@ -25,8 +25,30 @@ protected:
     bool active_on_player{false};
     int active_timer{};
     sf::Sprite power;
-    int time;
     sf::Vector2f pos;
 };
 
+class Rocket : public Power_Up
+{
+public:
+    Rocket(sf::Vector2f pos);
+};
+
+class Shield : public Power_Up
+{
+public:
+    Shield(sf::Vector2f pos);
+};
+
+class Shotgun : public Power_Up
+{
+public:
+    Shotgun(sf::Vector2f pos);
+};
+
+class Speed_Boost : public Power_Up
+{
+public:
+    Speed_Boost(sf::Vector2f pos);
+};
 #endif

@@ -6,10 +6,6 @@
 #include "Power_Up.h"
 #include <memory>
 #include <vector>
-#include "Shotgun.h"
-#include "Rocket.h"
-#include "Speed_Boost.h"
-#include "Shield.h"
 
 class Player
 {

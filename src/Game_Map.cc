@@ -7,10 +7,7 @@
 #include "Game_Map.h"
 #include "Tile.h"
 #include "Constants.h"
-#include "Shield.h"
-#include "Rocket.h"
-#include "Shotgun.h"
-#include "Speed_Boost.h"
+#include "Power_Up.h"
 #include "Resource_Manager.h"
 
 Game_Map::Game_Map()
