@@ -6,11 +6,11 @@ class Speed_Boost : public Power_Up
 {
 public:
     Speed_Boost(sf::Vector2f pos);
-    virtual void update() override;
-    virtual void render(sf::RenderTarget & target) override;
-    sf::Sprite& get_sprite();
+    // virtual void update() override;
+    // virtual void render(sf::RenderTarget & target) override;
+    // sf::Sprite& get_sprite();
 private:
-    sf::Sprite power;
-    int time;
-    sf::Vector2f pos;
+    // sf::Sprite power;
+    // int time;
+    // sf::Vector2f pos;
 };

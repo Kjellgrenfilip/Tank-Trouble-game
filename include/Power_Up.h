@@ -2,17 +2,16 @@
 #define POWERUP_H
 
 #include <SFML/Graphics.hpp>
-
 class Power_Up
 {
 public:
     Power_Up();
 
     virtual ~Power_Up() = default; 
-    //virtual Power_up(sf::Vector2f pos) = 0;
-    virtual void update() = 0;
-    virtual void render(sf::RenderTarget & target) = 0; 
-    virtual sf::Sprite& get_sprite() = 0;
+    Power_Up(sf::Vector2f &pos,sf::Texture& power_up_texture);
+    void update();
+    void render(sf::RenderTarget & target); 
+    sf::Sprite& get_sprite();
     
     bool is_expired(){return expired;};
     bool is_active_on_player(){return active_on_player;};
@@ -25,6 +24,9 @@ protected:
     int lifetime;
     bool active_on_player{false};
     int active_timer{};
+    sf::Sprite power;
+    int time;
+    sf::Vector2f pos;
 };
 
 #endif
