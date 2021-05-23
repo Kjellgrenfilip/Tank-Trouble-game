@@ -11,7 +11,7 @@ class Player
 {
 public:
     Player(int ID, sf::Vector2f const& pos);
-
+    ~Player();
     void update(Player&);
     void render(sf::RenderTarget & target);
     void event_handler(sf::Event event);

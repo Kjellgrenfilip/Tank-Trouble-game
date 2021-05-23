@@ -55,6 +55,14 @@ Player::Player(int ID, sf::Vector2f const& p)
 	}
 }
 
+Player::~Player()
+{
+    for(auto & projectile : projectiles)
+    {
+        delete projectile;
+    }
+}
+
 void Player::update(Player& p2)
 {
     //Kolla eventuella power ups som är aktiva
