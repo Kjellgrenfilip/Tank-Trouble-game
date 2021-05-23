@@ -220,7 +220,12 @@ sf::Texture& Resource_Manager::get_texture_shield()
 		{
 			throw std::invalid_argument("cannot open mandala font");
 		}
+		if(!shield_sound.loadFromFile("resources/sounds/shield_sound.wav"))
+		{
+			throw std::invalid_argument("cannont open shield sound");
+		}	
 	}
+	
 	
 	sf::SoundBuffer& Resource_Manager::get_soundbuffer_hit()
 	{
@@ -282,3 +287,12 @@ sf::Texture& Resource_Manager::get_texture_shield()
 	{
 		return font_mandala;
 	}
+	sf::SoundBuffer& Resource_Manager::get_soundbuffer_shield()
+	{
+		if (shield_sound.getSampleCount() == 0)
+			{
+				get_soundbuffer();
+			}
+			return shield_sound;
+	}
+			
