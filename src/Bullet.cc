@@ -27,9 +27,19 @@ void Projectile::reverse_y()
     velocity.y = velocity.y * (-1.0);
 }
 
-sf::Sprite Projectile::get_sprite()
+sf::Sprite & Projectile::get_sprite()
 {
     return sprite;
+}
+
+void Projectile::update()
+{
+    sprite.move(velocity);
+}
+
+void Projectile::render(sf::RenderTarget &target)
+{
+    target.draw(sprite);
 }
 
 Bullet::Bullet(sf::Vector2f const & pos, float rot) 
@@ -37,46 +47,11 @@ Bullet::Bullet(sf::Vector2f const & pos, float rot)
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     sprite.setScale(0.1, 0.1);
-    //sprite.setOrigin(50, 50);
-    
-    //sprite.setFillColor(sf::Color(80, 80, 80));
-}
-
-void Bullet::update()
-{
-    sprite.move(velocity);
-}
-
-void Bullet::render(sf::RenderTarget &target)
-{
-    target.draw(sprite);
-}
-
-sf::FloatRect Bullet::getBounds()
-{
-    return sprite.getGlobalBounds();
 }
 
 Rocket_Projectile::Rocket_Projectile(sf::Vector2f const & pos, float rot) 
     :   Projectile{rot, 1, Resource_Manager<sf::Texture>::get_file("resources/textures/rocket_projectile.png")}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
-    //sprite.setOrigin (10, 10);
     sprite.setRotation(rot + 45.0);
 }
-
-void Rocket_Projectile::update()
-{
-    sprite.move(velocity);
-}
-
-void Rocket_Projectile::render(sf::RenderTarget &target)
-{
-    target.draw(sprite);
-}
-
-sf::FloatRect Rocket_Projectile::getBounds()
-{
-    return sprite.getGlobalBounds();
-}
-

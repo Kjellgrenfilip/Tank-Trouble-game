@@ -10,10 +10,9 @@ class Projectile
         Projectile(float rot, int life, sf::Texture & texture);                  //Tar in spelarens rotaion för att bestämma riktning på projektil
         virtual ~Projectile() = default;
 
-        virtual void update() = 0;
-        virtual void render(sf::RenderTarget&) = 0;
-        virtual sf::FloatRect getBounds() = 0;              //Returnerar GlobalBounds för sprite
-        sf::Sprite get_sprite();
+        void update();
+        void render(sf::RenderTarget&);
+        sf::Sprite & get_sprite();
 
         sf::Vector2f & get_velocity();            //Returnera hastigheten (pixlar per frame)
         void reverse_x();                       //Byt riktning i x-led
@@ -29,22 +28,12 @@ class Bullet : public Projectile
 {
     public:
         Bullet(sf::Vector2f const & pos, float rot);    
-
-        virtual void update() override;
-        virtual void render(sf::RenderTarget&) override;
-
-        virtual sf::FloatRect getBounds() override;
 };
 
 class Rocket_Projectile : public Projectile
 {
     public:
         Rocket_Projectile(sf::Vector2f const & pos, float rot);
-       
-        virtual void update() override;
-        virtual void render(sf::RenderTarget &) override;
-
-        virtual sf::FloatRect getBounds() override;
 };
 
 #endif
