@@ -103,7 +103,7 @@ void Game_Map::update()
 
 void Game_Map::render(sf::RenderTarget &window)
 {
-        for(auto tile : tiles)
+        for(auto & tile : tiles)
         {
             window.draw(tile.get_sprite());
         }
