@@ -26,30 +26,18 @@ void Game_Map::generate(int mapID)
 
     tiles.clear();
 
-    //Tile temp_tile(sf::Vector2f(20, 20), false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
-
     std::string temp_string;
     float pos_x{};
     float pos_y{};
     while(map_text >> temp_string)
     {
         sf::Vector2f pos{pos_x * gridsize_x, pos_y * gridsize_y};
-        //Tile temp_tile(pos, false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
         if(temp_string == "1")
         {
-            //tilen är en vägg
-            //Tile temp_tile(pos, false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
-            //Tile temp_tile(pos, false, "resources/textures/rusty_wall.png");
-            //this->tiles.push_back(Tile{pos, false, "resources/textures/rusty_wall.png"});
-            //Tile temp_tile(pos, false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
             tiles.push_back(std::make_unique<Tile>(pos, false, GameMap_Manager::get_texture_wall()));
         }
         else
         {
-            //Tile temp_tile(pos, true, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
-            //Tile temp_tile(pos, true, Resource_Manager::get_texture_floor());
-            //this->tiles.push_back(temp_tile);
-            //this->tiles.push_back(Tile{pos, false, "resources/textures/rusty_texture.png"});
             tiles.push_back(std::make_unique<Tile>(pos, true, GameMap_Manager::get_texture_floor()));
         }
         if(pos_x >= pixel_resolution_x - 1)

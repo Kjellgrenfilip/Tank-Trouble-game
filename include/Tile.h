@@ -15,12 +15,15 @@ private:
 public:
     Tile(sf::Vector2f const& pos, bool pas, sf::Texture & tile);
     sf::Vector2f get_position();
-    sf::Sprite get_sprite(); 
+    sf::Sprite& get_sprite(); 
+    
     bool is_passable();
-    void setPowerUp();
     bool power_is_available();
+    
+    void setPowerUp();
     void set_available_power(bool new_val);
     void render(sf::RenderTarget & target);
     
 };
+
 #endif 

@@ -25,7 +25,7 @@ void Tile::setPowerUp()
     set_available_power(true);
 }
 
-sf::Sprite Tile::get_sprite()
+sf::Sprite& Tile::get_sprite()
 {
     return tile;
 }

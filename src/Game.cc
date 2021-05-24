@@ -9,7 +9,6 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <utility>
-
 #include <iostream>
 
 Game::Game( std::string const& title,
