@@ -6,7 +6,7 @@
 
 Player::Player(int ID, sf::Vector2f const& p)
 	: 	hp{3}, player_ID{ID}, 
-		pos{p}, rot{}, movement{}, hit_sound{Resource_Manager::get_soundbuffer_hit()}, 
+		pos{p}, rot{}, movement{}, 
 		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
 		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, shield_sound{Resource_Manager::get_soundbuffer_shield()},
 		up{}, down{}, left{}, right{}, fire{}, activate_powerup{}, hearts{}, projectiles{}, shield_circle{40},
@@ -218,13 +218,6 @@ std::vector<Projectile*> & Player::get_projectiles()
 sf::Sprite const& Player::getPlayerSprite() const
 {
 	return tank;
-}
-
-
-sf::FloatRect Player::get_hitbox() const
-{
-	return tank.getGlobalBounds();
-
 }
 
 sf::Vector2f Player::get_position()

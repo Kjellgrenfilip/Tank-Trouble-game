@@ -111,7 +111,6 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
         {   
             for(auto & tile : game_map.get_tiles())
             {
-                //sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
                 if(!tile.is_passable() && check_collision(projectile->get_sprite(), tile.get_sprite()))
                 {
                     if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
@@ -126,7 +125,6 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
                     sf::Sprite try_y{projectile->get_sprite()};
                     try_y.setPosition(try_y.getPosition().x + projectile->get_velocity().x, 
                                       try_y.getPosition().y - projectile->get_velocity().y);
-
 
                     if(!check_collision(try_x, tile.get_sprite()))
                     {

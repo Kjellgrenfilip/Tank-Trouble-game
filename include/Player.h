@@ -15,8 +15,6 @@ public:
     void update();
     void render(sf::RenderTarget & target);
     void event_handler(sf::Event event);
-	
-	sf::FloatRect get_hitbox() const;                           // Returnar playerns hitbox
 
     std::vector<Projectile*> & get_projectiles();
     sf::Vector2f get_position();                                // returnerar spelarens position    
@@ -38,7 +36,6 @@ private:
     float rot;					//Spelarens rotation
 	sf::Vector2f movement;		//Spelarens rörelseriktning i x och y led. Uppdateras i event_handlern inför varje knapptryck
 	
-	sf::Sound hit_sound;		//Ljud för träff
 	sf::Sound shot_sound;		//Ljud vid avfyrning av skott
 	sf::Sound rocket_sound;		//Ljud vid avfyrning av rocket powerup
 	sf::Sound shotgun_sound;	//Ljud vid avfyrning av shotgun powerup

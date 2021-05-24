@@ -3,6 +3,6 @@
 
 int main ()
 {
-    Game g { "Tank Trouble", screen_width, screen_height };
+    Game g { "Crazy Tanks!", screen_width, screen_height };
     g.start ();
 }

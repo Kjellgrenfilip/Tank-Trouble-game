@@ -25,7 +25,7 @@ OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
-	$(CCC) -I$(IDIR) $(CCFLAGS) -o tank-trouble $(OBJECTS) $(LDFLAGS)
+	$(CCC) -I$(IDIR) $(CCFLAGS) -o crazy_tanks $(OBJECTS) $(LDFLAGS)
 
 # Part objectives
 $(OBJDIR)/main.o:  $(SRC)/main.cc dir
@@ -74,8 +74,8 @@ dir:
 	@mkdir -p $(OBJDIR)
 
 clean:
-	rm tank-trouble $(OBJECTS)
+	rm crazy_tanks $(OBJECTS)
 
 run:
-	./tank-trouble
+	./crazy_tanks
 
