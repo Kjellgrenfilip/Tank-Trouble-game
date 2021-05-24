@@ -13,12 +13,12 @@ public:
     void render(sf::RenderTarget & target); 
     sf::Sprite& get_sprite();
     
-    bool is_expired(){return expired;};
-    bool is_active_on_player(){return active_on_player;};
-    void set_active_on_player(bool x){active_on_player = x;};
-    int get_active_time(){return active_timer;};
-    void set_active_time(int x){active_timer = x;};
-    void dec_active_timer(){--active_timer;};
+    bool is_expired();
+    bool is_active_on_player();
+    void set_active_on_player(bool x);
+    int get_active_time();
+    void set_active_time(int x);
+    void dec_active_timer();
 protected:
     bool expired;
     int lifetime;

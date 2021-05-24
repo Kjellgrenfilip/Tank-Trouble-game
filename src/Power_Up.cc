@@ -26,6 +26,30 @@ sf::Sprite& Power_Up::get_sprite()
 {
     return power;
 }
+bool Power_Up::is_expired()
+{
+    return expired;
+}
+bool Power_Up::is_active_on_player()
+{
+    return active_on_player;
+}
+void Power_Up::set_active_on_player(bool x)
+{
+    active_on_player = x;
+}
+int Power_Up::get_active_time()
+{
+    return active_timer;
+}
+void Power_Up::set_active_time(int x)
+{
+    active_timer = x;
+}
+void Power_Up::dec_active_timer()
+{
+    --active_timer;
+}
 
 Speed_Boost::Speed_Boost(sf::Vector2f pos)
     : Power_Up(pos,Resource_Manager::get_texture_speedboost())
