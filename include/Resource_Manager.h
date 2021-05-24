@@ -31,6 +31,7 @@ class Resource_Manager
         static inline sf::SoundBuffer rocket_sound;
         static inline sf::SoundBuffer shotgun_sound;
         static inline sf::SoundBuffer shield_sound;
+        static inline sf::SoundBuffer speed_sound;
 
         static inline Game_Map game_map;
         static inline sf::Texture rocket_projectile_texture;
@@ -58,6 +59,7 @@ class Resource_Manager
         static sf::SoundBuffer& get_soundbuffer_rocket();
         static sf::SoundBuffer& get_soundbuffer_shotgun();
         static sf::SoundBuffer& get_soundbuffer_shield();
+        static sf::SoundBuffer& get_soundbuffer_speed();
 
         static void load_game_map(int mapID = 0);
         static void get_texture();

@@ -236,7 +236,11 @@ void Resource_Manager::get_soundbuffer()
 	if(!shield_sound.loadFromFile("resources/sounds/shield_sound.wav"))
 	{
 		throw std::invalid_argument("cannont open shield sound");
-	}	
+	}
+	if(!speed_sound.loadFromFile("resources/sounds/speed_sound.wav"))
+	{
+		throw std::invalid_argument("cannont open speed sound");
+	}
 }
 sf::SoundBuffer& Resource_Manager::get_soundbuffer_hit()
 {
@@ -305,5 +309,13 @@ sf::SoundBuffer& Resource_Manager::get_soundbuffer_shield()
 			get_soundbuffer();
 		}
 		return shield_sound;
+}
+sf::SoundBuffer& Resource_Manager::get_soundbuffer_speed()
+{
+	if (speed_sound.getSampleCount() == 0)
+		{
+			get_soundbuffer();
+		}
+		return speed_sound;
 }
 			

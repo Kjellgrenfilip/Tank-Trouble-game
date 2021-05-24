@@ -40,6 +40,7 @@ private:
 	sf::Sound rocket_sound;		//Ljud vid avfyrning av rocket powerup
 	sf::Sound shotgun_sound;	//Ljud vid avfyrning av shotgun powerup
 	sf::Sound shield_sound;
+	sf::Sound speed_sound;
 	
 	sf::Keyboard::Key up;
 	sf::Keyboard::Key down;

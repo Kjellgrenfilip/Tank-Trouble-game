@@ -9,6 +9,7 @@ Player::Player(int ID, sf::Vector2f const& p)
 		pos{p}, rot{}, movement{}, 
 		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
 		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, shield_sound{Resource_Manager::get_soundbuffer_shield()},
+		speed_sound{Resource_Manager::get_soundbuffer_speed()},
 		up{}, down{}, left{}, right{}, fire{}, activate_powerup{}, hearts{}, projectiles{}, shield_circle{40},
 		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
 		player_text{"Player " + std::to_string(ID) + ':', Resource_Manager::get_font_mandala(), 32}, power_print_pos{},
@@ -192,6 +193,7 @@ void Player::event_handler(sf::Event event)
                 {
                     if(!my_power->is_active_on_player())
                     {
+						speed_sound.play();
                         my_power->set_active_on_player(true);
                         my_power->set_active_time(180);   //3 sekunder i 60 FPS
                         speed = 8.0;                    //Dubbla hastigheten
