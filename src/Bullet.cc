@@ -1,10 +1,14 @@
 #include "Bullet.h"
 #include <cmath>
 
-Projectile::Projectile(float rot, int life) 
-    :   lifetime{life}, velocity{   static_cast<float>(5*std::cos(rot*M_PI/180.0)), 
-                                    static_cast<float>(5*std::sin(rot*M_PI/180.0))}
+Projectile::Projectile(float rot, int life, sf::Texture & texture) 
+    :   lifetime{life}, 
+        velocity{   static_cast<float>(5*std::cos(rot*M_PI/180.0)), 
+                    static_cast<float>(5*std::sin(rot*M_PI/180.0))},
+        sprite{texture}
 {
+    auto size = texture.getSize();
+    sprite.setOrigin(size.x / 2, size.y / 2);
 }
 
 sf::Vector2f & Projectile::get_velocity()
@@ -22,12 +26,19 @@ void Projectile::reverse_y()
     velocity.y = velocity.y * (-1.0);
 }
 
+sf::Sprite Projectile::get_sprite()
+{
+    return sprite;
+}
+
 Bullet::Bullet(sf::Vector2f const & pos, float rot) 
-    :   Projectile{rot, 4}, sprite{5.0}
+    :   Projectile{rot, 4, Resource_Manager::get_texture_bullet()}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
-    sprite.setOrigin (5, 5);
-    sprite.setFillColor(sf::Color(80, 80, 80));
+    sprite.setScale(0.1, 0.1);
+    //sprite.setOrigin(50, 50);
+    
+    //sprite.setFillColor(sf::Color(80, 80, 80));
 }
 
 void Bullet::update()
@@ -46,10 +57,10 @@ sf::FloatRect Bullet::getBounds()
 }
 
 Rocket_Projectile::Rocket_Projectile(sf::Vector2f const & pos, float rot) 
-    :   Projectile{rot, 1}, sprite{Resource_Manager::get_texture_rocket_projectile()}
+    :   Projectile{rot, 1, Resource_Manager::get_texture_rocket_projectile()}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
-    sprite.setOrigin (10, 10);
+    //sprite.setOrigin (10, 10);
     sprite.setRotation(rot + 45.0);
 }
 

@@ -12,10 +12,11 @@
 
 Collision_Handler::Collision_Handler()
     :   game_map{Resource_Manager::get_game_map()}, obj1pos{}, obj2pos{}, 
-        bounce_sound{}, powerup_sound{}
+        bounce_sound{}, powerup_sound{}, hit_sound{}
 {
     bounce_sound.setBuffer(Resource_Manager::get_soundbuffer_bounce());
     powerup_sound.setBuffer(Resource_Manager::get_soundbuffer_powerup());
+    hit_sound.setBuffer(Resource_Manager::get_soundbuffer_hit());
 }
 
 Collision_Handler::Collision_Box::Collision_Box(sf::Sprite const& sprite)
@@ -110,27 +111,28 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
         {   
             for(auto & tile : game_map.get_tiles())
             {
-                sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
-                if(!tile.is_passable() && projectile->getBounds().intersects(tile_rect))
+                //sf::FloatRect tile_rect{tile.get_position(), sf::Vector2f{gridsize_x, gridsize_y}};
+                if(!tile.is_passable() && check_collision(projectile->get_sprite(), tile.get_sprite()))
                 {
                     if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
                     {
                         projectile->lifetime = 0;
                         break;
                     }
-                    //Testa ändra hastigheten på kulan i x- och y-led för att se om den kommer befinna sig i samma tile
-                    sf::FloatRect try_x{projectile->getBounds()};
-                    try_x.left = try_x.left - projectile->get_velocity().x;
-                    try_x.top = try_x.top + projectile->get_velocity().y;
-                    sf::FloatRect try_y{projectile->getBounds()};
-                    try_y.left = try_y.left + 2.0*projectile->get_velocity().x;
-                    try_y.top = try_y.top - 2.0*projectile->get_velocity().y;
 
-                    if(!try_x.intersects(tile_rect))
+                    sf::Sprite try_x{projectile->get_sprite()};
+                    try_x.setPosition(try_x.getPosition().x - projectile->get_velocity().x, 
+                                      try_x.getPosition().y + projectile->get_velocity().y);
+                    sf::Sprite try_y{projectile->get_sprite()};
+                    try_y.setPosition(try_y.getPosition().x + projectile->get_velocity().x, 
+                                      try_y.getPosition().y - projectile->get_velocity().y);
+
+
+                    if(!check_collision(try_x, tile.get_sprite()))
                     {
                         projectile->reverse_x();
                     }
-                    else if(!try_y.intersects(tile_rect))
+                    else if(!check_collision(try_y, tile.get_sprite()))
                     {
                         projectile->reverse_y();
                     }
@@ -140,9 +142,9 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
                         projectile->reverse_y();
                     }
 					if (projectile->lifetime > 1)
-						{
+					{
 						bounce_sound.play();
-						}	
+					}	
                     projectile->lifetime--;
                     break;
                 }
@@ -177,4 +179,36 @@ void Collision_Handler::tank_powerup_collision(std::vector<Player> & players)
             }
         }
     }
+}
+
+void Collision_Handler::bullet_tank_collision(Player & player1, Player & player2)
+{
+    for (auto & projectile : player1.get_projectiles())
+    {
+        if (check_collision(projectile->get_sprite(), player2.getPlayerSprite()))
+        {   
+            //Kolla om spelaren har aktiv sköld
+            if(dynamic_cast<Shield*>(player2.get_mypower().get()) != nullptr && player2.get_mypower()->is_active_on_player())
+            {
+                player2.get_mypower().reset();
+            }
+            else if(dynamic_cast<Bullet*>(projectile) != nullptr)
+            {
+                player2.set_hp(player2.get_hp()-1);
+            }
+            else if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
+            {
+                player2.set_hp(0);
+            }
+			hit_sound.play();
+            projectile->lifetime = 0;
+        }
+
+        if(projectile->lifetime <= 0)
+        {
+            delete projectile;
+            projectile = nullptr;
+        }
+    }
+    player1.get_projectiles().erase(remove(begin(player1.get_projectiles()), end(player1.get_projectiles()), nullptr), end(player1.get_projectiles()));
 }

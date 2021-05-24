@@ -15,6 +15,7 @@ public:
     void bullet_wall_collision(std::vector<Player> & players);
     void tank_tank_collision(std::vector<Player> & players);
     void tank_powerup_collision(std::vector<Player> & players);
+    void bullet_tank_collision(Player & player1, Player & player2);
 
 private:
     class Collision_Box
@@ -40,5 +41,6 @@ private:
 
     sf::Sound bounce_sound;
     sf::Sound powerup_sound;
+    sf::Sound hit_sound;
 };
 #endif

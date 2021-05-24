@@ -38,9 +38,11 @@ void Game_State::update()
     collision_handler.tank_wall_collision(players);
     collision_handler.tank_tank_collision(players);
     collision_handler.tank_powerup_collision(players);
+    collision_handler.bullet_tank_collision(players.at(0), players.at(1));
+    collision_handler.bullet_tank_collision(players.at(1), players.at(0));
 
-    players[0].update(players[1]);
-    players[1].update(players[0]);
+    players[0].update();
+    players[1].update();
     if (players[0].is_destroyed())
 	{
 		destroyed_sound.play();

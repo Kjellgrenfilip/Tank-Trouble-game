@@ -65,10 +65,14 @@ Player::~Player()
     }
 }
 
-void Player::update(Player& p2)
+void Player::update()
 {
-    //Kolla eventuella power ups som är aktiva
-    if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr && my_power->is_active_on_player())
+    if(hp == 0)
+	{
+		destroyed = true;
+	}
+	 //Kolla eventuella power ups som är aktiva	
+	if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr && my_power->is_active_on_player())
     {
         if(my_power->get_active_time() <= 0)
         {
@@ -85,8 +89,6 @@ void Player::update(Player& p2)
     {
         projectile->update();
     }
-
-	check_bullets(p2);
 	
 	pos = tank.getPosition();
 	rot = tank.getRotation();
@@ -103,14 +105,14 @@ void Player::render(sf::RenderTarget & window)
     }
 
 	if (!destroyed)
+	{
+		window.draw(tank);
+		if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->is_active_on_player())
 		{
-			window.draw(tank);
-			if(dynamic_cast<Shield*>(my_power.get()) != nullptr && my_power->is_active_on_player())
-			{
-				shield_circle.setPosition(get_position());
-				window.draw(shield_circle);
-			}	
-		}
+			shield_circle.setPosition(get_position());
+			window.draw(shield_circle);
+		}	
+	}
 	else
 	{
 		explosion.setPosition(pos);
@@ -144,7 +146,7 @@ void Player::event_handler(sf::Event event)
         {
 			tank.move(movement*speed);
         }
-       if ( sf::Keyboard::isKeyPressed (down) )
+       	if ( sf::Keyboard::isKeyPressed (down) )
         {
 			tank.move (-(movement*speed));		//Eftersom movement är beräknat i riktningen framåt, så blir det en negativ rörelse i motsatt riktning
         }
@@ -152,7 +154,7 @@ void Player::event_handler(sf::Event event)
         {
             tank.rotate (-3);    
         }
-       if ( sf::Keyboard::isKeyPressed (right) )
+       	if ( sf::Keyboard::isKeyPressed (right) )
         {
             tank.rotate (3);
 		}
@@ -208,7 +210,7 @@ void Player::event_handler(sf::Event event)
 		}   
 }
 	
-std::vector<Projectile*> Player::get_projectiles()
+std::vector<Projectile*> & Player::get_projectiles()
 {
     return projectiles;
 }
@@ -267,100 +269,6 @@ void Player::set_hearts(sf::Texture& h)
 	}
 }
 
-/*void Player::print_player_text(sf::RenderTarget & target)
-{
-	std::string file{"resources/fonts/Mandala.ttf"};
-    sf::Font font;
-    if(!font.loadFromFile(file))
-    {
-        throw std::invalid_argument("No font at location: " + file);
-    }	
-	sf::Text text1{"Player 1:", font, 32};
-	sf::Text text2{"Player 2:", font, 32};
-
-	if (player_ID == 1)
-	{
-		textsquare.setPosition(0,0);
-		target.draw(textsquare);
-		text1.setFillColor(sf::Color{175,40,40});
-		text1.setPosition(10, 0);
-		target.draw(text1);
-		if(my_power!=nullptr && player_ID == 1)
-		{
-			my_power->get_sprite().setPosition(textsquare.getPosition().x+textsquare.getGlobalBounds().width,0);
-			target.draw(my_power->get_sprite());
-		}
-	}
-	if (player_ID == 2)
-	{	
-		textsquare.setPosition(screen_width-textsquare.getGlobalBounds().width, 0);
-		target.draw(textsquare);
-		text2.setFillColor(sf::Color{28,24,128});
-		text2.setPosition(screen_width-220, 0);
-		target.draw(text2);
-		if(my_power!=nullptr && player_ID == 2)
-		{
-			my_power->get_sprite().setPosition(textsquare.getPosition().x-gridsize_x,0);
-			target.draw(my_power->get_sprite());
-		}
-	}
-		if(my_power!=nullptr && player_ID == 1)
-		{
-			my_power->get_sprite().setPosition(textsquare.getPosition().x+textsquare.getGlobalBounds().width,0);
-			target.draw(my_power->get_sprite());
-		}
-
-		if(my_power!=nullptr)
-		{
-			my_power->get_sprite().setPosition(power_print_pos);
-			target.draw(my_power->get_sprite());
-		}
-
-	for (int i{0}; i < hp; i++)
-	{
-		target.draw(hearts[i]);
-	}
-
-}*/
-
-void Player::check_bullets(Player & p2)
-{
-	for (auto & projectile : projectiles)
-    {
-        if (projectile->getBounds().intersects(p2.get_hitbox()))
-        {   
-            //Kolla om spelaren har aktiv sköld
-            if(dynamic_cast<Shield*>(p2.my_power.get()) != nullptr && p2.my_power->is_active_on_player())
-            {
-                p2.my_power.reset();
-            }
-            else if(dynamic_cast<Bullet*>(projectile) != nullptr)
-            {
-                p2.hp--;
-            }
-            else if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
-            {
-                p2.hp = 0;
-            }
-            
-			hit_sound.play();
-            projectile->lifetime = 0;
-            if (p2.hp == 0)
-            {
-                p2.destroyed = true;
-            }
-        }
-        if(projectile->lifetime <= 0)
-        {
-            delete projectile;
-            projectile = nullptr;
-        }
-        
-    }
-    projectiles.erase(remove(begin(projectiles), end(projectiles), nullptr), end(projectiles));
-}
-
-
 bool Player::is_destroyed()
 {
 	if(destroyed && explosion_counter == 0)
@@ -380,4 +288,19 @@ bool Player::set_power_up(std::shared_ptr<Power_Up> &new_power)
     {
         return false;
     }
+}
+
+int Player::get_hp()
+{
+	return hp;
+}
+
+void Player::set_hp(int x)
+{
+	hp = x;
+}
+
+std::shared_ptr<Power_Up> Player::get_mypower()
+{
+	return my_power;
 }

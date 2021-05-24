@@ -12,19 +12,23 @@ class Player
 public:
     Player(int ID, sf::Vector2f const& pos);
     ~Player();
-    void update(Player&);
+    void update();
     void render(sf::RenderTarget & target);
     void event_handler(sf::Event event);
 	
 	sf::FloatRect get_hitbox() const;                           // Returnar playerns hitbox
 
-    std::vector<Projectile*> get_projectiles();
+    std::vector<Projectile*> & get_projectiles();
     sf::Vector2f get_position();                                // returnerar spelarens position    
     sf::Vector2f get_old_position();                            // returnerar spelaren position på bilden innan
     void set_tank_pos(sf::Vector2f new_pos);                    // flyttar spelaren
     bool set_power_up(std::shared_ptr<Power_Up> &new_power);    // ny pointer till power_up
     sf::Sprite const& getPlayerSprite() const;                  // returnerar spelarens sprite
-	bool is_destroyed();								
+	bool is_destroyed();
+    int get_hp();
+    void set_hp(int);	
+
+    std::shared_ptr<Power_Up> get_mypower();							
 
 private:	
 	int hp;       				//Spelarens liv - spel startar med 3. Bullet skadar -1
@@ -61,10 +65,8 @@ private:
     bool destroyed;				//Boolean som håller koll på om spelarens har "dött"
 	float speed;				//"Hastigheten" som tanken ska förflyttas vid knapptrycks
     int explosion_counter;		//Håller koll på tiden när explosionsspriten skalas upp
-    float explosion_scale;		
+    float explosion_scale;
 
-	void check_bullets(Player&); //Kollisionskontroll mellan spelare och bullets
 	void set_hearts(sf::Texture& h);	//Fyller på hearts-vektorn med hjärtan
-	//void print_player_text(sf::RenderTarget & target);
 };
 #endif
