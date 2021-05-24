@@ -2,21 +2,21 @@
 #include <cmath>
 #include <iostream>
 #include "Game_Map.h"
-#include "Resource_Manager.h"
 #include "Player.h"
 #include "Bullet.h"
-
+#include "Resource_Manager.h"
+#include "GameMap_Manager.h"
 #include "Constants.h"
 
 #include "Collision_Handler.h"
 
 Collision_Handler::Collision_Handler()
-    :   game_map{Resource_Manager::get_game_map()}, obj1pos{}, obj2pos{}, 
+    :   game_map{GameMap_Manager::get_game_map()}, obj1pos{}, obj2pos{}, 
         bounce_sound{}, powerup_sound{}, hit_sound{}
 {
-    bounce_sound.setBuffer(Resource_Manager::get_soundbuffer_bounce());
-    powerup_sound.setBuffer(Resource_Manager::get_soundbuffer_powerup());
-    hit_sound.setBuffer(Resource_Manager::get_soundbuffer_hit());
+    bounce_sound.setBuffer(Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/wall_bounce_sound.wav"));
+    powerup_sound.setBuffer(Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/powerup_sound.wav"));
+    hit_sound.setBuffer(Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/hit_sound.wav"));
 }
 
 Collision_Handler::Collision_Box::Collision_Box(sf::Sprite const& sprite)
@@ -95,7 +95,7 @@ void Collision_Handler::tank_wall_collision(std::vector<Player> & players)
     {
         for(auto & tile : game_map.get_tiles())
         {
-            if(!tile.is_passable() && check_collision(player.getPlayerSprite(), tile.get_sprite()))
+            if(!tile->is_passable() && check_collision(player.getPlayerSprite(), tile->get_sprite()))
             {
                 player.set_tank_pos(player.get_old_position());
             }
@@ -111,7 +111,7 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
         {   
             for(auto & tile : game_map.get_tiles())
             {
-                if(!tile.is_passable() && check_collision(projectile->get_sprite(), tile.get_sprite()))
+                if(!tile->is_passable() && check_collision(projectile->get_sprite(), tile->get_sprite()))
                 {
                     if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
                     {
@@ -126,11 +126,11 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
                     try_y.setPosition(try_y.getPosition().x + projectile->get_velocity().x, 
                                       try_y.getPosition().y - projectile->get_velocity().y);
 
-                    if(!check_collision(try_x, tile.get_sprite()))
+                    if(!check_collision(try_x, tile->get_sprite()))
                     {
                         projectile->reverse_x();
                     }
-                    else if(!check_collision(try_y, tile.get_sprite()))
+                    else if(!check_collision(try_y, tile->get_sprite()))
                     {
                         projectile->reverse_y();
                     }

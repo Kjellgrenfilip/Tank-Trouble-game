@@ -1,18 +1,19 @@
 #include "Constants.h"
 #include "Game_State.h"
-//#include "Game_Map.h"
-#include "Resource_Manager.h"
+#include "Game_Map.h"
 #include "Collision_Handler.h"
+#include "GameMap_Manager.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Resource_Manager.h"
 Game_State::Game_State()
-    :   paus{false}, endgame{false}, destroyed_sound{}, players{}, game_map{Resource_Manager::get_game_map()}, 
+    :   paus{false}, endgame{false}, destroyed_sound{}, players{}, game_map{GameMap_Manager::get_game_map()}, 
         collision_handler{}
 {
 	players.push_back(Player(1, sf::Vector2f{screen_width/10, screen_height/10}));
 	players.push_back(Player(2, sf::Vector2f{(screen_width/10)*9, (screen_height/10)*9}));
     
-    destroyed_sound.setBuffer(Resource_Manager::get_soundbuffer_destroyed());
+    destroyed_sound.setBuffer(Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/destroyed_sound.wav"));
 }
 
 void Game_State::event_handler(sf::Event event)

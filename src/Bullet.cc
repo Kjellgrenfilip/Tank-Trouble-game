@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "Resource_Manager.h"
 #include <cmath>
 
 Projectile::Projectile(float rot, int life, sf::Texture & texture) 
@@ -32,7 +33,7 @@ sf::Sprite Projectile::get_sprite()
 }
 
 Bullet::Bullet(sf::Vector2f const & pos, float rot) 
-    :   Projectile{rot, 4, Resource_Manager::get_texture_bullet()}
+    :   Projectile{rot, 4, Resource_Manager<sf::Texture>::get_file("resources/textures/bullet.png")}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     sprite.setScale(0.1, 0.1);
@@ -57,7 +58,7 @@ sf::FloatRect Bullet::getBounds()
 }
 
 Rocket_Projectile::Rocket_Projectile(sf::Vector2f const & pos, float rot) 
-    :   Projectile{rot, 1, Resource_Manager::get_texture_rocket_projectile()}
+    :   Projectile{rot, 1, Resource_Manager<sf::Texture>::get_file("resources/textures/rocket_projectile.png")}
 {
     sprite.setPosition(pos + velocity*static_cast<float>(6.0));
     //sprite.setOrigin (10, 10);

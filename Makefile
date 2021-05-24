@@ -21,7 +21,7 @@ LDFLAGS += -L$(SFML_ROOT)/lib -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-
 MAINFILE := main.cc
 
 # Object modules
-OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o $(OBJDIR)/Win_State.o $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/Resource_Manager.o  $(OBJDIR)/Power_Up.o  $(OBJDIR)/Collision_Handler.o  $(OBJDIR)/Setting_State.o
+OBJECTS =  $(OBJDIR)/main.o  $(OBJDIR)/Game.o  $(OBJDIR)/Game_State.o  $(OBJDIR)/Menu_State.o  $(OBJDIR)/Pause_State.o $(OBJDIR)/Win_State.o $(OBJDIR)/Game_Map.o  $(OBJDIR)/Tile.o  $(OBJDIR)/Bullet.o $(OBJDIR)/Player.o  $(OBJDIR)/GameMap_Manager.o  $(OBJDIR)/Power_Up.o  $(OBJDIR)/Collision_Handler.o  $(OBJDIR)/Setting_State.o
 
 # Main objetice - created with 'make' or 'make main'.
 main: $(OBJECTS) Makefile 
@@ -61,8 +61,8 @@ $(OBJDIR)/Bullet.o: $(SRC)/Bullet.cc dir
 $(OBJDIR)/Player.o: $(SRC)/Player.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Player.cc -o $(OBJDIR)/Player.o
 
-$(OBJDIR)/Resource_Manager.o: $(SRC)/Resource_Manager.cc dir
-	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Resource_Manager.cc -o $(OBJDIR)/Resource_Manager.o
+$(OBJDIR)/GameMap_Manager.o: $(SRC)/GameMap_Manager.cc dir
+	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/GameMap_Manager.cc -o $(OBJDIR)/GameMap_Manager.o
 
 $(OBJDIR)/Power_Up.o: $(SRC)/Power_Up.cc dir
 	$(CCC) -I$(IDIR) $(CCFLAGS) -c $(SRC)/Power_Up.cc -o $(OBJDIR)/Power_Up.o

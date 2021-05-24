@@ -8,7 +8,7 @@
 #include "Tile.h"
 #include "Constants.h"
 #include "Power_Up.h"
-#include "Resource_Manager.h"
+#include "GameMap_Manager.h"
 
 Game_Map::Game_Map()
     : powerups{}, tiles{}
@@ -26,22 +26,31 @@ void Game_Map::generate(int mapID)
 
     tiles.clear();
 
+    //Tile temp_tile(sf::Vector2f(20, 20), false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
+
     std::string temp_string;
     float pos_x{};
     float pos_y{};
     while(map_text >> temp_string)
     {
         sf::Vector2f pos{pos_x * gridsize_x, pos_y * gridsize_y};
+        //Tile temp_tile(pos, false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
         if(temp_string == "1")
         {
             //tilen är en vägg
-            Tile temp_tile(pos, false, Resource_Manager::get_texture_wall());
-            this->tiles.push_back(temp_tile);
+            //Tile temp_tile(pos, false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
+            //Tile temp_tile(pos, false, "resources/textures/rusty_wall.png");
+            //this->tiles.push_back(Tile{pos, false, "resources/textures/rusty_wall.png"});
+            //Tile temp_tile(pos, false, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
+            tiles.push_back(std::make_unique<Tile>(pos, false, GameMap_Manager::get_texture_wall()));
         }
         else
         {
-            Tile temp_tile(pos, true, Resource_Manager::get_texture_floor());
-            this->tiles.push_back(temp_tile);
+            //Tile temp_tile(pos, true, Manager<sf::Texture>::get_file("resources/textures/rusty_wall.png"));
+            //Tile temp_tile(pos, true, Resource_Manager::get_texture_floor());
+            //this->tiles.push_back(temp_tile);
+            //this->tiles.push_back(Tile{pos, false, "resources/textures/rusty_texture.png"});
+            tiles.push_back(std::make_unique<Tile>(pos, true, GameMap_Manager::get_texture_floor()));
         }
         if(pos_x >= pixel_resolution_x - 1)
         {
@@ -61,28 +70,28 @@ void Game_Map::update()
     int t = rand() % tiles.size();
     int chance = rand() % 10;
 
-    if(tiles.at(t).is_passable() && chance == 0 && !tiles.at(t).power_is_available())
+    if(tiles.at(t)->is_passable() && chance == 0 && !tiles.at(t)->power_is_available())
     {
         srand(time(0));
         int rand_num = rand() % 4;
         switch(rand_num)
         {
             case 0:
-                    powerups.push_back(std::make_shared<Shield>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Shield>(tiles.at(t)->get_position()));
                     break;
             case 1:
-                    powerups.push_back(std::make_shared<Rocket>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Rocket>(tiles.at(t)->get_position()));
                     break;
             case 2:
-                    powerups.push_back(std::make_shared<Shotgun>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Shotgun>(tiles.at(t)->get_position()));
                     break;
             case 3:
-                    powerups.push_back(std::make_shared<Speed_Boost>(tiles.at(t).get_position()));
+                    powerups.push_back(std::make_shared<Speed_Boost>(tiles.at(t)->get_position()));
                     break;
             default:
                     throw std::logic_error("Random number not 0-3");
         }
-        tiles.at(t).setPowerUp();
+        tiles.at(t)->setPowerUp();
     }
     // Kolla om power_up har gått ut, ta bort
     for (size_t i{}; i < powerups.size(); i++)
@@ -105,7 +114,7 @@ void Game_Map::render(sf::RenderTarget &window)
 {
         for(auto & tile : tiles)
         {
-            window.draw(tile.get_sprite());
+            tile->render(window);
         }
         for(auto & i : powerups)
         {
@@ -150,10 +159,11 @@ std::string Game_Map::random_map(int mapID)
     }
     return rand_map;
 }
-    std::vector<Tile>& Game_Map::get_tiles()
+    std::vector<std::unique_ptr<Tile>>& Game_Map::get_tiles()
     {
         return tiles;
     }
+
     std::vector<std::shared_ptr<Power_Up>>& Game_Map::get_powerups()
     {
         return powerups;

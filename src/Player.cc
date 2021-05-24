@@ -1,5 +1,6 @@
 #include <Player.h>
 #include <Constants.h>
+//#include "Resource_Manager.h"
 #include "Resource_Manager.h"
 #include <cmath>
 #include <algorithm>
@@ -7,21 +8,21 @@
 Player::Player(int ID, sf::Vector2f const& p)
 	: 	hp{3}, player_ID{ID}, 
 		pos{p}, rot{}, movement{}, 
-		shot_sound{Resource_Manager::get_soundbuffer_shot()}, rocket_sound{Resource_Manager::get_soundbuffer_rocket()},
-		shotgun_sound{Resource_Manager::get_soundbuffer_shotgun()}, shield_sound{Resource_Manager::get_soundbuffer_shield()},
-		speed_sound{Resource_Manager::get_soundbuffer_speed()},
+		shot_sound{Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/shot_sound.wav")}, rocket_sound{Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/rocket_sound.wav")},
+		shotgun_sound{Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/shotgun_sound.wav")}, shield_sound{Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/shield_sound.wav")},
+		speed_sound{Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/speed_sound.wav")},
 		up{}, down{}, left{}, right{}, fire{}, activate_powerup{}, hearts{}, projectiles{}, shield_circle{40},
-		tank{Resource_Manager::get_texture_player(ID)}, explosion{Resource_Manager::get_texture_explosion()}, textsquare{},
-		player_text{"Player " + std::to_string(ID) + ':', Resource_Manager::get_font_mandala(), 32}, power_print_pos{},
+		tank{Resource_Manager<sf::Texture>::get_file("resources/textures/player" + std::to_string(ID) + "_texture.png")}, explosion{Resource_Manager<sf::Texture>::get_file("resources/textures/explosion.png")}, textsquare{},
+		player_text{"Player " + std::to_string(ID) + ':', Resource_Manager<sf::Font>::get_file("resources/fonts/Mandala.ttf"), 32}, power_print_pos{},
 		destroyed{false}, speed{4.0}, explosion_counter{20}, explosion_scale{0.2}
 {
 	tank.setPosition(pos);
     tank.setScale(0.1, 0.1);
-    auto size {Resource_Manager::get_texture_player(ID).getSize()};
+    auto size {tank.getTexture()->getSize()};
     tank.setOrigin(size.x / 2, size.y / 2); 
-	set_hearts(Resource_Manager::get_texture_heart());
+	set_hearts(Resource_Manager<sf::Texture>::get_file("resources/textures/heart.png"));
 	
-	auto size2{Resource_Manager::get_texture_explosion().getSize()};
+	auto size2{explosion.getTexture()->getSize()};
 	explosion.setOrigin(size2.x/2, size2.y/2);
 	shield_circle.setOrigin(shield_circle.getRadius(), shield_circle.getRadius());
 	textsquare.setFillColor(sf::Color{255,255,255,100});
@@ -122,8 +123,6 @@ void Player::render(sf::RenderTarget & window)
 		window.draw(explosion);
 		explosion_counter--;
 	}
-	window.draw(textsquare);
-	window.draw(player_text);
 	//print_player_text(window);   //skriver ut "Player1: --hjärtan--. Antalet hjärtan justeras med hjälp av players hp
 	if(my_power!=nullptr)
 	{
@@ -131,10 +130,12 @@ void Player::render(sf::RenderTarget & window)
 		window.draw(my_power->get_sprite());
 	}
 
+	window.draw(textsquare);
 	for (int i{0}; i < hp; i++)
 	{
 		window.draw(hearts[i]);
 	}
+	window.draw(player_text);
 }
 
 void Player::event_handler(sf::Event event)

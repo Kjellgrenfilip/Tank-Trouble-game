@@ -1,11 +1,13 @@
 #include "Menu_State.h"
 #include "Constants.h"
 #include "Resource_Manager.h"
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <stdexcept>
+
 Menu_State::Menu_State()
-    :   font{}, menu_background{Resource_Manager::get_texture_background()}, control_background{Resource_Manager::get_texture_controls()},
+    :   font{}, menu_background{Resource_Manager<sf::Texture>::get_file("resources/textures/menu_background.png")}, control_background{Resource_Manager<sf::Texture>::get_file("resources/textures/Controls.png")},
 		startgame{false}, settings{false}, exit{false}, controls{false}, menu_select{0}, menu_song{}  
 {
     std::string file{"resources/fonts/Amatic-Bold.ttf"};

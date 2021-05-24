@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
+#include "GameMap_Manager.h"
 Win_State::Win_State()
     :   font{}, play_again{false}, menu{false}, exit{false}, player1wins{0}, player2wins{0}, winner{0}, menu_select{0}    
 {
@@ -39,7 +40,7 @@ void Win_State::event_handler(sf::Event event)
             {
                 exit = true;
             }
-            Resource_Manager::load_game_map();
+            GameMap_Manager::load_game_map();
         }
         if(event.key.code == sf::Keyboard::Up)
         {

@@ -1,7 +1,7 @@
 #include "Setting_State.h"
 #include "Constants.h"
-#include "Resource_Manager.h"
-
+//#include "Resource_Manager.h"
+#include "GameMap_Manager.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -32,23 +32,23 @@ void Setting_State::event_handler(sf::Event event)
         {
             if(menu_select == 1)
             {
-                    Resource_Manager::load_game_map(1);
+                    GameMap_Manager::load_game_map(1);
             }
             else if(menu_select == 2)
             {
-                    Resource_Manager::load_game_map(2);
+                    GameMap_Manager::load_game_map(2);
             }
             else if(menu_select == 3)
             {
-                    Resource_Manager::load_game_map(3);
+                    GameMap_Manager::load_game_map(3);
             }
             else if(menu_select == 4)
             {
-                    Resource_Manager::load_game_map(4);
+                    GameMap_Manager::load_game_map(4);
             }
             else if(menu_select == 5)
             {
-                    Resource_Manager::load_game_map(5);
+                    GameMap_Manager::load_game_map(5);
             }
             exit = true;
         }

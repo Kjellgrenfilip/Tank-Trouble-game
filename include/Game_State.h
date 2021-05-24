@@ -6,7 +6,6 @@
 #include "State.h"
 #include "Game_Map.h"
 #include "Player.h"
-#include "Resource_Manager.h"
 #include "Collision_Handler.h"
 #include "Bullet.h"
 

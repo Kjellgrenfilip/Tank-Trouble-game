@@ -2,8 +2,6 @@
 #define BULLET_H
 
 #include <SFML/Graphics.hpp>
-#include "Resource_Manager.h"
-
 
 class Projectile
 {

@@ -5,8 +5,7 @@
 #include "Win_State.h"
 #include "Setting_State.h"
 #include "Constants.h"
-#include "Resource_Manager.h"
-
+#include "GameMap_Manager.h"
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <utility>
@@ -23,7 +22,7 @@ Game::Game( std::string const& title,
             running{true},
             states{}
 {
-    Resource_Manager::load_game_map();
+    GameMap_Manager::load_game_map();
 
     states.insert(  std::pair<int,
                     std::unique_ptr<State>>(

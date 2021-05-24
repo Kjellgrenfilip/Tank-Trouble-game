@@ -52,19 +52,19 @@ void Power_Up::dec_active_timer()
 }
 
 Speed_Boost::Speed_Boost(sf::Vector2f pos)
-    : Power_Up(pos,Resource_Manager::get_texture_speedboost())
+    : Power_Up(pos, Resource_Manager<sf::Texture>::get_file("resources/textures/speed_texture1.png"))
 {
 }
 
 Shotgun::Shotgun(sf::Vector2f pos)
-    : Power_Up(pos,Resource_Manager::get_texture_shotgun())
+    : Power_Up(pos, Resource_Manager<sf::Texture>::get_file("resources/textures/shotgun_boost1.png"))
 {
 }
 Shield::Shield(sf::Vector2f pos)
-    : Power_Up(pos,Resource_Manager::get_texture_shield())
+    : Power_Up(pos, Resource_Manager<sf::Texture>::get_file("resources/textures/shield_texture1.png"))
 {
 }
 Rocket::Rocket(sf::Vector2f pos)
-    : Power_Up(pos,Resource_Manager::get_texture_rocket())
+    : Power_Up(pos, Resource_Manager<sf::Texture>::get_file("resources/textures/rocket_boost1.png"))
 {
 }
