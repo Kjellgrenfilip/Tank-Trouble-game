@@ -31,7 +31,6 @@ Menu_State::Menu_State()
 	
 	menu_song.setLoop(true);
 	menu_song.play();
-	
 }
 
 void Menu_State::event_handler(sf::Event event)
@@ -88,6 +87,7 @@ void Menu_State::event_handler(sf::Event event)
         }    
     }
 }
+
 void Menu_State::game_event_handler(sf::Event)
 {
 }

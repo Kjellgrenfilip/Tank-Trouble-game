@@ -162,55 +162,57 @@ void Player::event_handler(sf::Event event)
 		}
 		
 	if(event.type == sf::Event::KeyReleased)
+	{
+		if ( event.key.code == fire)
 		{
-			if ( event.key.code == fire)
+			if (projectiles.size() < 4)
 			{
-				if (projectiles.size() < 4)
-				{
-					projectiles.push_back(new Bullet(pos, rot-90));
-					shot_sound.play();
-				}
+				projectiles.push_back(new Bullet(pos, rot-90));
+				shot_sound.play();
 			}
+		}
+        if(event.key.code == activate_powerup && my_power != nullptr)
+		{
+            if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
+            {   
+                //Skicka iväg tre kulor med olika vinkel
+                shotgun_sound.play();
+                projectiles.push_back(new Bullet(pos, rot-85));
+                projectiles.push_back(new Bullet(pos, rot-90));
+                projectiles.push_back(new Bullet(pos, rot-95));
+                my_power.reset();
+            }
 
-            if(event.key.code == activate_powerup && my_power != nullptr)
-			{
-                if(dynamic_cast<Shotgun*>(my_power.get()) != nullptr)
-                {   
-                    //Skicka iväg tre kulor med olika vinkel
-                    shotgun_sound.play();
-                    projectiles.push_back(new Bullet(pos, rot-85));
-                    projectiles.push_back(new Bullet(pos, rot-90));
-                    projectiles.push_back(new Bullet(pos, rot-95));
-                    my_power.reset();
-                }
-                if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
+            else if(dynamic_cast<Rocket*>(my_power.get()) != nullptr)
+            {
+                //Skicka iväg en raket
+                rocket_sound.play();
+                projectiles.push_back(new Rocket_Projectile(pos, rot-90));
+                my_power.reset();
+            }
+
+            else if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
+            {
+                if(!my_power->is_active_on_player())
                 {
-                    //Skicka iväg en raket
-                    rocket_sound.play();
-                    projectiles.push_back(new Rocket_Projectile(pos, rot-90));
-                    my_power.reset();
+					speed_sound.play();
+                    my_power->set_active_on_player(true);
+                    my_power->set_active_time(180);   //3 sekunder i 60 FPS
+                    speed = 8.0;                    //Dubbla hastigheten
                 }
-                if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr)
+            }
+
+            else if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
+            {
+                //Aktivera sköld
+                if(!my_power->is_active_on_player())
                 {
-                    if(!my_power->is_active_on_player())
-                    {
-						speed_sound.play();
-                        my_power->set_active_on_player(true);
-                        my_power->set_active_time(180);   //3 sekunder i 60 FPS
-                        speed = 8.0;                    //Dubbla hastigheten
-                    }
+					shield_sound.play();
+					my_power->set_active_on_player(true);
                 }
-                if(dynamic_cast<Shield*>(my_power.get()) != nullptr)
-                {
-                    //Aktivera sköld
-                    if(!my_power->is_active_on_player())
-                    {
-						shield_sound.play();
-						my_power->set_active_on_player(true);
-                    }
-                }
-			}
-		}   
+            }
+		}
+	}   
 }
 	
 std::vector<Projectile*> & Player::get_projectiles()
@@ -247,21 +249,21 @@ void Player::set_hearts(sf::Texture& h)
 	{
 		heart.setPosition(120, 5);
 		for (int i{hp}; i > 0; i--)
-			{
-				hearts.push_back(heart);
-				sf::Vector2f old_pos{heart.getPosition()};
-				heart.setPosition(old_pos.x + heart.getGlobalBounds().width+2, old_pos.y);
-			}
+		{
+			hearts.push_back(heart);
+			sf::Vector2f old_pos{heart.getPosition()};
+			heart.setPosition(old_pos.x + heart.getGlobalBounds().width+2, old_pos.y);
+		}
 	}
 	else
 	{	
 		heart.setPosition(screen_width- heart.getGlobalBounds().width*3 -10, 5);
 		for (int i{hp}; i > 0; i--)
-			{
-				hearts.push_back(heart);
-				sf::Vector2f old_pos{heart.getPosition()};
-				heart.setPosition(old_pos.x + heart.getGlobalBounds().width+2, old_pos.y);
-			}
+		{
+			hearts.push_back(heart);
+			sf::Vector2f old_pos{heart.getPosition()};
+			heart.setPosition(old_pos.x + heart.getGlobalBounds().width+2, old_pos.y);
+		}
 	}
 }
 

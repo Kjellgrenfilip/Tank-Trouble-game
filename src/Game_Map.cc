@@ -147,12 +147,13 @@ std::string Game_Map::random_map(int mapID)
     }
     return rand_map;
 }
-    std::vector<std::unique_ptr<Tile>>& Game_Map::get_tiles()
-    {
-        return tiles;
-    }
 
-    std::vector<std::shared_ptr<Power_Up>>& Game_Map::get_powerups()
-    {
-        return powerups;
-    }
+std::vector<std::unique_ptr<Tile>>& Game_Map::get_tiles()
+{
+    return tiles;
+}
+
+std::vector<std::shared_ptr<Power_Up>>& Game_Map::get_powerups()
+{
+    return powerups;
+}

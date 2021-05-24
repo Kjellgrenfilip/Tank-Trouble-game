@@ -21,15 +21,12 @@ private:
     }
 
 public:
-    Resource_Manager() = delete;
-
     static T& get_file(std::string filename)
     {
         auto lookup{resources.find(filename)};
         if(lookup == resources.end())
         {
-            T object{load_file(filename)};
-            lookup = resources.insert(std::pair<std::string, T>(filename, object)).first;
+            lookup = resources.insert(std::pair<std::string, T>(filename, load_file(filename))).first;
         }
         return lookup->second;
     }
