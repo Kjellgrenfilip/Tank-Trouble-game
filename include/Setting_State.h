@@ -19,7 +19,7 @@ public:
 private:
     sf::Text text[SETTING_ITEMS];
     sf::Font font;
-
+	std::vector<sf::Sprite> map_pictures;
     bool exit;
 
     int menu_select;

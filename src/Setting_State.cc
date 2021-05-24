@@ -1,12 +1,12 @@
 #include "Setting_State.h"
 #include "Constants.h"
-//#include "Resource_Manager.h"
+#include "Resource_Manager.h"
 #include "GameMap_Manager.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 Setting_State::Setting_State()
-    :   font{}, exit{false}, menu_select{0}    
+    :   font{}, map_pictures{}, exit{false}, menu_select{0}    
 {
     std::string file{"resources/fonts/Amatic-Bold.ttf"};
     if(!font.loadFromFile(file))
@@ -22,6 +22,13 @@ Setting_State::Setting_State()
         text[i] = sf::Text{temp, font, 52 };
         text[i].setPosition(screen_width / 2 - text[i].getGlobalBounds().width / 2, screen_height / SETTING_ITEMS + (text[i].getGlobalBounds().height + 10) * (i - 1));
     }
+	for (int i{1}; i < 6; i++)
+		{
+			sf::Sprite tmp{Resource_Manager<sf::Texture>::get_file("resources/textures/map" + std::to_string(i) + ".PNG")};
+			tmp.setScale(0.4, 0.4);
+			tmp.setPosition(screen_width/2-tmp.getGlobalBounds().width/2, screen_height/1.8);
+			map_pictures.push_back(tmp);
+		}
 }
 
 void Setting_State::event_handler(sf::Event event)
@@ -96,6 +103,10 @@ void Setting_State::render(sf::RenderTarget & target)
     {
         target.draw(text[i]);
     }
+	if (menu_select > 0 && menu_select < 6)
+	{
+		target.draw(map_pictures[menu_select-1]);
+	}
 }
 
 int Setting_State::get_next_state()
