@@ -188,7 +188,9 @@ void Collision_Handler::bullet_tank_collision(Player & player1, Player & player2
             //Kolla om spelaren har aktiv sköld
             if(dynamic_cast<Shield*>(player2.get_mypower().get()) != nullptr && player2.get_mypower()->is_active_on_player())
             {
-                player2.get_mypower().reset();
+                std::cout << "pang" << std::endl;
+                player2.reset_power_up();
+                //player2.get_mypower().reset();
             }
             else if(dynamic_cast<Bullet*>(projectile) != nullptr)
             {

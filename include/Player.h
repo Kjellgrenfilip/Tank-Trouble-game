@@ -25,7 +25,7 @@ public:
 	bool is_destroyed();
     int get_hp();
     void set_hp(int);	
-
+    void reset_power_up();
     std::shared_ptr<Power_Up> get_mypower();							
 
 private:	

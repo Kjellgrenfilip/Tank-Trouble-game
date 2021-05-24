@@ -297,3 +297,7 @@ std::shared_ptr<Power_Up> Player::get_mypower()
 {
 	return my_power;
 }
+void Player::reset_power_up()
+{
+	my_power = nullptr;
+}
