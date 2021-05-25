@@ -13,30 +13,30 @@ void GameMap_Manager::get_texture()
     }
 }
 
-sf::Texture& GameMap_Manager::get_texture_floor()
+sf::Texture& GameMap_Manager::get_texture_floor()   // Borde ligga/kunna hämtas i Resource_Manager men fungerar ej. Därav här.
 {
-    if(floor_texture.getSize() == sf::Vector2u(0,0))
+    if(floor_texture.getSize() == sf::Vector2u(0,0))    // Kolla om texturen finns inladdad
     {
         get_texture();
     }
     return floor_texture;
 }
 
-sf::Texture& GameMap_Manager::get_texture_wall()
+sf::Texture& GameMap_Manager::get_texture_wall()    // Borde ligga/kunna hämtas i Resource_Manager men fungerar ej. Därav här.
 {
-    if(wall_texture.getSize() == sf::Vector2u(0,0))
+    if(wall_texture.getSize() == sf::Vector2u(0,0))     // Kolla om texturen finns inladdad
     {
         get_texture();
     }
     return wall_texture;
 }
 
-void GameMap_Manager::load_game_map(int mapID)
+void GameMap_Manager::load_game_map(int mapID) // Möjligör att ladda olika maps under "spelets" gång.
 {
     game_map.generate(mapID);
 }
 
-Game_Map& GameMap_Manager::get_game_map()
+Game_Map& GameMap_Manager::get_game_map()   // Hämta en referens till game_map
 {
     return game_map;
 }

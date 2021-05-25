@@ -18,7 +18,7 @@ public:
     virtual int get_next_state() override;
 
 private:
-    sf::Text win_text[PAUSE_ITEMS];
+    sf::Text win_text[PAUSE_ITEMS];  
     sf::Text menu_text[PAUSE_ITEMS];
     sf::Font font;
 

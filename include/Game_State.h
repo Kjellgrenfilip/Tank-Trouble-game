@@ -28,10 +28,10 @@ private:
 	
     sf::Sound destroyed_sound;
 	
-    static inline int winner;
+    static inline int winner;                //Static för att kunna komma åt inten i Win_State utan ett game_State object
 	std::vector<Player> players;
-    Game_Map & game_map; 
-    Collision_Handler collision_handler;
+    Game_Map & game_map;                    //Referens till game_map i GameMap_Manager
+    Collision_Handler collision_handler;    //Sköter all kollision
 };
 
 #endif

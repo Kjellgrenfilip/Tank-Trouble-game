@@ -21,7 +21,7 @@ public:
 
     void generate(int mapID = 0);           //skapar kartan
     void render(sf::RenderTarget &window);  //ritar upp kartan och power_ups på kartan
-    void update();                          //updaterar puwer_ups på kartan
+    void update();                          //updaterar power_ups på kartan
 
     std::vector<std::unique_ptr<Tile>>& get_tiles();
     std::vector<std::shared_ptr<Power_Up>>& get_powerups();

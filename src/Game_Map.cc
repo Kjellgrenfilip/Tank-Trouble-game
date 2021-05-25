@@ -17,14 +17,13 @@ Game_Map::Game_Map()
 }
 void Game_Map::generate(int mapID)
 {
-    powerups.clear();// rensar powerups om en ny karta laddas.
+    powerups.clear();   // rensar powerups om en ny karta laddas.
+    tiles.clear();  //rensar tiles 
     std::ifstream map_text{random_map(mapID)};   
     if(map_text.fail())
     {
         throw std::logic_error("No map at file location");
     }
-
-    tiles.clear();
 
     std::string temp_string;
     float pos_x{};
@@ -34,11 +33,11 @@ void Game_Map::generate(int mapID)
         sf::Vector2f pos{pos_x * gridsize_x, pos_y * gridsize_y};
         if(temp_string == "1")
         {
-            tiles.push_back(std::make_unique<Tile>(pos, false, GameMap_Manager::get_texture_wall()));
+            tiles.push_back(std::make_unique<Tile>(pos, false, GameMap_Manager::get_texture_wall())); // Använder inte Resource_Manager då det genererar ett Segmentation Fault av okänd anledning
         }
         else
         {
-            tiles.push_back(std::make_unique<Tile>(pos, true, GameMap_Manager::get_texture_floor()));
+            tiles.push_back(std::make_unique<Tile>(pos, true, GameMap_Manager::get_texture_floor())); // Använder inte Resource_Manager då det genererar ett Segmentation Fault av okänd anledning
         }
         if(pos_x >= pixel_resolution_x - 1)
         {

@@ -5,11 +5,11 @@
 Projectile::Projectile(float rot, int life, sf::Texture & texture) 
     :   lifetime{life}, 
         velocity{   static_cast<float>(5*std::cos(rot*M_PI/180.0)), 
-                    static_cast<float>(5*std::sin(rot*M_PI/180.0))},
+                    static_cast<float>(5*std::sin(rot*M_PI/180.0))},    //Bestäm hastigheten utirfrån rotationen
         sprite{texture}
 {
     auto size = texture.getSize();
-    sprite.setOrigin(size.x / 2, size.y / 2);
+    sprite.setOrigin(size.x / 2, size.y / 2);                           //Sätt origin i mitten
 }
 
 sf::Vector2f & Projectile::get_velocity()

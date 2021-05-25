@@ -1,6 +1,5 @@
 #include <Player.h>
 #include <Constants.h>
-//#include "Resource_Manager.h"
 #include "Resource_Manager.h"
 #include <cmath>
 #include <algorithm>
@@ -16,31 +15,31 @@ Player::Player(int ID, sf::Vector2f const& p)
 		player_text{"Player " + std::to_string(ID) + ':', Resource_Manager<sf::Font>::get_file("resources/fonts/Mandala.ttf"), 32}, power_print_pos{},
 		destroyed{false}, speed{4.0}, explosion_counter{20}, explosion_scale{0.2}
 {
-	tank.setPosition(pos);
-    tank.setScale(0.1, 0.1);
+	tank.setPosition(pos);    //Sätter tankens startposition
+    tank.setScale(0.1, 0.1);  
     auto size {tank.getTexture()->getSize()};
-    tank.setOrigin(size.x / 2, size.y / 2); 
+    tank.setOrigin(size.x / 2, size.y / 2); //Sätter tankens "Mittpunkt"
 	set_hearts(Resource_Manager<sf::Texture>::get_file("resources/textures/heart.png"));
 	
 	auto size2{explosion.getTexture()->getSize()};
-	explosion.setOrigin(size2.x/2, size2.y/2);
+	explosion.setOrigin(size2.x/2, size2.y/2); 
 	shield_circle.setOrigin(shield_circle.getRadius(), shield_circle.getRadius());
-	textsquare.setFillColor(sf::Color{255,255,255,100});
-	textsquare.setSize(sf::Vector2f{gridsize_x*6, gridsize_y});
+	textsquare.setFillColor(sf::Color{255,255,255,100}); //Textrutan är vit med en opacitet på 100
+	textsquare.setSize(sf::Vector2f{gridsize_x*6, gridsize_y}); //Sätter storleken på texturan till 6*1 tiles.
 	if (ID == 1)
 	{
-		up = sf::Keyboard::Key::W;
+		up = sf::Keyboard::Key::W;	//Spelarens olika knappfunktioner sätts till respektive för spelare 1 och 2
 		down = sf::Keyboard::Key::S;
 		left = sf::Keyboard::Key::A;
 		right = sf::Keyboard::Key::D;
 		fire = sf::Keyboard::Key::F;
 		activate_powerup = sf::Keyboard::Key::G;
-		tank.setRotation(180);
-		textsquare.setPosition(0,0);
-		player_text.setFillColor(sf::Color::Red);
-		player_text.setPosition(10,0);
-		power_print_pos = sf::Vector2f{textsquare.getPosition().x+textsquare.getGlobalBounds().width,0};
-		shield_circle.setFillColor(sf::Color{255,0,0,100});
+		tank.setRotation(180);			//Spelare 1 startar med rotation på 180 grader för att inte kolla rakt in i väggen
+		textsquare.setPosition(0,0);	//Spelare 1 textruta positioneras i vänstra hörnet högst upp
+		player_text.setFillColor(sf::Color::Red);	//Spelare 1 text får färgen röd som är samma färg som tankens sprite
+		player_text.setPosition(10,0);	//Spelartextens position sätts likaså den i vänstra hörnet, 10 points från kanten
+		power_print_pos = sf::Vector2f{textsquare.getPosition().x+textsquare.getGlobalBounds().width,0}; //Positionen för powerup-sprite för spelare ett
+		shield_circle.setFillColor(sf::Color{255,0,0,100});	//Spelare 1 shield-circle som aktiveras vid shield powerup är röd.
 	}
 	else if (ID == 2)
 	{
@@ -59,7 +58,7 @@ Player::Player(int ID, sf::Vector2f const& p)
 	}
 }
 
-Player::~Player()
+Player::~Player()	//Rensa lite minne :)
 {
     for(auto & projectile : projectiles)
     {
@@ -73,30 +72,27 @@ void Player::update()
 	{
 		destroyed = true;
 	}
-	 //Kolla eventuella power ups som är aktiva	
+	 //Kolla om spelare har aktiv speed boost 
 	if(dynamic_cast<Speed_Boost*>(my_power.get()) != nullptr && my_power->is_active_on_player())
     {
         if(my_power->get_active_time() <= 0)
         {
-            speed = 4.0;
-            my_power.reset();
+            speed = 4.0;			//Om speed-powerup har gått ut i tid, återställs speed till vanliga "4"
+            my_power.reset();		//Rensa pekaren om ta bort power up
         }
         else
             my_power->dec_active_timer();
     }
 
-    //Uppdatera alla projektiler
-
+    //Uppdatera alla projektiler, bullets/rockets
     for(auto projectile : projectiles)
     {
         projectile->update();
     }
-	
 	pos = tank.getPosition();
 	rot = tank.getRotation();
 	
 }
-
 
 void Player::render(sf::RenderTarget & window)
 {
@@ -118,18 +114,16 @@ void Player::render(sf::RenderTarget & window)
 	else
 	{
 		explosion.setPosition(pos);
-		explosion_scale *= 1.1;
-		explosion.setScale(explosion_scale, explosion_scale);
-		window.draw(explosion);
-		explosion_counter--;
+		explosion_scale *= 1.1;  
+		explosion.setScale(explosion_scale, explosion_scale); //Ökar storleken på explosion spriten för att 
+		window.draw(explosion);								  //få det att se ut som en explosion
+		explosion_counter--;  
 	}
-	//print_player_text(window);   //skriver ut "Player1: --hjärtan--. Antalet hjärtan justeras med hjälp av players hp
 	if(my_power!=nullptr)
 	{
-		my_power->get_sprite().setPosition(power_print_pos);
-		window.draw(my_power->get_sprite());
+		my_power->get_sprite().setPosition(power_print_pos); //Om spelaren har en powerup så skrivs den ut bredvid
+		window.draw(my_power->get_sprite());				 //spelartexten
 	}
-
 	window.draw(textsquare);
 	for (int i{0}; i < hp; i++)
 	{
@@ -143,15 +137,15 @@ void Player::event_handler(sf::Event event)
 	old_pos = pos;
 	movement.x = cos((pi/180)*(tank.getRotation()-90)); //Riktningen som tanken ska röra sig i x-led sett från tankens "framdel"
 	movement.y = sin((pi/180)*(tank.getRotation()-90));	//Riktningen som tanken ska röra sig i y-led 		-||-
-	
+
 		if ( sf::Keyboard::isKeyPressed (up) )
         {
-			tank.move(movement*speed);
+			tank.move(movement*speed);					//Multiplicerar med speed för att hastigheten ska bli som önskat
         }
        	if ( sf::Keyboard::isKeyPressed (down) )
         {
 			tank.move (-(movement*speed));		//Eftersom movement är beräknat i riktningen framåt, så blir det en negativ rörelse i motsatt riktning
-        }
+        }										
         if ( sf::Keyboard::isKeyPressed (left) )
         {
             tank.rotate (-3);    
@@ -269,7 +263,8 @@ void Player::set_hearts(sf::Texture& h)
 
 bool Player::is_destroyed()
 {
-	if(destroyed && explosion_counter == 0)
+	if(destroyed && explosion_counter == 0) //Explosion counter på 20 från början ger en "explosion-timer"
+											//på cirka 1/3 sekund, i 60 fps
 		return true;
 	else
 		return false;

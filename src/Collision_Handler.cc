@@ -19,7 +19,13 @@ Collision_Handler::Collision_Handler()
     hit_sound.setBuffer(Resource_Manager<sf::SoundBuffer>::get_file("resources/sounds/hit_sound.wav"));
 }
 
-Collision_Handler::Collision_Box::Collision_Box(sf::Sprite const& sprite)
+// Inspiration tagen från: 
+// https://github.com/SFML/SFML/wiki/Source%3A-Simple-Collision-Detection-for-SFML-2
+// https://www.gamedev.net/tutorials/_/technical/game-programming/2d-rotated-rectangle-collision-r2604/
+
+// För struktur över hur Collision_Box ser ut.
+
+Collision_Handler::Collision_Box::Collision_Box(sf::Sprite const& sprite)           // Skapa en kollisionsbox utrifrån transform värdet från och storlek på spriten.
     : points{}, transform{sprite.getTransform()}, boundery{sprite.getTextureRect()}
 {
     transform_points();
@@ -27,10 +33,10 @@ Collision_Handler::Collision_Box::Collision_Box(sf::Sprite const& sprite)
 
 void Collision_Handler::Collision_Box::transform_points()
 {
-    points.push_back(transform.transformPoint(0, 0));                                 // Upper left point
-    points.push_back(transform.transformPoint(boundery.width, 0));                    // Upper right point
-    points.push_back(transform.transformPoint(boundery.width, boundery.height));      // Lower right point
-    points.push_back(transform.transformPoint(0, boundery.height));                   // Lower Left point
+    points.push_back(transform.transformPoint(0, 0));                                 // Skapa 4 punkter en för varje hörn av rektangeln.
+    points.push_back(transform.transformPoint(boundery.width, 0));                    
+    points.push_back(transform.transformPoint(boundery.width, boundery.height));      
+    points.push_back(transform.transformPoint(0, boundery.height));                   
 }
 
 void Collision_Handler::Collision_Box::project(sf::Vector2f const& axis, float & min, float & max)
@@ -38,13 +44,13 @@ void Collision_Handler::Collision_Box::project(sf::Vector2f const& axis, float &
     sf::Vector2f projection;
     projection.x = ((points.at(0).x * axis.x + points.at(0).y * axis.y) / (axis.x * axis.x + axis.y * axis.y)) * axis.x;  // Projektionsformel för linje
     projection.y = ((points.at(0).x * axis.x + points.at(0).y * axis.y) / (axis.x * axis.x + axis.y * axis.y)) * axis.y;  // Projektionsformel för linje    
-    min = (projection.x * axis.x + projection.y * axis.y);                                                          // Projektionsformel för linje
+    min = (projection.x * axis.x + projection.y * axis.y);                                                                // Projektionsformel för linje
     max = min;
     for(size_t i = 1; i < points.size(); i++)
     {
         projection.x = ((points.at(i).x * axis.x + points.at(i).y * axis.y) / (axis.x * axis.x + axis.y * axis.y)) * axis.x;  // Projektionsformel för linje
         projection.y = ((points.at(i).x * axis.x + points.at(i).y * axis.y) / (axis.x * axis.x + axis.y * axis.y)) * axis.y;  // Projektionsformel för linje
-        float dot_product = (projection.x * axis.x + projection.y * axis.y);                                            // Projektionsformel för linje
+        float dot_product = (projection.x * axis.x + projection.y * axis.y);                                                  // Projektionsformel för linje
         if(dot_product<min)     // Spara undan max/min värde 
         {
             min = dot_product;
@@ -56,7 +62,13 @@ void Collision_Handler::Collision_Box::project(sf::Vector2f const& axis, float &
     }
 }
 
-bool Collision_Handler::check_collision(sf::Sprite const& object1, sf::Sprite const& object2)
+// Inspiration tagen från: 
+// https://github.com/SFML/SFML/wiki/Source%3A-Simple-Collision-Detection-for-SFML-2
+// https://www.gamedev.net/tutorials/_/technical/game-programming/2d-rotated-rectangle-collision-r2604/
+
+// För check_collision()
+
+bool Collision_Handler::check_collision(sf::Sprite const& object1, sf::Sprite const& object2)   // Kolla kollision mellan två sprites / objekt
 {
     obj1pos = object1.getPosition();
     obj2pos = object2.getPosition();
@@ -71,15 +83,15 @@ bool Collision_Handler::check_collision(sf::Sprite const& object1, sf::Sprite co
     Collision_Box obj2(object2);
 
     std::vector<sf::Vector2f> axes;
-    axes.push_back(sf::Vector2f(obj1.points[1].x - obj1.points[0].x, obj1.points[1].y - obj1.points[0].y));
+    axes.push_back(sf::Vector2f(obj1.points[1].x - obj1.points[0].x, obj1.points[1].y - obj1.points[0].y));     // Skapa 4 vectorer en i varje riktining för varje rektangel.
     axes.push_back(sf::Vector2f(obj1.points[1].x - obj1.points[2].x, obj1.points[1].y - obj1.points[2].y));
     axes.push_back(sf::Vector2f(obj2.points[0].x - obj2.points[3].x, obj2.points[0].y - obj2.points[3].y));
     axes.push_back(sf::Vector2f(obj2.points[0].x - obj2.points[1].x, obj2.points[0].y - obj2.points[1].y));
 
-    for(size_t i{0}; i < axes.size(); i++)
+    for(size_t i{0}; i < axes.size(); i++)          // Projicera varje punkt/rektangel på varje axel och kolla om dem överlappar eller inte 
     {
         float min1, max1, min2, max2;
-        obj1.project(axes.at(i), min1, max1);
+        obj1.project(axes.at(i), min1, max1);       
         obj2.project(axes.at(i), min2, max2);
         if(!((min2 <= max1) && (max2 >= min1)))     // Separating axis theorem
         {
@@ -113,19 +125,21 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
             {
                 if(!tile->is_passable() && check_collision(projectile->get_sprite(), tile->get_sprite()))
                 {
-                    if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr)
+                    if(dynamic_cast<Rocket_Projectile*>(projectile) != nullptr) //Kolla om projektilen är en raket
                     {
                         projectile->lifetime = 0;
-                        break;
+                        break;                      //Eftersom raketen tas bort efter en kollosion görs inga ytterliggare kontroller
                     }
 
+                    //Testa flytta kulan en frame med förändrad riktning i x-led och y-led
                     sf::Sprite try_x{projectile->get_sprite()};
                     try_x.setPosition(try_x.getPosition().x - projectile->get_velocity().x, 
                                       try_x.getPosition().y + projectile->get_velocity().y);
                     sf::Sprite try_y{projectile->get_sprite()};
                     try_y.setPosition(try_y.getPosition().x + projectile->get_velocity().x, 
                                       try_y.getPosition().y - projectile->get_velocity().y);
-
+                    
+                    //Kolla kollision igen
                     if(!check_collision(try_x, tile->get_sprite()))
                     {
                         projectile->reverse_x();
@@ -144,7 +158,7 @@ void Collision_Handler::bullet_wall_collision(std::vector<Player> & players)
 						bounce_sound.play();
 					}	
                     projectile->lifetime--;
-                    break;
+                    break;                  //Kolla inga fler tiles mot denna kula, finns kollision med flera tiles hanteras det vid nästa anrop
                 }
             }
         }

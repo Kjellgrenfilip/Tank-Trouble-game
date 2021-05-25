@@ -7,14 +7,14 @@ class Projectile
 {
     public:
         Projectile() = default;
-        Projectile(float rot, int life, sf::Texture & texture);                  //Tar in spelarens rotaion för att bestämma riktning på projektil
+        Projectile(float rot, int life, sf::Texture & texture);            //Tar in spelarens rotation och position samt texturen
         virtual ~Projectile() = default;
 
-        void update();
+        void update();  
         void render(sf::RenderTarget&);
         sf::Sprite & get_sprite();
 
-        sf::Vector2f & get_velocity();            //Returnera hastigheten (pixlar per frame)
+        sf::Vector2f & get_velocity();          //Returnera hastigheten (pixlar per frame)
         void reverse_x();                       //Byt riktning i x-led
         void reverse_y();                       //Byt riktning i y-led
 

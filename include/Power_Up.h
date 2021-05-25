@@ -5,7 +5,7 @@
 class Power_Up
 {
 public:
-    Power_Up();
+    Power_Up() = delete;
 
     virtual ~Power_Up() = default; 
     Power_Up(sf::Vector2f &pos,sf::Texture& power_up_texture);
